@@ -1,6 +1,6 @@
 ### E aí pessoal, Tranquilo? 👋
 
-Me chamo Thiago Magno, estou na casa dos 20 e poucos anos e atualmente moro em Palhoça-SC, um lugar incrível. Meu mergulho na área da informática começou com um curso técnico, e desde então, tenho me dedicado a explorar as maravilhas desse universo em constante evolução. Gosto de desafios tecnológicos e sou um entusiasta do minimalismo, acredito que a simplicidade é a chave para soluções elegantes.
+Me chamo Thiago, estou na casa dos 20 e poucos anos e atualmente moro em Palhoça-SC, um lugar incrível. Meu mergulho na área da informática começou com um curso técnico, e desde então, tenho me dedicado a explorar as maravilhas desse universo em constante evolução. Gosto de desafios tecnológicos e sou um entusiasta do minimalismo, acredito que a simplicidade é a chave para soluções elegantes.
 
 No ambiente de trabalho, sou conhecido pela minha abordagem meticulosa em relação a horários e prazos. Tenho uma inclinação natural para seguir padrões e prezo pela organização em todas as etapas do processo.
 
