@@ -1,9 +1,9 @@
 import type { Metadata } from 'next'
-import { Montserrat } from 'next/font/google'
+import { Lexend } from 'next/font/google'
 import './globals.css'
 import { Navbar } from '@/components/navbar'
 
-const montserrat = Montserrat({ subsets: ['latin'] })
+const lexend = Lexend({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Thiago Magno',
@@ -17,7 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-br">
-      <body className={montserrat.className}>
+      <body className={lexend.className}>
         <Navbar />
         {children}
       </body>
