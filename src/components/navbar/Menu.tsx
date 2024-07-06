@@ -13,24 +13,21 @@ export function MenuComponent() {
       (href !== '/' && pathname.includes(href))
 
     return (
-      <Link
-        href={href}
-        className={`text-neutral-100 ${isActive ? 'underline' : ''}`}
-      >
+      <Link href={href} className={isActive ? 'underline' : ''}>
         {label}
       </Link>
     )
   }
 
   return (
-    <nav className="hidden flex-1 items-center md:flex md:justify-between">
+    <nav className="ml-20 hidden flex-1 items-center md:flex md:justify-between">
       <ul className="flex space-x-6">
         <MenuItem href="/" label="Início" />
         <MenuItem href="/formacao" label="Formação" />
         <MenuItem href="/projetos" label="Projetos" />
         <MenuItem href="/blog" label="Blog" />
       </ul>
-      <ToggleTheme light />
+      <ToggleTheme />
     </nav>
   )
 }

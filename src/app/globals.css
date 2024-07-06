@@ -4,6 +4,21 @@
 
 @layer base {
   body {
-    @apply bg-neutral-300 leading-relaxed dark:bg-neutral-900 text-neutral-700 dark:text-neutral-200
+    @apply bg-slate-300 leading-relaxed dark:bg-[#0F0F0F]
+    text-neutral-700 dark:text-neutral-200 overflow-y-scroll
+  }
+}
+
+@layer utilities {
+  ::-webkit-scrollbar {
+    @apply w-2 fixed
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-neutral-300 dark:bg-[#0F0F0F]
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-neutral-700
   }
 }
