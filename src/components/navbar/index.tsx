@@ -4,10 +4,9 @@ import { DropdownMenuComponent } from './DropdownMenu'
 
 export function Navbar() {
   return (
-    <nav className="flex h-14 items-center bg-gradient-to-r from-slate-800 to-slate-900 shadow-md md:h-16">
-      <div className="mx-auto flex max-w-[96%] flex-1 items-center justify-between">
-        <DropdownMenuComponent />
-        <Link href="/" className="relative flex h-10 w-10 md:h-12 md:w-12">
+    <nav className="flex h-14 items-center bg-slate-900 shadow-md dark:bg-neutral-950/80 md:h-16">
+      <div className="mx-auto flex max-w-[96%] flex-1 items-center gap-5">
+        <Link href="/" className="relative flex h-8 w-8 md:h-10 md:w-10">
           <Image
             src="/logo_thg.svg"
             alt="Logotipo THG"
@@ -16,15 +15,7 @@ export function Navbar() {
             className="w-full object-cover"
           />
         </Link>
-        <div className="relative flex h-8 w-8 cursor-pointer md:h-10 md:w-10">
-          <Image
-            src="/thiago.jpg"
-            alt="Foto de Thiago magno"
-            layout="fill"
-            objectFit="cover"
-            className="w-full rounded-full object-cover"
-          />
-        </div>
+        <DropdownMenuComponent />
       </div>
     </nav>
   )

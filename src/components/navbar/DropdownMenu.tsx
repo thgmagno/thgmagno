@@ -10,6 +10,7 @@ import {
 import { Dot, Menu } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { ToggleTheme } from '../toggle-theme'
 
 export function DropdownMenuComponent() {
   const pathname = usePathname()
@@ -42,6 +43,12 @@ export function DropdownMenuComponent() {
           <MenuItem href="/formacao" label="Formação" />
           <MenuItem href="/projetos" label="Projetos" />
           <MenuItem href="/blog" label="Blog" />
+        </DropdownMenuGroup>
+        <hr className="opacity-45" />
+        <DropdownMenuGroup className="flex flex-col">
+          <span className="my-2 flex items-center justify-between px-2">
+            Tema: <ToggleTheme />
+          </span>
         </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>
