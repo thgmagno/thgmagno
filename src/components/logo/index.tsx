@@ -7,7 +7,7 @@ export function Logo() {
   return (
     <Link href="/">
       <span
-        className={`absolute -top-1 text-3xl tracking-tight text-zinc-600 duration-300 hover:tracking-wide dark:text-zinc-300 ${bangers.className}`}
+        className={`absolute -top-1 text-3xl tracking-tight text-zinc-600 duration-300 dark:text-zinc-300 md:hover:tracking-wide ${bangers.className}`}
       >
         THG
       </span>
