@@ -1,29 +1,43 @@
+import { Hero } from '@/components/hero'
 import { ProjectRecents } from '@/components/projects/ProjectRecents'
 import { TooltipComponent } from '@/components/tooltip'
 import { Wrapper } from '@/components/wrapper'
 import { Github, Instagram, Linkedin, Mail } from 'lucide-react'
+import { ReactNode } from 'react'
 
 export default function Home() {
   const currentYear = new Date().getFullYear()
+  const Section = ({
+    title,
+    children,
+  }: {
+    title: string
+    children: ReactNode
+  }) => (
+    <section className="mb-14 flex flex-col space-y-5 text-justify">
+      <Subtitle title={title} />
+      {children}
+    </section>
+  )
+
+  const Subtitle = ({ title }: { title: string }) => (
+    <div className="flex items-center">
+      <div className="mr-4 flex-1 border-b border-neutral-400 dark:border-neutral-700" />
+      <h3 className="flex text-xl">{title}</h3>
+      <div className="ml-4 flex-1 border-b border-neutral-400 dark:border-neutral-700" />
+    </div>
+  )
 
   return (
     <Wrapper>
       <div className="mx-auto flex max-w-3xl flex-col">
-        <section className="my-8 justify-center md:my-14">
-          <h1 className="text-4xl font-extralight uppercase text-neutral-700 md:text-5xl">
-            Thiago Magno
-          </h1>
-          <h2 className="text-lg font-light text-neutral-600">
-            Desenvolvedor Web
-          </h2>
-        </section>
-        <section className="space-y-5 text-justify">
-          <h3 className="text-lg">Sobre mim</h3>
+        <Hero />
 
+        <Section title="Sobre mim">
           <p>
-            Sou um desenvolvedor web dedicado a criar soluções digitais
-            inovadoras e eficientes. Sempre fui ligado em tecnologia e minha
-            jornada começou em 2017, quando realizei um curso técnico
+            Sou um desenvolvedor web buscando criar soluções digitais inovadoras
+            e eficientes. Sempre fui ligado em tecnologia, e a minha jornada
+            começou em 2017, quando realizei um curso técnico
             profissionalizante.
           </p>
 
@@ -38,26 +52,66 @@ export default function Home() {
             meu objetivo é proporcionar experiências de usuário excepcionais,
             combinando criatividade e tecnologia.
           </p>
+        </Section>
 
-          <h4 className="text-lg">Interesses</h4>
-
+        <Section title="Interesses">
           <p>
             Gosto de me manter atualizado com as tendências e avanços no
-            desenvolvimento web.
+            desenvolvimento web. Estudando as principais ferramentas para manter
+            a competitividade e relevância no mercado tecnológico.
           </p>
 
           <p>
-            Além da programação web, também me interesso pelo estudo da área de
-            UX/UI, visando sempre aprimorar a experiência do usuário em cada
-            projeto.
+            Tenho uma certa facilidade no estudo da área de front-end, gosto de
+            aprender e aplicar conceitos que são exigidos no mercado, por
+            exemplo a responsividade, devemos garantir que os sites funcionem
+            perfeitamente em qualquer dispositivo.
           </p>
 
-          <h4 className="text-lg">Projetos recentes</h4>
+          <p>
+            Buscar estratégias de renderizações no lado do servidor e
+            otimizações de páginas garantem um tempo de resposta menor e com
+            isso entrega uma página que carrega quase que instantaneamente,
+            melhorando a experiência do usuário.
+          </p>
+
+          <p>
+            Também tenho me dedicado a estudar áreas do back-end, de forma a
+            complementar as habilidades, e ter mais versatilidade no
+            desenvolvimento. Python e Golang, são linguagens promissoras, e
+            acredito que estarão em alta no futuro. Ter conhecimento nessas
+            áreas poderá atender as necessidades tecnológicas de forma
+            eficiente.
+          </p>
+        </Section>
+
+        <Section title="Projetos recentes">
           <ProjectRecents />
-        </section>
+        </Section>
+
+        <Section title="Sobre o portfólio">
+          <p>
+            Este portfólio foi feito 100% por mim, e realizei do zero, desde
+            imagens, logotipos, escolha de cores, fontes, estutura do layout e
+            etc. Embora tenha me inspirado em alguns templates na internet,
+            sempre procurei transmitir o meu estilo e minhas habilidades em cada
+            detalhe.
+          </p>
+          <p>
+            Durante a etapa do desenvolvimento mantive o foco na padronização do
+            código, para que se tornasse um projeto fácil de manter no longo
+            prazo.
+          </p>
+          <p>
+            Este site é alimentado por uma API que é totalmente gerenciável, e
+            basicamente qualquer alteração realizada na API irá refletir aqui.
+            Essa flexibilidade facilita a atualização e manutenção do conteúdo,
+            conforme necessário.
+          </p>
+        </Section>
 
         <footer className="relative my-28">
-          <section className="flex justify-center space-x-5 text-neutral-600 md:justify-end">
+          <section className="flex justify-center space-x-5 md:justify-end">
             <TooltipComponent
               href="mailto:thgmgn@gmail.com"
               Icon={Mail}
@@ -79,7 +133,7 @@ export default function Home() {
               label="Github"
             />
           </section>
-          <span className="absolute -bottom-36 flex w-full items-center justify-center text-neutral-700">
+          <span className="absolute -bottom-36 flex w-full items-center justify-center text-center">
             © {currentYear} Thiago Magno dos Santos CNPJ: 53.274.431/0001-02
           </span>
         </footer>
