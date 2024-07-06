@@ -30,16 +30,16 @@ export function DropdownMenuComponent() {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
+      <DropdownMenuTrigger asChild className="md:hidden">
         <button>
           <Menu size={20} className="text-slate-100" />
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="ml-2.5 w-44 border-slate-600 bg-slate-800 text-slate-100">
+      <DropdownMenuContent className="absolute -right-5 w-44 border-none bg-slate-800 text-slate-100 dark:bg-neutral-800">
         <DropdownMenuLabel>Navegar para:</DropdownMenuLabel>
         <hr className="opacity-45" />
         <DropdownMenuGroup className="flex flex-col">
-          <MenuItem href="/" label="Tela inicial" />
+          <MenuItem href="/" label="Início" />
           <MenuItem href="/formacao" label="Formação" />
           <MenuItem href="/projetos" label="Projetos" />
           <MenuItem href="/blog" label="Blog" />
