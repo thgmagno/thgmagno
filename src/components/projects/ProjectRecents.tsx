@@ -9,7 +9,7 @@ export function ProjectRecents() {
 
   return (
     <>
-      <section className="grid gap-4 md:grid-cols-3">
+      <section className="grid gap-4 sm:grid-cols-3">
         <Card />
         <Card />
         <Card />
