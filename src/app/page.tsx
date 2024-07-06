@@ -89,9 +89,9 @@ export default function Home() {
       <Section title="Sobre o portfólio">
         <p>
           Este portfólio foi feito 100% por mim, e realizei do zero, desde
-          imagens, logotipos, escolha de cores, fontes, estutura do layout e
-          etc. Embora tenha me inspirado em alguns templates na internet, sempre
-          procurei transmitir o meu estilo e minhas habilidades em cada detalhe.
+          imagens, logotipos, cores, fontes, estutura do layout e etc. Embora
+          tenha me inspirado em alguns templates na internet, sempre procurei
+          transmitir o meu estilo e minhas habilidades em cada detalhe.
         </p>
         <p>
           Durante a etapa do desenvolvimento mantive o foco na padronização do

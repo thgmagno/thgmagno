@@ -4,11 +4,7 @@ import { useEffect, useState } from 'react'
 import { Sun, Moon, Loader2 } from 'lucide-react'
 import { useTheme } from 'next-themes'
 
-interface Props {
-  light?: boolean
-}
-
-export function ToggleTheme({ light }: Props) {
+export function ToggleTheme() {
   const [mounted, setMounted] = useState(false)
   const { setTheme, resolvedTheme } = useTheme()
 
@@ -16,15 +12,14 @@ export function ToggleTheme({ light }: Props) {
     setMounted(true)
   }, [])
 
-  if (!mounted)
-    return <Loader2 size={20} className="animate-spin text-neutral-100" />
+  if (!mounted) return <Loader2 size={20} className="animate-spin" />
 
   if (resolvedTheme === 'dark') {
     return (
       <Sun
         onClick={() => setTheme('light')}
         size={20}
-        className={`cursor-pointer ${light ? 'text-neutral-100' : ''}`}
+        className="cursor-pointer"
       />
     )
   }
@@ -34,7 +29,7 @@ export function ToggleTheme({ light }: Props) {
       <Moon
         onClick={() => setTheme('dark')}
         size={20}
-        className={`cursor-pointer ${light ? 'text-neutral-100' : ''}`}
+        className="cursor-pointer"
       />
     )
   }

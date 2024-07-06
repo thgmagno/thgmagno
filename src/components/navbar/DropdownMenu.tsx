@@ -32,24 +32,22 @@ export function DropdownMenuComponent() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild className="md:hidden">
         <button>
-          <Menu size={20} className="text-slate-100" />
+          <Menu size={20} />
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="absolute -right-5 w-44 border-none bg-slate-800 text-slate-100 dark:bg-neutral-800">
+      <DropdownMenuContent className="absolute -right-5 w-44 border-none bg-slate-200 dark:bg-neutral-800">
         <DropdownMenuLabel>Navegar para:</DropdownMenuLabel>
-        <hr className="opacity-45" />
+        <hr className="my-1.5 border-neutral-400 dark:border-neutral-600" />
         <DropdownMenuGroup className="flex flex-col">
           <MenuItem href="/" label="Início" />
           <MenuItem href="/formacao" label="Formação" />
           <MenuItem href="/projetos" label="Projetos" />
           <MenuItem href="/blog" label="Blog" />
         </DropdownMenuGroup>
-        <hr className="opacity-45" />
-        <DropdownMenuGroup className="flex flex-col">
-          <span className="my-2 flex items-center justify-between px-2">
-            Tema: <ToggleTheme />
-          </span>
-        </DropdownMenuGroup>
+        <hr className="my-1.5 border-neutral-400 dark:border-neutral-600" />
+        <DropdownMenuLabel className="flex justify-between">
+          Tema: <ToggleTheme />
+        </DropdownMenuLabel>
       </DropdownMenuContent>
     </DropdownMenu>
   )
