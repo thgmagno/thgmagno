@@ -3,7 +3,7 @@
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
-export function ToggleCategory() {
+export function EducationFilters() {
   const searchParams = useSearchParams()
   const pathname = usePathname()
   const { replace } = useRouter()
@@ -19,6 +19,7 @@ export function ToggleCategory() {
     const params = new URLSearchParams(searchParams)
     const searchString = params.get('categoria') || ''
     const categories = searchString ? searchString.split(',') : []
+    const maxLength = 4
 
     if (categories.includes(value)) {
       const updatedCategories = categories.filter(
@@ -31,7 +32,11 @@ export function ToggleCategory() {
       }
     } else {
       categories.push(value)
-      params.set('categoria', categories.join(','))
+      if (categories.length >= maxLength) {
+        params.delete('categoria')
+      } else {
+        params.set('categoria', categories.join(','))
+      }
     }
 
     replace(`${pathname}?${params.toString()}`)
@@ -51,6 +56,12 @@ export function ToggleCategory() {
         className={`px-2 py-1 ${selectedCategories.includes('backend') ? 'rounded-full bg-neutral-600 text-neutral-100' : ''}`}
       >
         Back-end
+      </button>
+      <button
+        onClick={() => handleFilters('full-stack')}
+        className={`px-2 py-1 ${selectedCategories.includes('full-stack') ? 'rounded-full bg-neutral-600 text-neutral-100' : ''}`}
+      >
+        Full-stack
       </button>
       <button
         onClick={() => handleFilters('ferramentas')}
