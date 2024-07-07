@@ -16,10 +16,24 @@ import { useLanguageStore, ValidLanguage } from '@/lib/store/languageStore'
 import { toast } from 'sonner'
 
 type DictType = {
-  menuOptions: {
+  navigation: {
+    portuguese: {
+      label: string
+      options: string[]
+    }
+    english: {
+      label: string
+      options: string[]
+    }
+  }
+  language: {
     value: ValidLanguage
     label: string
   }[]
+  theme: {
+    portuguese: string
+    english: string
+  }
   icon: {
     portuguese: JSX.Element
     english: JSX.Element
@@ -35,8 +49,6 @@ export function DropdownMenuComponent() {
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="absolute -right-5 w-44 border-none bg-slate-200 dark:bg-neutral-800">
-        <DropdownMenuLabel>Navegar para:</DropdownMenuLabel>
-        <hr className="my-1.5 border-neutral-400 dark:border-neutral-600" />
         <ManuNavigation />
         <hr className="my-1.5 border-neutral-400 dark:border-neutral-600" />
         <SelectLanguage />
@@ -49,6 +61,20 @@ export function DropdownMenuComponent() {
 
 function ManuNavigation() {
   const pathname = usePathname()
+  const { language } = useLanguageStore()
+
+  const dicts: Partial<DictType> = {
+    navigation: {
+      portuguese: {
+        label: 'Navegar para',
+        options: ['Início', 'Formação', 'Projetos', 'Blog'],
+      },
+      english: {
+        label: 'Go to',
+        options: ['Home', 'Education', 'Projects', 'Blog'],
+      },
+    },
+  }
 
   const MenuItem = ({ href, label }: { href: string; label: string }) => {
     const isActive =
@@ -63,13 +89,25 @@ function ManuNavigation() {
     )
   }
 
+  if (!dicts.navigation) return
+
   return (
-    <DropdownMenuGroup className="flex flex-col">
-      <MenuItem href="/" label="Início" />
-      <MenuItem href="/formacao" label="Formação" />
-      <MenuItem href="/projetos" label="Projetos" />
-      <MenuItem href="/blog" label="Blog" />
-    </DropdownMenuGroup>
+    <>
+      <DropdownMenuLabel>{dicts.navigation[language].label}:</DropdownMenuLabel>
+      <hr className="my-1.5 border-neutral-400 dark:border-neutral-600" />
+      <DropdownMenuGroup className="flex flex-col">
+        <MenuItem href="/" label={dicts.navigation[language].options[0]} />
+        <MenuItem
+          href="/formacao"
+          label={dicts.navigation[language].options[1]}
+        />
+        <MenuItem
+          href="/projetos"
+          label={dicts.navigation[language].options[2]}
+        />
+        <MenuItem href="/blog" label={dicts.navigation[language].options[3]} />
+      </DropdownMenuGroup>
+    </>
   )
 }
 
@@ -106,8 +144,8 @@ function SelectLanguage() {
     }
   }
 
-  const dicts: DictType = {
-    menuOptions: [
+  const dicts: Partial<DictType> = {
+    language: [
       { value: 'portuguese', label: 'PT' },
       { value: 'english', label: 'EN' },
     ],
@@ -121,12 +159,12 @@ function SelectLanguage() {
     <div className="grid grid-cols-2 pr-2">
       <DropdownMenuLabel>Idioma:</DropdownMenuLabel>
       <DropdownMenuGroup className="flex flex-col gap-1 text-sm">
-        {dicts.menuOptions.map((option) => (
+        {dicts.language?.map((option) => (
           <button
             onClick={() => handleChangeLanguage(option.value)}
             className={`flex items-center justify-end gap-2 ${language === option.value ? '' : 'opacity-30'}`}
           >
-            {option.label} {dicts.icon[option.value]}
+            {option.label} {dicts.icon && dicts.icon[option.value]}
           </button>
         ))}
       </DropdownMenuGroup>
@@ -135,9 +173,20 @@ function SelectLanguage() {
 }
 
 function SelectTheme() {
+  const { language } = useLanguageStore()
+
+  const dicts: Partial<DictType> = {
+    theme: {
+      portuguese: 'Tema',
+      english: 'Theme',
+    },
+  }
+
+  if (!dicts.theme) return
+
   return (
     <DropdownMenuLabel className="flex justify-between">
-      Tema: <ToggleTheme />
+      {dicts.theme[language]}: <ToggleTheme />
     </DropdownMenuLabel>
   )
 }
