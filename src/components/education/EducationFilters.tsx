@@ -19,7 +19,6 @@ export function EducationFilters() {
     const params = new URLSearchParams(searchParams)
     const searchString = params.get('categoria') || ''
     const categories = searchString ? searchString.split(',') : []
-    const maxLength = 4
 
     if (categories.includes(value)) {
       const updatedCategories = categories.filter(
@@ -32,11 +31,7 @@ export function EducationFilters() {
       }
     } else {
       categories.push(value)
-      if (categories.length >= maxLength) {
-        params.delete('categoria')
-      } else {
-        params.set('categoria', categories.join(','))
-      }
+      params.set('categoria', categories.join(','))
     }
 
     replace(`${pathname}?${params.toString()}`)
