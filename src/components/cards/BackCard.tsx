@@ -31,7 +31,7 @@ export const BackCard = ({ setSide }: Props) => {
   )
 
   return (
-    <section className="mb-16 mt-6 rounded-xl border border-neutral-400 bg-gradient-to-r from-neutral-300 to-neutral-400/60 px-3 py-4 shadow-md [transform:rotateY(180deg)] dark:border-neutral-800 dark:from-zinc-800 dark:to-slate-800">
+    <section className="mb-16 mt-6 rounded-xl border border-neutral-400 bg-gradient-to-r from-neutral-300 to-neutral-400/60 px-3 py-4 shadow-md [transform:rotateY(180deg)] dark:border-neutral-800 dark:from-[#111B21] dark:to-zinc-900">
       <article className="flex items-center justify-between">
         <div className="flex w-full justify-evenly">
           <Icon path={gmailIcon} title="Gmail" href="mailto:thgmgn@gmail.com" />

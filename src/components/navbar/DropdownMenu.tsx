@@ -30,6 +30,10 @@ type DictType = {
     value: ValidLanguage
     label: string
   }[]
+  menuLabel: {
+    portuguese: string
+    english: string
+  }
   theme: {
     portuguese: string
     english: string
@@ -149,6 +153,10 @@ function SelectLanguage() {
       { value: 'portuguese', label: 'PT' },
       { value: 'english', label: 'EN' },
     ],
+    menuLabel: {
+      portuguese: 'Idioma',
+      english: 'Language',
+    },
     icon: {
       portuguese: <FlagBR />,
       english: <FlagUK />,
@@ -157,7 +165,9 @@ function SelectLanguage() {
 
   return (
     <div className="grid grid-cols-2 pr-2">
-      <DropdownMenuLabel>Idioma:</DropdownMenuLabel>
+      <DropdownMenuLabel>
+        {dicts.menuLabel && dicts.menuLabel[language]}:
+      </DropdownMenuLabel>
       <DropdownMenuGroup className="flex flex-col gap-1 text-sm">
         {dicts.language?.map((option) => (
           <button

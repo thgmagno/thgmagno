@@ -8,7 +8,7 @@ interface Props {
 
 export const FrontCard = ({ occupationArea, setSide }: Props) => {
   return (
-    <section className="mb-16 mt-6 rounded-xl border border-neutral-400 bg-gradient-to-r from-neutral-300 to-neutral-400/60 px-3 py-4 shadow-md dark:border-neutral-800 dark:from-zinc-800 dark:to-slate-800">
+    <section className="mb-16 mt-6 rounded-xl border border-neutral-400 bg-gradient-to-r from-neutral-300 to-neutral-400/60 px-3 py-4 shadow-md dark:border-neutral-800 dark:from-[#111B21] dark:to-zinc-900">
       <article className="flex items-center justify-between">
         <div className="relative">
           <h1 className="text-2xl font-extralight uppercase sm:text-4xl md:text-5xl">
