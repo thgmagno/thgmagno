@@ -11,6 +11,7 @@ import { Dot, Menu } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { ToggleTheme } from '../toggle-theme'
+import { FlagBR, FlagUK } from '../flags'
 
 export function DropdownMenuComponent() {
   const pathname = usePathname()
@@ -44,6 +45,18 @@ export function DropdownMenuComponent() {
           <MenuItem href="/projetos" label="Projetos" />
           <MenuItem href="/blog" label="Blog" />
         </DropdownMenuGroup>
+        <hr className="my-1.5 border-neutral-400 dark:border-neutral-600" />
+        <div className="grid grid-cols-2 pr-2">
+          <DropdownMenuLabel>Idioma:</DropdownMenuLabel>
+          <DropdownMenuGroup className="flex flex-col gap-1 text-sm">
+            <button className="flex items-center justify-end gap-2">
+              PT <FlagBR />
+            </button>
+            <button className="flex items-center justify-end gap-2 opacity-40">
+              EN <FlagUK />
+            </button>
+          </DropdownMenuGroup>
+        </div>
         <hr className="my-1.5 border-neutral-400 dark:border-neutral-600" />
         <DropdownMenuLabel className="flex justify-between">
           Tema: <ToggleTheme />
