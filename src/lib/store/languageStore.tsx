@@ -15,7 +15,9 @@ const initialState = {
 }
 
 const storagedLanguage =
-  localStorage?.getItem('thgmagno-language') ?? initialState.language
+  typeof window !== 'undefined' && typeof localStorage !== 'undefined'
+    ? localStorage?.getItem('thgmagno-language') || initialState.language
+    : initialState.language
 
 export const useLanguageStore = create<Store>()((set) => ({
   language: storagedLanguage as ValidLanguage,
