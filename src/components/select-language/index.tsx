@@ -35,7 +35,7 @@ type DictType = {
 export function SelectLanguage() {
   const { language, setLanguage, Icon } = useLanguageStore()
 
-  function handleChangeLanguage(newLanguage: 'portuguese' | 'english') {
+  function handleChangeLanguage(newLanguage: string) {
     const acceptLanguages = ['portuguese', 'english']
 
     if (language === newLanguage || !acceptLanguages.includes(newLanguage))
@@ -48,7 +48,7 @@ export function SelectLanguage() {
             <FlagBR /> Idioma alterado para Português
           </div>,
         )
-        setLanguage(language)
+        setLanguage(newLanguage)
         break
       case 'english':
         toast(
@@ -56,7 +56,7 @@ export function SelectLanguage() {
             <FlagUK /> Language changed to English
           </div>,
         )
-        setLanguage(language)
+        setLanguage(newLanguage)
         break
       default:
         toast.error('Opção inválida')
