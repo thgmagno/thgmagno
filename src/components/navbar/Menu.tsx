@@ -2,7 +2,8 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { ToggleTheme } from '../toggle-theme'
+import { ToggleTheme } from '@/components/toggle-theme'
+import { SelectLanguage } from '@/components/select-language'
 
 export function MenuComponent() {
   const pathname = usePathname()
@@ -27,7 +28,10 @@ export function MenuComponent() {
         <MenuItem href="/projetos" label="Projetos" />
         <MenuItem href="/blog" label="Blog" />
       </ul>
-      <ToggleTheme />
+      <div className="flex items-center gap-5">
+        <ToggleTheme />
+        <SelectLanguage />
+      </div>
     </nav>
   )
 }

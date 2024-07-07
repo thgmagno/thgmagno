@@ -12,13 +12,13 @@ export function ToggleTheme() {
     setMounted(true)
   }, [])
 
-  if (!mounted) return <Loader2 size={20} className="animate-spin" />
+  if (!mounted) return <Loader2 size={24} className="animate-spin" />
 
   if (resolvedTheme === 'dark') {
     return (
       <Sun
         onClick={() => setTheme('light')}
-        size={20}
+        size={24}
         className="cursor-pointer"
       />
     )
@@ -28,7 +28,7 @@ export function ToggleTheme() {
     return (
       <Moon
         onClick={() => setTheme('dark')}
-        size={20}
+        size={24}
         className="cursor-pointer"
       />
     )
