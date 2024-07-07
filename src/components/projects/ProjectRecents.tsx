@@ -1,6 +1,10 @@
 import Link from 'next/link'
 
-export function ProjectRecents() {
+interface Props {
+  labelButton: string
+}
+
+export function ProjectRecents({ labelButton }: Props) {
   const Card = () => (
     <div className="h-56 rounded-lg border p-2 shadow">
       <h1>Projeto</h1>
@@ -19,7 +23,7 @@ export function ProjectRecents() {
           href="/projetos"
           className="rounded-full bg-neutral-500 px-4 py-1 text-neutral-100 hover:bg-neutral-600"
         >
-          Ver todos
+          {labelButton}
         </Link>
       </div>
     </>
