@@ -1,9 +1,10 @@
 'use client'
 
-import { ReactNode } from 'react'
+import { ReactNode, useState } from 'react'
 import { useLanguageStore } from '@/lib/store/languageStore'
 import { ProjectRecents } from '../projects/ProjectRecents'
-import Image from 'next/image'
+import { FrontCard } from '../cards/FrontCard'
+import { BackCard } from '../cards/BackCard'
 
 const Section = ({
   title,
@@ -95,27 +96,27 @@ const dicts = {
 
 export const HeroSection = () => {
   const { language } = useLanguageStore()
+  const [side, setSide] = useState<'front' | 'back'>('front')
 
   return (
-    <section className="mb-16 mt-6 flex items-center justify-between rounded-xl border border-neutral-400 bg-gradient-to-r from-neutral-300 to-neutral-400 px-3 py-4 shadow-md dark:border-neutral-800 dark:from-neutral-800 dark:to-neutral-900">
-      <div className="relative">
-        <h1 className="text-2xl font-extralight uppercase sm:text-4xl md:text-5xl">
-          Thiago Magno
-        </h1>
-        <h2 className="text-sm font-light sm:text-base md:text-lg">
-          {dicts[language].hero.occupationArea}
-        </h2>
+    <div className="[perspective:1000px]">
+      <div
+        className={`transition-all duration-300 [transform-style:preserve-3d] ${side === 'front' ? '[transform:rotateY(0)]' : '[transform:rotateY(180deg)]'}`}
+      >
+        {side === 'front' ? (
+          <div className="inset-0">
+            <FrontCard
+              occupationArea={dicts[language].hero.occupationArea}
+              setSide={() => setSide('back')}
+            />
+          </div>
+        ) : (
+          <div className="inset-0">
+            <BackCard setSide={() => setSide('front')} />
+          </div>
+        )}
       </div>
-      <div className="relative h-16 w-16 sm:h-20 sm:w-20 md:h-24 md:w-24">
-        <Image
-          src="/thiago.jpg"
-          alt="Foto de Thiago magno"
-          layout="fill"
-          objectFit="cover"
-          className="w-full rounded-full object-cover shadow ring-2 ring-neutral-500 dark:ring-neutral-800"
-        />
-      </div>
-    </section>
+    </div>
   )
 }
 
