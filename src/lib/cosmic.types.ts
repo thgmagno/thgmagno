@@ -59,6 +59,7 @@ export type CosmicResponse = {
         'started-at': string
         'ended-at': string
         category: {
+          key: string
           value: string
         }
         'document-url': string
