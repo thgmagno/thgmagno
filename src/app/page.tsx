@@ -1,24 +1,31 @@
+import { fetchData } from '@/actions'
 import {
-  AboutMeSection,
-  InterestsSection,
-  RecentProjectsSection,
-  AboutPortfolioSection,
-  HeroSection,
+  Hero,
+  AboutMe,
+  Interests,
+  AboutPortfolio,
+  RecentProjects,
 } from '@/components/sections'
 import { TooltipComponent } from '@/components/tooltip'
 import { Wrapper } from '@/components/wrapper'
 import { Github, Instagram, Linkedin, Mail } from 'lucide-react'
 
-export default function Home() {
+export default async function Home() {
   const currentYear = new Date().getFullYear()
+  const { home } = await fetchData().then((data) => data.object.metadata)
 
   return (
     <Wrapper>
-      <HeroSection />
-      <AboutMeSection />
-      <InterestsSection />
-      <RecentProjectsSection />
-      <AboutPortfolioSection />
+      <Hero
+        fullname={home.fullname}
+        image-profile={home['image-profile']}
+        occupation-area={home['occupation-area']}
+        social={home.social}
+      />
+      <AboutMe about-me={home['about-me']} />
+      <Interests interests={home.interests} />
+      <AboutPortfolio about-portfolio={home['about-portfolio']} />
+      <RecentProjects />
 
       <footer className="relative my-28">
         <section className="flex justify-center space-x-5 md:justify-end">
