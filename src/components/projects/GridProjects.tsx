@@ -11,6 +11,15 @@ type Props = Pick<CosmicResponse['object']['metadata'], 'projects'>
 export function GridProjects({ projects }: Props) {
   const { language } = useLanguageStore()
 
+  const dict = {
+    portuguese: {
+      label: 'Saiba mais',
+    },
+    english: {
+      label: 'Read more',
+    },
+  }
+
   return (
     <section className="mt-5 grid gap-6 md:grid-cols-2">
       {projects.map((item) => (
@@ -32,9 +41,12 @@ export function GridProjects({ projects }: Props) {
                 </Badge>
               ))}
             </div>
-            <button className="flex items-center gap-1 rounded-md border px-2 py-1 text-sm hover:bg-neutral-700 active:scale-95">
-              Saiba mais
-            </button>
+            <Link
+              href={`/projetos/${item.data.slug}`}
+              className="flex items-center gap-1 rounded-md border px-2 py-1 text-sm hover:bg-neutral-700 active:scale-95"
+            >
+              {dict[language].label}
+            </Link>
           </div>
           <Image
             src={item.image.url}

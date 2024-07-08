@@ -1,3 +1,5 @@
+'use client'
+
 import { FlagBR, FlagUK } from '@/components/flags'
 import { create } from 'zustand'
 
@@ -15,9 +17,7 @@ const initialState = {
 }
 
 const storagedLanguage =
-  typeof window !== 'undefined' && typeof localStorage !== 'undefined'
-    ? localStorage?.getItem('thgmagno-language') || initialState.language
-    : initialState.language
+  localStorage?.getItem('thgmagno-language') || initialState.language
 
 export const useLanguageStore = create<Store>()((set) => ({
   language: storagedLanguage as ValidLanguage,
