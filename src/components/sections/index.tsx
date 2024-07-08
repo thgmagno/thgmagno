@@ -1,10 +1,11 @@
 'use client'
 
-import { ReactNode, useState } from 'react'
+import { ReactNode } from 'react'
 import { useLanguageStore } from '@/lib/store/languageStore'
 import { ProjectRecents } from '../projects/ProjectRecents'
-import { FrontCard } from '../cards/FrontCard'
-import { BackCard } from '../cards/BackCard'
+import Image from 'next/image'
+import { Badge } from '../ui/badge'
+import Link from 'next/link'
 
 const Section = ({
   title,
@@ -96,27 +97,40 @@ const dicts = {
 
 export const HeroSection = () => {
   const { language } = useLanguageStore()
-  const [side, setSide] = useState<'front' | 'back'>('front')
+  const SocialBadge = ({ href, label }: { href: string; label: string }) => (
+    <Badge className="bg-neutral-600 dark:bg-neutral-800 dark:text-neutral-100">
+      <Link href={href}>{label}</Link>
+    </Badge>
+  )
 
   return (
-    <div className="[perspective:1000px]">
-      <div
-        className={`transition-all duration-300 [transform-style:preserve-3d] ${side === 'front' ? '[transform:rotateY(0)]' : '[transform:rotateY(180deg)]'}`}
-      >
-        {side === 'front' ? (
-          <div className="inset-0">
-            <FrontCard
-              occupationArea={dicts[language].hero.occupationArea}
-              setSide={() => setSide('back')}
-            />
+    <section className="mb-16 mt-6 rounded-xl border border-neutral-400 bg-slate-200 px-3 py-4 shadow-md dark:border-neutral-800 dark:bg-neutral-900">
+      <article className="flex items-center justify-between">
+        <div className="">
+          <h1 className="text-2xl font-extralight uppercase sm:text-4xl md:text-5xl">
+            Thiago Magno
+          </h1>
+          <h2 className="top-3 text-sm font-light sm:text-base md:text-lg">
+            {dicts[language].hero.occupationArea}
+          </h2>
+          <div className="mt-3 flex -translate-x-10 scale-75 justify-start gap-2 md:translate-x-0 md:scale-100">
+            <SocialBadge href="#" label="E-mail" />
+            <SocialBadge href="#" label="Github" />
+            <SocialBadge href="#" label="Instagram" />
+            <SocialBadge href="#" label="Linkedin" />
           </div>
-        ) : (
-          <div className="inset-0">
-            <BackCard setSide={() => setSide('front')} />
-          </div>
-        )}
-      </div>
-    </div>
+        </div>
+        <div className="relative h-20 w-20 sm:h-28 sm:w-28 md:h-32 md:w-32">
+          <Image
+            src="/thiago.jpg"
+            alt="Foto de Thiago magno"
+            layout="fill"
+            objectFit="cover"
+            className="w-full rounded-full object-cover shadow ring-2 ring-neutral-500 dark:ring-zinc-600"
+          />
+        </div>
+      </article>
+    </section>
   )
 }
 
