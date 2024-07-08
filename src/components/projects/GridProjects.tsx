@@ -41,13 +41,15 @@ export function GridProjects({ projects }: Props) {
               {item.data.description[language].slice(0, 130).concat('...')}
             </p>
           </div>
-          <div className="relative z-10 mr-3 flex justify-between md:mt-6">
+          <div className="relative z-10 mx-2 flex justify-between md:mt-6">
             <div className="no-scrollbar flex max-w-[60%] gap-1 overflow-x-scroll md:max-w-[70%]">
-              {item.data.technologies.map((tech) => (
-                <Badge className="bg-neutral-700 dark:bg-neutral-900 dark:text-white dark:hover:bg-neutral-950">
-                  <Link href={tech.url}>{tech.title}</Link>
-                </Badge>
-              ))}
+              {item.data.technologies
+                .sort((a, b) => a.title.localeCompare(b.title))
+                .map((tech) => (
+                  <Badge className="bg-neutral-700 dark:bg-neutral-900 dark:text-white dark:hover:bg-neutral-950">
+                    <Link href={tech.url}>{tech.title}</Link>
+                  </Badge>
+                ))}
             </div>
             <Link
               href={`/projetos/${item.data.slug}`}
