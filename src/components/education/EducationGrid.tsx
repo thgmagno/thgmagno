@@ -1,24 +1,12 @@
 import { Award } from 'lucide-react'
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '../ui/tooltip'
+import { Tooltip, TooltipProvider, TooltipTrigger } from '../ui/tooltip'
 import Link from 'next/link'
 import Image from 'next/image'
+import { CosmicResponse } from '@/lib/cosmic.types'
+import { Degree } from './Degree'
+import { TooltipComponent } from './TooltipComponent'
 
-interface Props {
-  education: {
-    id: string
-    instituition: string
-    degree: string
-    duration: number
-    category: string
-    imageUrl: string
-    documentUrl: string
-  }[]
-}
+type Props = Pick<CosmicResponse['object']['metadata'], 'education'>
 
 export function EducationGrid({ education }: Props) {
   if (!education) return null
@@ -27,19 +15,19 @@ export function EducationGrid({ education }: Props) {
     <section className="grid gap-6 sm:grid-cols-2 md:grid-cols-3">
       {education.map((item) => (
         <article
-          key={item.id}
+          key={`${item.degree}-${item['started-at']}`}
           className="relative min-h-24 cursor-default rounded-lg border-l-4 border-slate-600 bg-neutral-100 py-3 pl-2 dark:bg-neutral-800"
         >
           <div className="flex max-w-[70%] items-center text-sm">
             <Image
-              src={item.imageUrl}
+              src={item['instituition-logo'].url}
               alt={`Foto de ${item.instituition}`}
               width={50}
               height={50}
               className="rounded-lg"
             />
             <div className="max-w-[80%] pl-2 text-sm">
-              <p className="truncate font-medium">{item.degree}</p>
+              <Degree degree={item.degree} />
               <p className="truncate">{item.instituition}</p>
               <p className="truncate">{item.duration} h</p>
             </div>
@@ -48,13 +36,11 @@ export function EducationGrid({ education }: Props) {
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger>
-                  <Link href={item.documentUrl}>
+                  <Link href={item['document-url']} target="_blank">
                     <Award size={20} className="text-slate-600" />
                   </Link>
                 </TooltipTrigger>
-                <TooltipContent>
-                  Acessar o certificado de {item.degree}
-                </TooltipContent>
+                <TooltipComponent degree={item.degree} />
               </Tooltip>
             </TooltipProvider>
           </div>

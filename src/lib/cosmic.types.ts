@@ -46,6 +46,21 @@ export type CosmicResponse = {
           }
         }
       }
+      education: {
+        instituition: string
+        'instituition-logo': {
+          url: string
+        }
+        degree: {
+          portuguese: string
+          english: string
+        }
+        duration: number
+        'started-at': string
+        'ended-at': string
+        category: string
+        'document-url': string
+      }[]
     }
   }
 }

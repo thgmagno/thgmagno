@@ -1,36 +1,29 @@
+import { fetchData } from '@/actions'
 import { EducationFilters } from '@/components/education/EducationFilters'
 import { EducationGrid } from '@/components/education/EducationGrid'
 import { Wrapper } from '@/components/wrapper'
-import { nanoid } from 'nanoid'
 
-export default function Formacao({
+export default async function Formacao({
   searchParams,
 }: {
-  searchParams: { categoria: string }
+  searchParams: { categoria: string | null }
 }) {
-  const data = {
-    instituition: 'Senai',
-    degree: 'Ténico em Informática',
-    duration: 1420,
-    category: 'full-stack',
-    imageUrl: '/logo_senai.jpg',
-    documentUrl: '#',
-  }
+  const { education } = await fetchData().then((data) => data.object.metadata)
+  const searchCategory = searchParams.categoria
+  const categories = Array.from(
+    new Set(education.sort().map((item) => item.category)),
+  )
 
-  const dataMock = Array.from({ length: 10 }, () => ({ ...data }))
+  const filteredData = searchCategory
+    ? education.filter((item) => searchCategory.includes(item.category))
+    : education
 
-  const filteredData = searchParams.categoria
-    ? dataMock.filter((item) => searchParams.categoria.includes(item.category))
-    : dataMock
-
-  const dataMockFormatted = filteredData
-    .map((item) => ({ ...item, id: nanoid() }))
-    .sort((a, b) => b.duration - a.duration)
+  const dataSorted = filteredData?.sort((a, b) => b.duration - a.duration)
 
   return (
-    <Wrapper title="Formação">
-      <EducationFilters />
-      <EducationGrid education={dataMockFormatted} />
+    <Wrapper>
+      <EducationFilters categories={categories} />
+      <EducationGrid education={dataSorted} />
     </Wrapper>
   )
 }

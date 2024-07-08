@@ -1,9 +1,11 @@
 'use client'
 
+import { useLanguageStore } from '@/lib/store/languageStore'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
-export function EducationFilters() {
+export function EducationFilters({ categories }: { categories: string[] }) {
+  const { language } = useLanguageStore()
   const searchParams = useSearchParams()
   const pathname = usePathname()
   const { replace } = useRouter()
@@ -37,33 +39,27 @@ export function EducationFilters() {
     replace(`${pathname}?${params.toString()}`)
   }
 
+  const dict = {
+    portuguese: {
+      label: 'Filtros',
+    },
+    english: {
+      label: 'Filters',
+    },
+  }
+
   return (
     <section className="my-3 flex flex-wrap items-center gap-2 text-sm md:justify-center">
-      Filtros:
-      <button
-        onClick={() => handleFilters('frontend')}
-        className={`px-2 py-1 ${selectedCategories.includes('frontend') ? 'rounded-full bg-neutral-600 text-neutral-100' : ''}`}
-      >
-        Front-end
-      </button>
-      <button
-        onClick={() => handleFilters('backend')}
-        className={`px-2 py-1 ${selectedCategories.includes('backend') ? 'rounded-full bg-neutral-600 text-neutral-100' : ''}`}
-      >
-        Back-end
-      </button>
-      <button
-        onClick={() => handleFilters('full-stack')}
-        className={`px-2 py-1 ${selectedCategories.includes('full-stack') ? 'rounded-full bg-neutral-600 text-neutral-100' : ''}`}
-      >
-        Full-stack
-      </button>
-      <button
-        onClick={() => handleFilters('ferramentas')}
-        className={`px-2 py-1 ${selectedCategories.includes('ferramentas') ? 'rounded-full bg-neutral-600 text-neutral-100' : ''}`}
-      >
-        Ferramentas
-      </button>
+      {dict[language].label}:
+      {categories.map((item) => (
+        <button
+          key={item}
+          onClick={() => handleFilters(item)}
+          className={`px-2 py-1 ${selectedCategories.includes(item) ? 'rounded-full bg-neutral-600 text-neutral-100' : ''}`}
+        >
+          {item}
+        </button>
+      ))}
     </section>
   )
 }
