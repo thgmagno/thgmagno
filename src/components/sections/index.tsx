@@ -98,7 +98,7 @@ const dicts = {
 export const HeroSection = () => {
   const { language } = useLanguageStore()
   const SocialBadge = ({ href, label }: { href: string; label: string }) => (
-    <Badge className="bg-neutral-600 dark:bg-neutral-800 dark:text-neutral-100">
+    <Badge className="bg-neutral-600 dark:bg-neutral-800 dark:text-neutral-100 dark:hover:bg-neutral-900">
       <Link href={href}>{label}</Link>
     </Badge>
   )
@@ -114,10 +114,16 @@ export const HeroSection = () => {
             {dicts[language].hero.occupationArea}
           </h2>
           <div className="mt-3 flex origin-left scale-75 transform gap-2 md:scale-100">
-            <SocialBadge href="#" label="Email" />
-            <SocialBadge href="#" label="Github" />
-            <SocialBadge href="#" label="Instagram" />
-            <SocialBadge href="#" label="Linkedin" />
+            <SocialBadge href="mailto:thgmgn@gmail.com" label="Email" />
+            <SocialBadge
+              href="https://www.linkedin.com/in/thgmagno"
+              label="Linkedin"
+            />
+            <SocialBadge
+              href="https://www.instagram.com/thgmagno/"
+              label="Instagram"
+            />
+            <SocialBadge href="https://github.com/thgmagno" label="Github" />
           </div>
         </div>
         <div className="relative h-20 w-20 sm:h-28 sm:w-28 md:h-32 md:w-32">
