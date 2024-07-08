@@ -15,7 +15,7 @@ export function EducationFilters({ education }: Props) {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([])
 
   const categoryEducation = education.map((item) => item.category.value)
-  const categoryFilters = Array.from(new Set(categoryEducation))
+  const categoryFilters = Array.from(new Set(categoryEducation)).sort()
 
   useEffect(() => {
     const searchString = searchParams.get('categoria') || ''
