@@ -14,9 +14,8 @@ export function EducationFilters({ education }: Props) {
   const { replace } = useRouter()
   const [selectedCategories, setSelectedCategories] = useState<string[]>([])
 
-  const categories: string[] = Array.from(
-    new Set(education.map((item) => item.category.value).sort()),
-  )
+  const categoryEducation = education.map((item) => item.category.value)
+  const categoryFilters = Array.from(new Set(categoryEducation))
 
   useEffect(() => {
     const searchString = searchParams.get('categoria') || ''
@@ -70,7 +69,7 @@ export function EducationFilters({ education }: Props) {
   return (
     <section className="my-3 flex flex-wrap items-center gap-2 text-sm md:justify-center">
       {dict[language].label}:
-      {categories.map((item) => (
+      {categoryFilters.map((item) => (
         <button
           key={item}
           onClick={() => handleFilters(item)}

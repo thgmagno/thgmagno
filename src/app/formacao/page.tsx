@@ -15,7 +15,7 @@ export default async function Formacao({
     ? education.filter((item) => searchCategory.includes(item.category.value))
     : education
 
-  const dataSorted = filteredData?.sort((a, b) => b.duration - a.duration)
+  const dataSorted = filteredData.sort((a, b) => b.duration - a.duration)
 
   return (
     <Wrapper>
