@@ -10,12 +10,12 @@ export default async function Formacao({
 }) {
   const { education } = await fetchData().then((data) => data.object.metadata)
   const searchCategory = searchParams.categoria
-  const categories = Array.from(
-    new Set(education.sort().map((item) => item.category)),
+  const categories: string[] = Array.from(
+    new Set(education.sort().map((item) => item.category.value)),
   )
 
   const filteredData = searchCategory
-    ? education.filter((item) => searchCategory.includes(item.category))
+    ? education.filter((item) => searchCategory.includes(item.category.value))
     : education
 
   const dataSorted = filteredData?.sort((a, b) => b.duration - a.duration)

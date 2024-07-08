@@ -39,9 +39,21 @@ export function EducationFilters({ categories }: { categories: string[] }) {
     replace(`${pathname}?${params.toString()}`)
   }
 
-  const dict = {
+  const dict: {
+    portuguese: {
+      label: string
+      categories: Record<string, string>
+    }
+    english: {
+      label: string
+    }
+  } = {
     portuguese: {
       label: 'Filtros',
+      categories: {
+        Fundamentals: 'Fundamentos',
+        Tools: 'Ferramentas',
+      },
     },
     english: {
       label: 'Filters',
@@ -57,7 +69,9 @@ export function EducationFilters({ categories }: { categories: string[] }) {
           onClick={() => handleFilters(item)}
           className={`px-2 py-1 ${selectedCategories.includes(item) ? 'rounded-full bg-neutral-600 text-neutral-100' : ''}`}
         >
-          {item}
+          {language === 'portuguese'
+            ? dict.portuguese.categories[item] ?? item
+            : item}
         </button>
       ))}
     </section>

@@ -16,9 +16,9 @@ export function EducationGrid({ education }: Props) {
       {education.map((item, index) => (
         <article
           key={index}
-          className="relative min-h-24 cursor-default rounded-lg border-l-4 border-slate-600 bg-neutral-100 py-3 pl-2 dark:bg-neutral-800"
+          className="relative flex min-h-24 max-w-[calc(100vw-40px)] cursor-default rounded-lg border-l-4 border-slate-600 bg-neutral-100 py-3 pl-2 dark:bg-neutral-800"
         >
-          <div className="flex max-w-[70%] items-center text-sm">
+          <div className="flex max-w-[85%] items-center text-sm">
             <Image
               src={item['instituition-logo'].url}
               alt={`Foto de ${item.instituition}`}
@@ -26,7 +26,7 @@ export function EducationGrid({ education }: Props) {
               height={50}
               className="rounded-lg"
             />
-            <div className="max-w-[80%] pl-2 text-sm">
+            <div className="truncate pl-2 text-sm">
               <Degree degree={item.degree} />
               <p className="truncate">{item.instituition}</p>
               <p className="truncate">{item.duration} h</p>
