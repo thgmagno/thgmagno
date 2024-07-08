@@ -1,6 +1,6 @@
 import { GridProjects } from '@/components/projects/GridProjects'
 import { Wrapper } from '@/components/wrapper'
-import { FeaturesType, ProjectType, TechnologiesType } from '@/lib/types'
+import { ProjectType, TechnologiesType } from '@/lib/types'
 
 export default function Projetos() {
   const data: ProjectType = {
@@ -30,7 +30,7 @@ export default function Projetos() {
   const techMock = Array.from({ length: 10 }, () => ({ ...technologies }))
 
   return (
-    <Wrapper title="Projetos">
+    <Wrapper>
       <GridProjects projects={dataMock} technologies={techMock} />
     </Wrapper>
   )
