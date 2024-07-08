@@ -13,9 +13,9 @@ export function EducationGrid({ education }: Props) {
 
   return (
     <section className="grid gap-6 sm:grid-cols-2 md:grid-cols-3">
-      {education.map((item) => (
+      {education.map((item, index) => (
         <article
-          key={`${item.degree}-${item['started-at']}`}
+          key={index}
           className="relative min-h-24 cursor-default rounded-lg border-l-4 border-slate-600 bg-neutral-100 py-3 pl-2 dark:bg-neutral-800"
         >
           <div className="flex max-w-[70%] items-center text-sm">
