@@ -106,15 +106,15 @@ export const HeroSection = () => {
   return (
     <section className="mb-16 mt-6 rounded-xl border border-neutral-400 bg-slate-200 px-3 py-4 shadow-md dark:border-neutral-800 dark:bg-neutral-900">
       <article className="flex items-center justify-between">
-        <div className="">
+        <div className="max-w-[70%]">
           <h1 className="text-2xl font-extralight uppercase sm:text-4xl md:text-5xl">
             Thiago Magno
           </h1>
-          <h2 className="top-3 text-sm font-light sm:text-base md:text-lg">
+          <h2 className="mt-2 text-xs font-light sm:text-base md:text-lg">
             {dicts[language].hero.occupationArea}
           </h2>
-          <div className="mt-3 flex -translate-x-10 scale-75 justify-start gap-2 md:translate-x-0 md:scale-100">
-            <SocialBadge href="#" label="E-mail" />
+          <div className="mt-3 flex origin-left scale-75 transform gap-2 md:scale-100">
+            <SocialBadge href="#" label="Email" />
             <SocialBadge href="#" label="Github" />
             <SocialBadge href="#" label="Instagram" />
             <SocialBadge href="#" label="Linkedin" />
