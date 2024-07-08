@@ -1,15 +1,22 @@
 'use client'
 
+import { CosmicResponse } from '@/lib/cosmic.types'
 import { useLanguageStore } from '@/lib/store/languageStore'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
-export function EducationFilters({ categories }: { categories: string[] }) {
+type Props = Pick<CosmicResponse['object']['metadata'], 'education'>
+
+export function EducationFilters({ education }: Props) {
   const { language } = useLanguageStore()
   const searchParams = useSearchParams()
   const pathname = usePathname()
   const { replace } = useRouter()
   const [selectedCategories, setSelectedCategories] = useState<string[]>([])
+
+  const categories: string[] = Array.from(
+    new Set(education.map((item) => item.category.value).sort()),
+  )
 
   useEffect(() => {
     const searchString = searchParams.get('categoria') || ''

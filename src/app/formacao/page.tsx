@@ -10,9 +10,6 @@ export default async function Formacao({
 }) {
   const { education } = await fetchData().then((data) => data.object.metadata)
   const searchCategory = searchParams.categoria
-  const categories: string[] = Array.from(
-    new Set(education.map((item) => item.category.value).sort()),
-  )
 
   const filteredData = searchCategory
     ? education.filter((item) => searchCategory.includes(item.category.value))
@@ -22,7 +19,7 @@ export default async function Formacao({
 
   return (
     <Wrapper>
-      <EducationFilters categories={categories} />
+      <EducationFilters education={education} />
       <EducationGrid education={dataSorted} />
     </Wrapper>
   )
