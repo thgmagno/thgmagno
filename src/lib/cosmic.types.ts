@@ -58,7 +58,9 @@ export type CosmicResponse = {
         duration: number
         'started-at': string
         'ended-at': string
-        category: string
+        category: {
+          value: string
+        }
         'document-url': string
       }[]
     }
