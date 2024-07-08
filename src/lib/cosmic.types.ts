@@ -64,6 +64,38 @@ export type CosmicResponse = {
         }
         'document-url': string
       }[]
+      projects: {
+        data: {
+          title: string
+          slug: string
+          description: {
+            portuguese: string
+            english: string
+          }
+          objective: {
+            portuguese: string
+            english: string
+          }
+          url: string
+          features: {
+            portuguese: {
+              title: string
+              description: string
+            }[]
+            english: {
+              title: string
+              description: string
+            }[]
+          }[]
+          technologies: {
+            title: string
+            url: string
+          }[]
+        }
+        image: {
+          url: string
+        }
+      }[]
     }
   }
 }
