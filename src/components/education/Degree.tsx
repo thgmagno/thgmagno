@@ -11,5 +11,9 @@ type Props = {
 
 export function Degree({ degree }: Props) {
   const { language } = useLanguageStore()
-  return <p className="truncate font-medium">{degree[language]}</p>
+  return (
+    <p title={degree[language]} className="truncate font-medium">
+      {degree[language]}
+    </p>
+  )
 }

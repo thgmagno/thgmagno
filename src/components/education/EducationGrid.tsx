@@ -28,7 +28,9 @@ export function EducationGrid({ education }: Props) {
             />
             <div className="truncate pl-2 text-sm">
               <Degree degree={item.degree} />
-              <p className="truncate">{item.instituition}</p>
+              <p title={item.instituition} className="truncate">
+                {item.instituition}
+              </p>
               <p className="truncate">{item.duration} h</p>
             </div>
           </div>
