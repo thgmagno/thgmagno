@@ -25,15 +25,23 @@ export function GridProjects({ projects }: Props) {
       {projects.map((item) => (
         <article
           key={item.data.title}
-          className="relative cursor-default overflow-hidden rounded-lg border-l-4 border-slate-600 bg-neutral-800 py-3 pl-2 text-white"
+          className="cursor-default overflow-hidden rounded-lg border-l-4 border-slate-600 bg-neutral-800 pb-3 text-white"
         >
-          <div className="relative z-10 max-h-20 max-w-[70%]">
+          <div className="relative min-h-32 w-full">
+            <Image
+              src={item.image.url}
+              fill
+              alt={`Image of ${item.data.title}`}
+              className="absolute left-0 top-0 object-cover opacity-20 dark:opacity-80"
+            />
+          </div>
+          <div className="relative z-10 mb-8 mt-5 max-h-20 pl-2">
             <b>{item.data.title}</b>
             <p className="text-sm font-light">
-              {item.data.description[language].slice(0, 80).concat('...')}
+              {item.data.description[language].slice(0, 130).concat('...')}
             </p>
           </div>
-          <div className="relative z-10 mr-3 mt-10 flex justify-between md:mt-6">
+          <div className="relative z-10 mr-3 flex justify-between md:mt-6">
             <div className="no-scrollbar flex max-w-[60%] gap-1 overflow-x-scroll md:max-w-[70%]">
               {item.data.technologies.map((tech) => (
                 <Badge className="bg-neutral-700 dark:bg-neutral-900 dark:text-white dark:hover:bg-neutral-950">
@@ -48,12 +56,6 @@ export function GridProjects({ projects }: Props) {
               {dict[language].label}
             </Link>
           </div>
-          <Image
-            src={item.image.url}
-            fill
-            alt={`Image of ${item.data.title}`}
-            className="absolute left-0 top-0 object-cover opacity-20 dark:opacity-10"
-          />
         </article>
       ))}
     </section>
