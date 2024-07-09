@@ -71,11 +71,11 @@ function ManuNavigation() {
     navigation: {
       portuguese: {
         label: 'Navegar para',
-        options: ['Início', 'Formação', 'Projetos', 'Blog'],
+        options: ['Início', 'Formação', 'Projetos'],
       },
       english: {
         label: 'Go to',
-        options: ['Home', 'Education', 'Projects', 'Blog'],
+        options: ['Home', 'Education', 'Projects'],
       },
     },
   }
@@ -109,7 +109,6 @@ function ManuNavigation() {
           href="/projetos"
           label={dicts.navigation[language].options[2]}
         />
-        <MenuItem href="/blog" label={dicts.navigation[language].options[3]} />
       </DropdownMenuGroup>
     </>
   )
