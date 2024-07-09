@@ -24,8 +24,8 @@ export function MenuComponent() {
 
   const dicts = {
     label: {
-      portuguese: ['Início', 'Formação', 'Projetos', 'Blog'],
-      english: ['Home', 'Education', 'Projects', 'Blog'],
+      portuguese: ['Início', 'Formação', 'Projetos'],
+      english: ['Home', 'Education', 'Projects'],
     },
   }
 
@@ -35,7 +35,6 @@ export function MenuComponent() {
         <MenuItem href="/" label={dicts.label[language][0]} />
         <MenuItem href="/formacao" label={dicts.label[language][1]} />
         <MenuItem href="/projetos" label={dicts.label[language][2]} />
-        <MenuItem href="/blog" label={dicts.label[language][3]} />
       </ul>
       <div className="flex items-center gap-5">
         <ToggleTheme />
