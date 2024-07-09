@@ -1,10 +1,11 @@
 'use client'
 
-import Image from 'next/image'
 import Link from 'next/link'
 import { Badge } from '../ui/badge'
 import { CosmicResponse } from '@/lib/cosmic.types'
 import { useLanguageStore } from '@/lib/store/languageStore'
+import { ImageProject } from './ImageProject'
+import { StatusProject } from './StatusProject'
 
 type Props = Pick<CosmicResponse['object']['metadata'], 'projects'>
 
@@ -25,19 +26,15 @@ export function GridProjects({ projects }: Props) {
       {projects.map((item) => (
         <article
           key={item.data.title}
-          className="cursor-default overflow-hidden rounded-lg border-l-4 border-slate-600 bg-neutral-800 pb-3 text-white"
+          className="cursor-default overflow-hidden rounded-lg border-l-4 border-slate-600 bg-neutral-100 pb-3 shadow-md dark:bg-neutral-800"
         >
-          <div className="relative min-h-32 w-full">
-            <Image
-              src={item.image.url}
-              fill
-              alt={`Image of ${item.data.title}`}
-              className="absolute left-0 top-0 object-cover opacity-20 dark:opacity-80"
-            />
-          </div>
+          <ImageProject url={item.image.url} title={item.data.title} />
           <div className="relative z-10 mb-8 mt-5 max-h-20 pl-2">
-            <b>{item.data.title}</b>
-            <p className="text-sm font-light">
+            <div className="mb-2 flex justify-between">
+              <b>{item.data.title}</b>
+              <StatusProject done={item.done} />
+            </div>
+            <p className="pr-3 text-justify text-sm font-light">
               {item.data.description[language].slice(0, 130).concat('...')}
             </p>
           </div>
@@ -53,7 +50,7 @@ export function GridProjects({ projects }: Props) {
             </div>
             <Link
               href={`/projetos/${item.data.slug}`}
-              className="flex items-center gap-1 rounded-md border px-2 py-1 text-sm hover:bg-neutral-700 active:scale-95"
+              className="flex items-center gap-1 rounded-md border bg-neutral-600 px-2 py-1 text-sm text-neutral-100 hover:bg-neutral-700 active:scale-95 dark:hover:bg-neutral-700"
             >
               {dict[language].label}
             </Link>
