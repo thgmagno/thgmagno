@@ -95,6 +95,8 @@ export type CosmicResponse = {
         image: {
           url: string
         }
+        'created-at': string
+        done: boolean
       }[]
     }
   }
