@@ -1,4 +1,4 @@
-import { fetchData } from '@/actions'
+import { fetchData, getRecentProjects } from '@/actions'
 import {
   Hero,
   AboutMe,
@@ -11,8 +11,9 @@ import { Wrapper } from '@/components/wrapper'
 import { Github, Instagram, Linkedin, Mail } from 'lucide-react'
 
 export default async function Home() {
-  const currentYear = new Date().getFullYear()
   const { home } = await fetchData().then((data) => data.object.metadata)
+  const currentYear = new Date().getFullYear()
+  const recentProjects = await getRecentProjects()
 
   return (
     <Wrapper>
@@ -25,7 +26,7 @@ export default async function Home() {
       <AboutMe about-me={home['about-me']} />
       <Interests interests={home.interests} />
       <AboutPortfolio about-portfolio={home['about-portfolio']} />
-      <RecentProjects />
+      <RecentProjects projects={recentProjects} />
 
       <footer className="relative my-28">
         <section className="flex justify-center space-x-5 md:justify-end">
