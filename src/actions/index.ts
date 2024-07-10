@@ -26,3 +26,19 @@ export async function getProjectBySlug(
 
   return project
 }
+
+export async function getRecentProjects() {
+  const projects = await fetchData().then(
+    (data) => data.object.metadata.projects,
+  )
+
+  const recentProjects = projects
+    .sort(
+      (a, b) =>
+        new Date(b['created-at']).getTime() -
+        new Date(a['created-at']).getTime(),
+    )
+    .slice(0, 3)
+
+  return recentProjects
+}
