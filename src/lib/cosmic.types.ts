@@ -86,7 +86,7 @@ export type CosmicResponse = {
               title: string
               description: string
             }[]
-          }[]
+          }
           technologies: {
             title: string
             url: string
