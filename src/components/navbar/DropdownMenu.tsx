@@ -170,6 +170,7 @@ function SelectLanguage() {
       <DropdownMenuGroup className="flex flex-col gap-1 text-sm">
         {dicts.language?.map((option) => (
           <button
+            key={option.value}
             onClick={() => handleChangeLanguage(option.value)}
             className={`flex items-center justify-end gap-2 ${language === option.value ? '' : 'opacity-30'}`}
           >

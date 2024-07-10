@@ -12,12 +12,12 @@ export function StatusProject({ done }: { done: boolean }) {
   return (
     <>
       {done ? (
-        <span className="mr-3 flex items-center gap-2">
+        <span className="mr-3 flex min-w-fit items-center gap-2 text-xs sm:text-sm">
           <div className="h-2 w-2 animate-pulse rounded-full bg-emerald-500" />
           {dict[language][0]}
         </span>
       ) : (
-        <span className="mr-3 flex items-center gap-2">
+        <span className="mr-3 flex min-w-fit items-center gap-2 text-xs sm:text-sm">
           <div className="h-2 w-2 animate-pulse rounded-full bg-amber-300" />
           {dict[language][1]}
         </span>
