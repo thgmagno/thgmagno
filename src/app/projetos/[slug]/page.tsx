@@ -1,4 +1,5 @@
 import { getProjectBySlug } from '@/actions'
+import { ViewProject } from '@/components/projects/ViewProject'
 import { Wrapper } from '@/components/wrapper'
 
 export default async function ProjetosSlug({
@@ -10,8 +11,7 @@ export default async function ProjetosSlug({
 
   return (
     <Wrapper>
-      <h1>{params.slug}</h1>
-      <pre>{JSON.stringify(project, null, 2)}</pre>
+      <ViewProject project={project} />
     </Wrapper>
   )
 }
