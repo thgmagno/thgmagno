@@ -4,17 +4,20 @@ import Link from 'next/link'
 import { Section } from '.'
 import { useLanguageStore } from '@/lib/store/languageStore'
 import { CosmicResponse } from '@/lib/cosmic.types'
+import Image from 'next/image'
 
 type Props = Pick<CosmicResponse['object']['metadata'], 'projects'>
 
 const dicts = {
   portuguese: {
     title: 'Projetos recentes',
-    labelButton: 'Ver todos',
+    viewProjects: 'Ver todos',
+    readMore: 'Saiba mais',
   },
   english: {
     title: 'Recent projects',
-    labelButton: 'See all',
+    viewProjects: 'See all',
+    readMore: 'Read more',
   },
 }
 
@@ -27,9 +30,24 @@ export function RecentProjects({ projects }: Props) {
         {projects.map((item) => (
           <div
             key={item.data.slug}
-            className="h-56 rounded-lg border p-2 shadow"
+            className="relative z-0 h-56 overflow-hidden rounded-lg border shadow"
           >
-            <h1>{item.data?.title}</h1>
+            <Image
+              src={item.image.url}
+              alt=""
+              layout="fill"
+              objectFit="cover"
+              className="w-full object-cover opacity-85 dark:opacity-35"
+            />
+            <div className="relative z-10 flex w-full justify-between border-b bg-neutral-600/80 p-2 text-white shadow dark:border-neutral-900/30 dark:bg-neutral-900/80">
+              <h1>{item.data?.title}</h1>
+              <Link
+                href={`/projetos/${item.data.slug}`}
+                className="flex items-center rounded border px-2 text-xs dark:bg-neutral-800"
+              >
+                {dicts[language].readMore}
+              </Link>
+            </div>
           </div>
         ))}
       </section>
@@ -38,7 +56,7 @@ export function RecentProjects({ projects }: Props) {
           href="/projetos"
           className="rounded-full bg-neutral-500 px-4 py-1 text-neutral-100 hover:bg-neutral-600"
         >
-          {dicts[language].labelButton}
+          {dicts[language].viewProjects}
         </Link>
       </div>
     </Section>
