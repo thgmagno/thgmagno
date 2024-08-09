@@ -2,11 +2,11 @@
 
 import { CosmicResponse } from '@/lib/cosmic.types'
 import { useLanguageStore } from '@/lib/store/languageStore'
-import Image from 'next/image'
 import { Badge } from '../ui/badge'
 import Link from 'next/link'
 import { StatusProject } from './StatusProject'
-import { ArrowUpRight } from 'lucide-react'
+import { LinkToProject } from './LinkToProject'
+import { VideoProject } from './VideoProject'
 
 type Props = {
   project: Partial<CosmicResponse['object']['metadata']['projects'][0]>
@@ -45,10 +45,6 @@ export function ViewProject({ project }: Props) {
       portuguese: 'Tecnologias',
       english: 'Technologies',
     },
-    website: {
-      portuguese: 'Visitar o site',
-      english: 'Visit the website',
-    },
   }
 
   return (
@@ -67,25 +63,16 @@ export function ViewProject({ project }: Props) {
         {project.data?.description[language] as string}
       </p>
 
-      <div className="relative mx-auto my-8 h-[400px] w-full opacity-90 sm:max-w-[90%] md:max-w-[60%]">
-        <Image
-          src={project.image?.url as string}
-          alt={`Image of ${project.data?.title}`}
-          layout="fill"
-          objectFit="cover"
-          className="w-full rounded-lg object-cover shadow ring-2 ring-neutral-500 dark:ring-zinc-600"
+      {project.data?.url.includes('https://www.youtube.com/') ? (
+        <VideoProject videoUrl={project.data.url} />
+      ) : (
+        <LinkToProject
+          url={String(project.data?.url)}
+          title={String(project.data?.title)}
+          imageUrl={String(project.image?.url)}
+          language={language}
         />
-        <div className="absolute -bottom-8 left-0 right-0 flex items-center justify-center">
-          <div className="mr-3 flex-1 border-b border-neutral-500" />
-          <Link
-            target="_blank"
-            href={project.data?.url as string}
-            className="flex items-center justify-end gap-2.5 text-sm hover:underline active:scale-95"
-          >
-            {dicts.website[language]} <ArrowUpRight size={16} />
-          </Link>
-        </div>
-      </div>
+      )}
 
       <div className="mt-5 flex flex-col space-y-5">
         <div className="flex flex-col space-y-3">
