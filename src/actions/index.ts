@@ -42,3 +42,7 @@ export async function getRecentProjects() {
 
   return recentProjects
 }
+
+export async function getSecret() {
+  return process.env.JWT_SECRET
+}

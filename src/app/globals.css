@@ -7,6 +7,42 @@
     @apply bg-slate-300 leading-relaxed dark:bg-[#0F0F0F]
     text-neutral-700 dark:text-neutral-200 overflow-y-scroll
   }
+
+  form input[type='checkbox'] {
+    @apply h-5 w-5 cursor-pointer
+  }
+
+  form input[type='date'] {
+    @apply cursor-pointer
+  }
+
+  form button[type='submit'] {
+    @apply dark:bg-neutral-950 bg-slate-200 p-2 rounded-md
+  }
+
+  form input, textarea {
+    @apply p-2 border-none outline-none rounded-md bg-slate-400/40 dark:bg-neutral-800
+  }
+
+  .btn-add {
+    @apply rounded-md border dark:border-neutral-800 dark:bg-neutral-600/30 bg-slate-400/30 p-2
+  }
+
+  .btn-remove {
+    @apply rounded-md border dark:border-neutral-800 dark:bg-red-600/30 bg-red-400/30 p-2
+  }
+
+  .container-horizontal {
+    @apply flex items-center gap-5
+  }
+
+  .container-vertical {
+    @apply flex flex-col space-y-2 flex-1
+  }
+
+  .highlight {
+    @apply dark:bg-neutral-950/80 rounded-md border shadow-md dark:shadow-none bg-slate-200 dark:border-neutral-800 px-2 py-4
+  }
 }
 
 @layer utilities {
