@@ -1,9 +1,9 @@
-import { getFormations } from '@/server/actions'
-import { Formation } from '@/server/db'
+import { Formation } from '@/lib/types'
+import { findManyFormations } from '@/server/actions'
 import Link from 'next/link'
 
 export default async function Formacoes() {
-  const formations = await getFormations()
+  const formations = await findManyFormations()
 
   return (
     <section className="space-y-6">

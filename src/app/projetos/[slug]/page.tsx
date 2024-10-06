@@ -1,11 +1,11 @@
-import { getProjectBySlug } from '@/server/actions'
+import { findOneProject } from '@/server/actions'
 
 export default async function SlugProjeto({
   params,
 }: {
   params: { slug: string }
 }) {
-  const project = await getProjectBySlug(params.slug)
+  const project = await findOneProject(params.slug)
 
   return (
     <section className="space-y-6">
