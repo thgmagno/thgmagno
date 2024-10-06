@@ -1,8 +1,4 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-  images: {
-    remotePatterns: [{ hostname: 'cdn.cosmicjs.com' }],
-  },
-}
+const nextConfig = {};
 
-export default nextConfig
+export default nextConfig;

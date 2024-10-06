@@ -1,37 +1,34 @@
-import { fetchData } from '@/actions'
-import { EducationFilters } from '@/components/education/EducationFilters'
-import { EducationGrid } from '@/components/education/EducationGrid'
-import { Wrapper } from '@/components/wrapper'
-import { ArrowUpRight } from 'lucide-react'
+import { getFormations } from '@/server/actions'
+import { Formation } from '@/server/db'
 import Link from 'next/link'
 
-export default async function Formacao({
-  searchParams,
-}: {
-  searchParams: { categoria: string | null }
-}) {
-  const { education } = await fetchData().then((data) => data.object.metadata)
-  const searchCategory = searchParams.categoria
-
-  const filteredData = searchCategory
-    ? education.filter((item) => searchCategory.includes(item.category.value))
-    : education
-
-  const dataSorted = filteredData.sort((a, b) => b.duration - a.duration)
+export default async function Formacoes() {
+  const formations = await getFormations()
 
   return (
-    <Wrapper>
-      <div className="flex items-center justify-between">
-        <EducationFilters education={education} />
-        <Link
-          target="_blank"
-          href="https://me-green-tau.vercel.app/"
-          className="flex items-center gap-1 border-neutral-600 text-sm hover:border-b"
-        >
-          Acessar CV <ArrowUpRight size={20} />
-        </Link>
+    <section className="space-y-6">
+      <h1 className="mb-8 text-2xl font-medium tracking-tight">Formação</h1>
+      {formations.map((formation) => (
+        <Formacao key={formation.id} formation={formation} />
+      ))}
+    </section>
+  )
+}
+
+function Formacao({ formation }: { formation: Formation }) {
+  return (
+    <Link
+      href="/blog/getting-started"
+      className="mb-4 flex flex-col space-y-1 transition-opacity duration-200 hover:opacity-80"
+    >
+      <div className="flex w-full flex-col items-start justify-between space-y-1 sm:flex-row sm:items-center sm:space-x-2 sm:space-y-0">
+        <p className="tracking-tight text-black dark:text-white">
+          {formation.title}
+        </p>
+        <p className="text-sm tabular-nums text-neutral-600 dark:text-neutral-400">
+          {formation.duration_time}
+        </p>
       </div>
-      <EducationGrid education={dataSorted} />
-    </Wrapper>
+    </Link>
   )
 }
