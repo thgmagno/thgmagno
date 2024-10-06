@@ -1,14 +1,20 @@
 import { SortSelector } from '@/components/common/SortSelector'
-import { getProjects } from '@/server/actions'
-import { Project } from '@/server/db'
+import { Project } from '@/lib/types'
+import { findManyProjects } from '@/server/actions'
 import Link from 'next/link'
 
 export default async function Projetos({
   searchParams,
 }: {
-  searchParams: { ordenacao?: string }
+  searchParams: { ordenacao?: string; pagina?: string; limite?: string }
 }) {
-  const projects = await getProjects(!!searchParams.ordenacao)
+  const pagina = Number(searchParams.pagina) || 1
+  const limite = Number(searchParams.limite) || 10
+  const projetos = await findManyProjects(
+    pagina,
+    limite,
+    !!searchParams.ordenacao,
+  )
 
   return (
     <section className="space-y-6">
@@ -16,7 +22,7 @@ export default async function Projetos({
         <h1 className="mb-8 text-2xl font-medium tracking-tight">Projetos</h1>
         <SortSelector ordenacao={searchParams.ordenacao} />
       </div>
-      {projects.map((project) => (
+      {projetos.map((project) => (
         <Projeto key={project.id} project={project} />
       ))}
     </section>
