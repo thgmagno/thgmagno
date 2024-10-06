@@ -1,8 +1,6 @@
-import { getProjectBySlug } from '@/actions'
-import { ViewProject } from '@/components/projects/ViewProject'
-import { Wrapper } from '@/components/wrapper'
+import { getProjectBySlug } from '@/server/actions'
 
-export default async function ProjetosSlug({
+export default async function SlugProjeto({
   params,
 }: {
   params: { slug: string }
@@ -10,8 +8,10 @@ export default async function ProjetosSlug({
   const project = await getProjectBySlug(params.slug)
 
   return (
-    <Wrapper>
-      <ViewProject project={project} />
-    </Wrapper>
+    <section className="space-y-6">
+      <h1 className="mb-8 text-2xl font-medium tracking-tight">
+        {project.title}
+      </h1>
+    </section>
   )
 }

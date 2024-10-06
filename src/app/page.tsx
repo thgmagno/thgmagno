@@ -1,60 +1,31 @@
-import { fetchData, getRecentProjects } from '@/actions'
-import {
-  Hero,
-  AboutMe,
-  Interests,
-  AboutPortfolio,
-  RecentProjects,
-} from '@/components/sections'
-import { TooltipComponent } from '@/components/tooltip'
-import { Wrapper } from '@/components/wrapper'
-import { Github, Instagram, Linkedin, Mail } from 'lucide-react'
+import Image from 'next/image'
 
-export default async function Home() {
-  const { home } = await fetchData().then((data) => data.object.metadata)
-  const currentYear = new Date().getFullYear()
-  const recentProjects = await getRecentProjects()
-
+export default function Home() {
   return (
-    <Wrapper>
-      <Hero
-        fullname={home.fullname}
-        image-profile={home['image-profile']}
-        occupation-area={home['occupation-area']}
-        social={home.social}
+    <section>
+      <h1 className="mb-8 text-2xl font-medium tracking-tight">
+        Desenvolvedor web full-stack
+      </h1>
+      <Image
+        src="/toggle.svg"
+        height={160}
+        width={160}
+        alt="Foto de Thiago Magno"
+        className="mx-auto mb-10 mt-0 block rounded-full bg-gray-100 grayscale hover:grayscale-0 sm:float-right sm:mb-5 sm:ml-5 lg:mb-5 lg:mt-5"
       />
-      <AboutMe about-me={home['about-me']} />
-      <Interests interests={home.interests} />
-      <AboutPortfolio about-portfolio={home['about-portfolio']} />
-      <RecentProjects projects={recentProjects} />
-
-      <footer className="relative my-28">
-        <section className="flex justify-center space-x-5 md:justify-end">
-          <TooltipComponent
-            href="mailto:thgmgn@gmail.com"
-            Icon={Mail}
-            label="E-mail"
-          />
-          <TooltipComponent
-            href="https://www.linkedin.com/in/thgmagno"
-            Icon={Linkedin}
-            label="Linkedin"
-          />
-          <TooltipComponent
-            href="https://www.instagram.com/thgmagno/"
-            Icon={Instagram}
-            label="Instagram"
-          />
-          <TooltipComponent
-            href="https://github.com/thgmagno"
-            Icon={Github}
-            label="Github"
-          />
-        </section>
-        <span className="absolute -bottom-36 flex w-full items-center justify-center text-center">
-          © {currentYear} Thiago Magno dos Santos CNPJ: 53.274.431/0001-02
-        </span>
-      </footer>
-    </Wrapper>
+      <p>
+        Sempre fui ligado em tecnologia, e a minha jornada começou em 2017,
+        quando realizei um curso técnico profissionalizante.{' '}
+      </p>
+      <p>
+        Desde então, venho me dedicando à programação, buscando aplicar as
+        melhores práticas do mercado e mantendo a mente aberta para novas ideias
+        e tecnologias.
+      </p>
+      <p>
+        Eu acredito que a tecnologia pode transformar vidas e negócios, e o meu
+        objetivo é combinar criatividade e tecnologia.
+      </p>
+    </section>
   )
 }
