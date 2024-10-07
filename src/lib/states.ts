@@ -7,6 +7,7 @@ export interface LoginFormState {
 }
 
 export interface CategoryFormState {
+  success?: boolean
   errors: {
     title?: string[]
     _form?: string
@@ -14,6 +15,7 @@ export interface CategoryFormState {
 }
 
 export interface TechnologyFormState {
+  success?: boolean
   errors: {
     title?: string[]
     url?: string[]
@@ -22,6 +24,7 @@ export interface TechnologyFormState {
 }
 
 export interface FormationFormState {
+  success?: boolean
   errors: {
     institution?: string[]
     title?: string[]
@@ -33,6 +36,7 @@ export interface FormationFormState {
 }
 
 export interface ProjectFormState {
+  success?: boolean
   errors: {
     title?: string[]
     description?: string[]

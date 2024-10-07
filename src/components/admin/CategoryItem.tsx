@@ -7,12 +7,15 @@ import {
   CardTitle,
   CardDescription,
 } from '@/components/ui/card'
+import { useCategoryStore } from '@/lib/store'
 import { Category } from '@/lib/types'
 import { deleteCategory } from '@/server/services'
 import { Edit, Trash2 } from 'lucide-react'
 import { toast } from 'sonner'
 
 export function CategoryItem({ category }: { category: Category }) {
+  const { onEdit } = useCategoryStore()
+
   const onDelete = () => {
     toast.promise(deleteCategory(category.id as number), {
       loading: 'Processando...',
@@ -29,7 +32,10 @@ export function CategoryItem({ category }: { category: Category }) {
           <CardDescription>Slug: {category.slug}</CardDescription>
         </CardHeader>
         <CardFooter className="absolute right-0 top-5 space-x-2">
-          <button className="success hover:underline">
+          <button
+            onClick={() => onEdit(category)}
+            className="success hover:underline"
+          >
             <Edit className="h-5 w-5" />
             <span className="sr-only">Editar</span>
           </button>

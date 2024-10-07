@@ -121,7 +121,7 @@ export function ProjectForm() {
           />
         </CardContent>
         <CardFooter className="flex justify-end">
-          <SubmitButton title="Cadastrar" />
+          <SubmitButton title="Salvar" />
         </CardFooter>
       </form>
     </Card>
