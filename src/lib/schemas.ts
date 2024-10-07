@@ -1,30 +1,82 @@
 import { z } from 'zod'
 
+const capitalizeString = (value: string) => {
+  const splitted = value.split(' ')
+  const capitalized = splitted
+    .map((word) => word.charAt(0).toUpperCase().concat(word.slice(1)))
+    .join(' ')
+  return capitalized
+}
+
+export const LoginSchema = z.object({
+  user: z.string().min(1, 'O campo usuário é obrigatório'),
+  password: z.string().min(1, 'O campo senha é obrigatório'),
+})
+
 export const CategorySchema = z.object({
-  id: z.number().optional(),
-  slug: z.string().min(1).max(60),
-  title: z.string().min(1).max(60),
+  id: z.preprocess((val) => {
+    if (typeof val === 'string') {
+      const parsed = Number(val)
+      return isNaN(parsed) ? undefined : parsed
+    }
+    return val
+  }, z.number()),
+  title: z
+    .string()
+    .min(1, 'O campo é obrigatório')
+    .max(60)
+    .transform((val) => capitalizeString(val)),
 })
 
 export const TechnologySchema = z.object({
-  id: z.number().optional(),
-  title: z.string().min(1).max(100),
+  id: z.preprocess((val) => {
+    if (typeof val === 'string') {
+      const parsed = Number(val)
+      return isNaN(parsed) ? undefined : parsed
+    }
+    return val
+  }, z.number()),
+  title: z
+    .string()
+    .min(1, 'O campo é obrigatório')
+    .max(100)
+    .transform((val) => capitalizeString(val)),
   url: z.string().url(),
 })
 
 export const FormationSchema = z.object({
-  id: z.number().optional(),
-  institution: z.string().min(1).max(100),
-  title: z.string().min(1).max(100),
+  id: z.preprocess((val) => {
+    if (typeof val === 'string') {
+      const parsed = Number(val)
+      return isNaN(parsed) ? undefined : parsed
+    }
+    return val
+  }, z.number()),
+  institution: z.string().min(1, 'O campo é obrigatório').max(100),
+  title: z
+    .string()
+    .min(1, 'O campo é obrigatório')
+    .max(100)
+    .transform((val) => capitalizeString(val)),
   duration_time: z.number().positive(),
   certificate_url: z.string().url().nullable(),
 })
 
 export const ProjectSchema = z.object({
-  id: z.number().optional(),
-  title: z.string().min(1).max(100),
-  description: z.string().min(1).max(500),
-  slug: z.string().min(1).max(60),
+  id: z.preprocess((val) => {
+    if (typeof val === 'string') {
+      const parsed = Number(val)
+      return isNaN(parsed) ? undefined : parsed
+    }
+    return val
+  }, z.number()),
+  title: z
+    .string()
+    .min(1, 'O campo é obrigatório')
+    .max(100)
+    .transform((val) => capitalizeString(val)),
+  description: z.string().min(1, 'O campo é obrigatório').max(500),
+  slug: z.string().min(1, 'O campo é obrigatório').max(60),
   created_at: z.date(),
   website_url: z.string().url().nullable(),
   presentation_video_url: z.string().url().nullable(),

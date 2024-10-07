@@ -22,7 +22,6 @@ export async function upsertCategory(
 ): Promise<CategoryFormState> {
   const parsed = CategorySchema.safeParse({
     id: formData.get('id'),
-    slug: formData.get('slug'),
     title: formData.get('title'),
   })
 
@@ -35,16 +34,16 @@ export async function upsertCategory(
       await db
         .updateTable('port_categories')
         .set({
-          slug: parsed.data.slug,
           title: parsed.data.title,
         })
         .where('id', '=', parsed.data.id)
         .execute()
     } else {
+      const slug = parsed.data.title.toLowerCase().split(' ').join('-')
       await db
         .insertInto('port_categories')
         .values({
-          slug: parsed.data.slug,
+          slug,
           title: parsed.data.title,
         })
         .execute()
@@ -58,7 +57,7 @@ export async function upsertCategory(
   }
 
   revalidatePath('/')
-  redirect('/dashboard')
+  redirect('/admin')
 }
 
 export async function upsertTechnology(
@@ -95,14 +94,15 @@ export async function upsertTechnology(
         .execute()
     }
   } catch (error) {
-    console.log(error)
-    return {
-      errors: { _form: 'Não foi possível conectar-se ao banco de dados' },
+    if (error instanceof Error) {
+      return { errors: { _form: error.message } }
+    } else {
+      return { errors: { _form: 'Não foi possível conectar-se ao servidor.' } }
     }
   }
 
   revalidatePath('/')
-  redirect('/dashboard')
+  redirect('/admin')
 }
 
 export async function upsertFormation(
@@ -153,7 +153,7 @@ export async function upsertFormation(
   }
 
   revalidatePath('/')
-  redirect('/dashboard')
+  redirect('/admin')
 }
 
 export async function upsertProject(
@@ -210,7 +210,7 @@ export async function upsertProject(
   }
 
   revalidatePath('/')
-  redirect('/dashboard')
+  redirect('/admin')
 }
 
 export async function deleteCategory(id: number) {
@@ -226,6 +226,7 @@ export async function deleteCategory(id: number) {
       }
     }
   }
+  revalidatePath('/')
 }
 
 export async function deleteTechnology(id: number) {
@@ -241,6 +242,7 @@ export async function deleteTechnology(id: number) {
       }
     }
   }
+  revalidatePath('/')
 }
 
 export async function deleteFormation(id: number) {
@@ -256,6 +258,7 @@ export async function deleteFormation(id: number) {
       }
     }
   }
+  revalidatePath('/')
 }
 
 export async function deleteProject(id: number) {
@@ -271,4 +274,5 @@ export async function deleteProject(id: number) {
       }
     }
   }
+  revalidatePath('/')
 }

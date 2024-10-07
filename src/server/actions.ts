@@ -41,3 +41,23 @@ export async function findOneProject(slug: string) {
 
   return project
 }
+
+export async function findManyCategories() {
+  const categories = await db
+    .selectFrom('port_categories')
+    .selectAll()
+    .orderBy('title')
+    .execute()
+
+  return categories
+}
+
+export async function findManyTechnologies() {
+  const technologies = await db
+    .selectFrom('port_technologies')
+    .selectAll()
+    .orderBy('title')
+    .execute()
+
+  return technologies
+}

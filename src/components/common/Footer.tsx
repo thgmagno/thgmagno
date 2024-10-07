@@ -3,14 +3,14 @@ import Link from 'next/link'
 export function Footer() {
   const currentYear = new Date().getFullYear()
   return (
-    <small className="mt-16 block cursor-default select-none text-[#1C1C1C] lg:mt-24 dark:text-[#D4D4D4]">
+    <small className="mt-16 block cursor-default select-none text-[#1C1C1C] dark:text-[#D4D4D4] lg:mt-24">
       <time>© {currentYear} thgmgn@gmail.com</time>
       <div className="float-right flex gap-3.5 text-lg transition-opacity duration-300 hover:opacity-90">
         <Link href="https://github.com/thgmagno" target="_blank">
           <svg
             stroke="currentColor"
             fill="currentColor"
-            stroke-width="0"
+            strokeWidth="0"
             viewBox="0 0 496 512"
             height="1em"
             width="1em"
@@ -23,7 +23,7 @@ export function Footer() {
           <svg
             stroke="currentColor"
             fill="currentColor"
-            stroke-width="0"
+            strokeWidth="0"
             viewBox="0 0 448 512"
             height="1em"
             width="1em"
@@ -36,7 +36,7 @@ export function Footer() {
           <svg
             stroke="currentColor"
             fill="currentColor"
-            stroke-width="0"
+            strokeWidth="0"
             viewBox="0 0 24 24"
             height="1em"
             width="1em"
