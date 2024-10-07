@@ -27,6 +27,7 @@ export interface FormationFormState {
     title?: string[]
     duration_time?: string[]
     certificate_url?: string[]
+    category?: string[]
     _form?: string
   }
 }

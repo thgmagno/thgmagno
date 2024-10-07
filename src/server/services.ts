@@ -116,6 +116,7 @@ export async function upsertFormation(
     title: formData.get('title'),
     duration_time: formData.get('duration_time'),
     certificate_url: formData.get('certificate_url'),
+    category: formData.get('category'),
   })
 
   if (!parsed.success) {
@@ -124,24 +125,47 @@ export async function upsertFormation(
 
   try {
     if (parsed.data.id) {
-      await db
-        .updateTable('port_formations')
-        .set({
-          institution: parsed.data.institution,
-          title: parsed.data.title,
-          duration_time: parsed.data.duration_time,
-          certificate_url: parsed.data.certificate_url,
-        })
-        .where('id', '=', parsed.data.id)
-        .execute()
+      await Promise.all([
+        db
+          .updateTable('port_formations')
+          .set({
+            institution: parsed.data.institution,
+            title: parsed.data.title,
+            duration_time: parsed.data.duration_time,
+            certificate_url: parsed.data.certificate_url,
+          })
+          .where('id', '=', parsed.data.id)
+          .execute(),
+        db
+          .updateTable('port_formation_categories')
+          .set({
+            category_id: parsed.data.category,
+            formation_id: parsed.data.id,
+          })
+          .where('formation_id', '=', parsed.data.id)
+          .execute(),
+      ])
     } else {
-      await db
+      const [newFormation] = await db
         .insertInto('port_formations')
         .values({
           institution: parsed.data.institution,
           title: parsed.data.title,
           duration_time: parsed.data.duration_time,
           certificate_url: parsed.data.certificate_url,
+        })
+        .returning('id')
+        .execute()
+
+      if (!newFormation.id) {
+        throw new Error('Erro ao gravar o registro no banco de dados')
+      }
+
+      await db
+        .insertInto('port_formation_categories')
+        .values({
+          category_id: parsed.data.category,
+          formation_id: newFormation.id,
         })
         .execute()
     }
@@ -171,6 +195,7 @@ export async function upsertProject(
   })
 
   if (!parsed.success) {
+    console.log(parsed.error)
     return { errors: parsed.error.flatten().fieldErrors }
   }
 

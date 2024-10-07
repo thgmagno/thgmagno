@@ -7,18 +7,26 @@ import {
   CardDescription,
   CardFooter,
 } from '@/components/ui/card'
-import { Technology } from '@/lib/types'
-import { deleteTechnology } from '@/server/services'
+import { Formation } from '@/lib/types'
+import { deleteFormation } from '@/server/services'
 import { Edit, Trash2 } from 'lucide-react'
 import Link from 'next/link'
 import { toast } from 'sonner'
 
-export function TechnologyItem({ technology }: { technology: Technology }) {
+interface FormationWithCategory extends Formation {
+  category: string | null
+}
+
+export function FormationItem({
+  formation,
+}: {
+  formation: FormationWithCategory
+}) {
   const onDelete = () => {
-    toast.promise(deleteTechnology(technology.id as number), {
+    toast.promise(deleteFormation(formation.id as number), {
       loading: 'Processando...',
-      success: 'Tecnologia deletada com sucesso.',
-      error: 'Falha ao deletar a tecnologia.',
+      success: 'Formação deletada com sucesso.',
+      error: 'Falha ao deletar a formação.',
     })
   }
 
@@ -26,15 +34,17 @@ export function TechnologyItem({ technology }: { technology: Technology }) {
     <li>
       <Card className="relative flex flex-col">
         <CardHeader>
-          <CardTitle>{technology.title}</CardTitle>
+          <CardTitle>{formation.title}</CardTitle>
           <CardDescription>
-            URL:{' '}
+            <p>Duração: {formation.duration_time} horas</p>
+            <p>Instituição: {formation.institution}</p>
+            <p>Categoria: {formation.category || 'Não informado'}</p>
             <Link
               target="_blank"
-              href={technology.url}
+              href={formation.certificate_url || '#'}
               className="hover:underline"
             >
-              {technology.url}
+              Acessar o certificado
             </Link>
           </CardDescription>
         </CardHeader>

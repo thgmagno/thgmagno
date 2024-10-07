@@ -19,7 +19,7 @@ export function Login() {
   const [formState, action] = useFormState(login, { errors: {} })
 
   return (
-    <Card className="mx-auto max-w-sm bg-background">
+    <Card className="mx-auto max-w-sm">
       <CardHeader>
         <CardTitle>Entrar como Administrador</CardTitle>
         <CardDescription>Identifique-se para continuar</CardDescription>

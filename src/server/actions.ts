@@ -6,7 +6,25 @@ import { redirect } from 'next/navigation'
 export async function findManyFormations() {
   const formations = await db
     .selectFrom('port_formations')
-    .selectAll()
+    .leftJoin(
+      'port_formation_categories',
+      'port_formations.id',
+      'port_formation_categories.formation_id',
+    )
+    .leftJoin(
+      'port_categories',
+      'port_formation_categories.category_id',
+      'port_categories.id',
+    )
+    .select([
+      'port_formations.id',
+      'port_formations.institution',
+      'port_formations.title',
+      'port_formations.duration_time',
+      'port_formations.certificate_url',
+      'port_categories.title as category',
+    ])
+    .orderBy('port_formations.title')
     .execute()
 
   return formations

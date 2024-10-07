@@ -1,7 +1,8 @@
+import { isDate } from 'date-fns/isDate'
 import { z } from 'zod'
 
 const capitalizeString = (value: string) => {
-  const splitted = value.split(' ')
+  const splitted = value.trim().split(' ')
   const capitalized = splitted
     .map((word) => word.charAt(0).toUpperCase().concat(word.slice(1)))
     .join(' ')
@@ -52,14 +53,34 @@ export const FormationSchema = z.object({
     }
     return val
   }, z.number()),
-  institution: z.string().min(1, 'O campo é obrigatório').max(100),
+  institution: z
+    .string()
+    .min(1, 'O campo é obrigatório')
+    .max(100)
+    .transform((val) => capitalizeString(val)),
   title: z
     .string()
     .min(1, 'O campo é obrigatório')
     .max(100)
     .transform((val) => capitalizeString(val)),
-  duration_time: z.number().positive(),
-  certificate_url: z.string().url().nullable(),
+  duration_time: z.preprocess((val) => {
+    if (typeof val === 'string') {
+      const parsed = Number(val)
+      return isNaN(parsed) ? undefined : parsed
+    }
+    return val
+  }, z.number()),
+  certificate_url: z.string().url().optional(),
+  category: z.preprocess(
+    (val) => {
+      if (typeof val === 'string') {
+        const parsed = Number(val)
+        return isNaN(parsed) ? undefined : parsed
+      }
+      return val
+    },
+    z.number({ message: 'Categoria inválida' }).positive(),
+  ),
 })
 
 export const ProjectSchema = z.object({
@@ -76,7 +97,13 @@ export const ProjectSchema = z.object({
     .max(100)
     .transform((val) => capitalizeString(val)),
   description: z.string().min(1, 'O campo é obrigatório').max(500),
-  created_at: z.date(),
+  created_at: z.preprocess((val) => {
+    if (typeof val === 'string') {
+      const parsed = new Date(val)
+      return isDate(parsed) ? parsed : undefined
+    }
+    return val
+  }, z.date()),
   website_url: z.string().url().nullable(),
   presentation_video_url: z.string().url().nullable(),
 })
