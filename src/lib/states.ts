@@ -35,7 +35,6 @@ export interface ProjectFormState {
   errors: {
     title?: string[]
     description?: string[]
-    slug?: string[]
     created_at?: string[]
     website_url?: string[]
     presentation_video_url?: string[]

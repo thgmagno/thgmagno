@@ -13,6 +13,7 @@ import { useFormState } from 'react-dom'
 import { ErrorMessage } from '@/components/common/ErrorMessage'
 import { SubmitButton } from '@/components/common/SubmitButton'
 import { upsertProject } from '@/server/services'
+import { Textarea } from '../ui/textarea'
 
 export function ProjectForm() {
   const [formState, action] = useFormState(upsertProject, { errors: {} })
@@ -24,7 +25,7 @@ export function ProjectForm() {
       </CardHeader>
       <form action={action}>
         <CardContent>
-          <div className="grid w-full items-baseline gap-4 md:grid-cols-2">
+          <div className="grid w-full items-baseline gap-4">
             <input type="hidden" name="id" value="" />
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="title">Título</Label>
@@ -33,17 +34,12 @@ export function ProjectForm() {
             </div>
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="description">Descrição</Label>
-              <Input
+              <Textarea
                 id="description"
                 name="description"
-                placeholder="Informe a descrição"
+                placeholder="Informe a descrição."
               />
               <ErrorMessage message={formState?.errors.description} />
-            </div>
-            <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="slug">Slug</Label>
-              <Input id="slug" name="slug" placeholder="Informe o slug" />
-              <ErrorMessage message={formState?.errors.slug} />
             </div>
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="website_url">URL do Site</Label>

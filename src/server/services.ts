@@ -16,6 +16,8 @@ import { db } from './db'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 
+const createSlug = (text: string) => text.toLowerCase().split(' ').join('-')
+
 export async function upsertCategory(
   formState: CategoryFormState,
   formData: FormData,
@@ -39,11 +41,10 @@ export async function upsertCategory(
         .where('id', '=', parsed.data.id)
         .execute()
     } else {
-      const slug = parsed.data.title.toLowerCase().split(' ').join('-')
       await db
         .insertInto('port_categories')
         .values({
-          slug,
+          slug: createSlug(parsed.data.title),
           title: parsed.data.title,
         })
         .execute()
@@ -164,7 +165,6 @@ export async function upsertProject(
     id: formData.get('id'),
     title: formData.get('title'),
     description: formData.get('description'),
-    slug: formData.get('slug'),
     created_at: formData.get('created_at'),
     website_url: formData.get('website_url'),
     presentation_video_url: formData.get('presentation_video_url'),
@@ -181,7 +181,6 @@ export async function upsertProject(
         .set({
           title: parsed.data.title,
           description: parsed.data.description,
-          slug: parsed.data.slug,
           created_at: parsed.data.created_at,
           website_url: parsed.data.website_url,
           presentation_video_url: parsed.data.presentation_video_url,
@@ -194,7 +193,7 @@ export async function upsertProject(
         .values({
           title: parsed.data.title,
           description: parsed.data.description,
-          slug: parsed.data.slug,
+          slug: createSlug(parsed.data.title),
           created_at: parsed.data.created_at,
           website_url: parsed.data.website_url,
           presentation_video_url: parsed.data.presentation_video_url,
