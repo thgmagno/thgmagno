@@ -76,7 +76,6 @@ export const ProjectSchema = z.object({
     .max(100)
     .transform((val) => capitalizeString(val)),
   description: z.string().min(1, 'O campo é obrigatório').max(500),
-  slug: z.string().min(1, 'O campo é obrigatório').max(60),
   created_at: z.date(),
   website_url: z.string().url().nullable(),
   presentation_video_url: z.string().url().nullable(),
