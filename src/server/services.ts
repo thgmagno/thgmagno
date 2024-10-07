@@ -12,9 +12,8 @@ import {
   ProjectFormState,
   TechnologyFormState,
 } from '@/lib/states'
-import { db } from './db'
+import { db } from '@/server/db'
 import { revalidatePath } from 'next/cache'
-import { redirect } from 'next/navigation'
 
 const createSlug = (text: string) => text.toLowerCase().split(' ').join('-')
 
@@ -58,7 +57,7 @@ export async function upsertCategory(
   }
 
   revalidatePath('/')
-  redirect('/admin')
+  return { success: true, errors: {} }
 }
 
 export async function upsertTechnology(
@@ -103,7 +102,7 @@ export async function upsertTechnology(
   }
 
   revalidatePath('/')
-  redirect('/admin')
+  return { success: true, errors: {} }
 }
 
 export async function upsertFormation(
@@ -178,7 +177,7 @@ export async function upsertFormation(
   }
 
   revalidatePath('/')
-  redirect('/admin')
+  return { success: true, errors: {} }
 }
 
 export async function upsertProject(
@@ -195,7 +194,6 @@ export async function upsertProject(
   })
 
   if (!parsed.success) {
-    console.log(parsed.error)
     return { errors: parsed.error.flatten().fieldErrors }
   }
 
@@ -234,7 +232,7 @@ export async function upsertProject(
   }
 
   revalidatePath('/')
-  redirect('/admin')
+  return { success: true, errors: {} }
 }
 
 export async function deleteCategory(id: number) {

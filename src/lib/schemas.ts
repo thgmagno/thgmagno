@@ -63,15 +63,7 @@ export const FormationSchema = z.object({
     .min(1, 'O campo é obrigatório')
     .max(100)
     .transform((val) => capitalizeString(val)),
-  duration_time: z.preprocess((val) => {
-    if (typeof val === 'string') {
-      const parsed = Number(val)
-      return isNaN(parsed) ? undefined : parsed
-    }
-    return val
-  }, z.number()),
-  certificate_url: z.string().url().optional(),
-  category: z.preprocess(
+  duration_time: z.preprocess(
     (val) => {
       if (typeof val === 'string') {
         const parsed = Number(val)
@@ -79,7 +71,18 @@ export const FormationSchema = z.object({
       }
       return val
     },
-    z.number({ message: 'Categoria inválida' }).positive(),
+    z.number().positive({ message: 'Informe a duração do curso' }),
+  ),
+  certificate_url: z.string().url().optional(),
+  category: z.preprocess(
+    (val) => {
+      if (typeof val === 'string') {
+        const parsed = Number(val)
+        return isNaN(parsed) ? undefined : parsed
+      }
+      return val ?? 0
+    },
+    z.number().positive({ message: 'Categoria inválida' }),
   ),
 })
 

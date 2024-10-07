@@ -15,8 +15,11 @@ import { deleteProject } from '@/server/services'
 import { Edit, Trash2 } from 'lucide-react'
 import Link from 'next/link'
 import { toast } from 'sonner'
+import { useProjectStore } from '@/lib/store'
 
 export function ProjectItem({ project }: { project: Project }) {
+  const { onEdit } = useProjectStore()
+
   const onDelete = () => {
     toast.promise(deleteProject(project.id as number), {
       loading: 'Processando...',
@@ -63,7 +66,10 @@ export function ProjectItem({ project }: { project: Project }) {
           {project.description}
         </CardContent>
         <CardFooter className="absolute right-0 top-5 space-x-2">
-          <button className="success hover:underline">
+          <button
+            onClick={() => onEdit(project)}
+            className="success hover:underline"
+          >
             <Edit className="h-5 w-5" />
             <span className="sr-only">Editar</span>
           </button>

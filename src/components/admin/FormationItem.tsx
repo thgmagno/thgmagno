@@ -7,21 +7,20 @@ import {
   CardDescription,
   CardFooter,
 } from '@/components/ui/card'
-import { Formation } from '@/lib/types'
+import { useFormationStore } from '@/lib/store'
+import { FormationWithCategory } from '@/lib/types'
 import { deleteFormation } from '@/server/services'
 import { Edit, Trash2 } from 'lucide-react'
 import Link from 'next/link'
 import { toast } from 'sonner'
-
-interface FormationWithCategory extends Formation {
-  category: string | null
-}
 
 export function FormationItem({
   formation,
 }: {
   formation: FormationWithCategory
 }) {
+  const { onEdit } = useFormationStore()
+
   const onDelete = () => {
     toast.promise(deleteFormation(formation.id as number), {
       loading: 'Processando...',
@@ -38,7 +37,7 @@ export function FormationItem({
           <CardDescription>
             <p>Duração: {formation.duration_time} horas</p>
             <p>Instituição: {formation.institution}</p>
-            <p>Categoria: {formation.category || 'Não informado'}</p>
+            <p>Categoria: {formation.category_title || 'Não informado'}</p>
             <Link
               target="_blank"
               href={formation.certificate_url || '#'}
@@ -49,7 +48,10 @@ export function FormationItem({
           </CardDescription>
         </CardHeader>
         <CardFooter className="absolute right-0 top-5 space-x-2">
-          <button className="success hover:underline">
+          <button
+            onClick={() => onEdit(formation)}
+            className="success hover:underline"
+          >
             <Edit className="h-5 w-5" />
             <span className="sr-only">Editar</span>
           </button>

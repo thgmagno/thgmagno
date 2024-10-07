@@ -22,7 +22,8 @@ export async function findManyFormations() {
       'port_formations.title',
       'port_formations.duration_time',
       'port_formations.certificate_url',
-      'port_categories.title as category',
+      'port_categories.id as category_id',
+      'port_categories.title as category_title',
     ])
     .orderBy('port_formations.title')
     .execute()

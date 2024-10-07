@@ -7,6 +7,7 @@ import {
   CardDescription,
   CardFooter,
 } from '@/components/ui/card'
+import { useTechnologyStore } from '@/lib/store'
 import { Technology } from '@/lib/types'
 import { deleteTechnology } from '@/server/services'
 import { Edit, Trash2 } from 'lucide-react'
@@ -14,6 +15,8 @@ import Link from 'next/link'
 import { toast } from 'sonner'
 
 export function TechnologyItem({ technology }: { technology: Technology }) {
+  const { onEdit } = useTechnologyStore()
+
   const onDelete = () => {
     toast.promise(deleteTechnology(technology.id as number), {
       loading: 'Processando...',
@@ -39,7 +42,10 @@ export function TechnologyItem({ technology }: { technology: Technology }) {
           </CardDescription>
         </CardHeader>
         <CardFooter className="absolute right-0 top-5 space-x-2">
-          <button className="success hover:underline">
+          <button
+            onClick={() => onEdit(technology)}
+            className="success hover:underline"
+          >
             <Edit className="h-5 w-5" />
             <span className="sr-only">Editar</span>
           </button>

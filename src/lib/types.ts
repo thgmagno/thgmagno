@@ -54,6 +54,11 @@ export interface Formation {
   certificate_url: string | null
 }
 
+export interface FormationWithCategory extends Formation {
+  category_id?: number | null
+  category_title: string | null
+}
+
 export interface Project {
   id?: number
   title: string
