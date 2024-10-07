@@ -1,6 +1,13 @@
+export interface LoginFormState {
+  errors: {
+    user?: string[]
+    password?: string[]
+    _form?: string
+  }
+}
+
 export interface CategoryFormState {
   errors: {
-    slug?: string[]
     title?: string[]
     _form?: string
   }
