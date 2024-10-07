@@ -11,9 +11,9 @@ export async function Categories() {
       <h2 className="mt-6 text-xl font-semibold">Categorias Cadastradas</h2>
       <div className="mt-4">
         {categories.length > 0 ? (
-          <ul className="list-inside list-disc space-y-2">
+          <ul className="space-y-3">
             {categories.map((category) => (
-              <CategoryItem category={category} key={category.id} />
+              <CategoryItem key={category.id} category={category} />
             ))}
           </ul>
         ) : (

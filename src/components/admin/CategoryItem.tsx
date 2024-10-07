@@ -1,5 +1,12 @@
 'use client'
 
+import {
+  Card,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from '@/components/ui/card'
 import { Category } from '@/lib/types'
 import { deleteCategory } from '@/server/services'
 import { Edit, Trash2 } from 'lucide-react'
@@ -15,20 +22,23 @@ export function CategoryItem({ category }: { category: Category }) {
   }
 
   return (
-    <li className="flex items-center justify-between rounded-md border p-1.5">
-      <span>
-        <strong>{category.title}</strong> (Slug: {category.slug})
-      </span>
-      <div className="ml-auto flex items-center space-x-2">
-        <button className="text-green-400 hover:underline">
-          <Edit className="h-5 w-5" />
-          <span className="sr-only">Editar</span>
-        </button>
-        <button onClick={onDelete} className="text-red-400 hover:underline">
-          <Trash2 className="h-5 w-5" />
-          <span className="sr-only">Excluir</span>
-        </button>
-      </div>
+    <li>
+      <Card className="relative flex flex-col">
+        <CardHeader>
+          <CardTitle>{category.title}</CardTitle>
+          <CardDescription>Slug: {category.slug}</CardDescription>
+        </CardHeader>
+        <CardFooter className="absolute right-0 top-5 space-x-2">
+          <button className="success hover:underline">
+            <Edit className="h-5 w-5" />
+            <span className="sr-only">Editar</span>
+          </button>
+          <button onClick={onDelete} className="danger hover:underline">
+            <Trash2 className="h-5 w-5" />
+            <span className="sr-only">Excluir</span>
+          </button>
+        </CardFooter>
+      </Card>
     </li>
   )
 }

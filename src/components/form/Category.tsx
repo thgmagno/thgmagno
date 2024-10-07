@@ -18,7 +18,7 @@ export function CategoryForm() {
   const [formState, action] = useFormState(upsertCategory, { errors: {} })
 
   return (
-    <Card className="bg-background">
+    <Card>
       <CardHeader>
         <CardTitle>Cadastrar Nova Categoria</CardTitle>
       </CardHeader>

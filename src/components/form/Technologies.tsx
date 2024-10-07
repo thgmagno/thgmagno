@@ -18,7 +18,7 @@ export function TechnologyForm() {
   const [formState, action] = useFormState(upsertTechnology, { errors: {} })
 
   return (
-    <Card className="bg-background">
+    <Card>
       <CardHeader>
         <CardTitle>Cadastrar Nova Tecnologia</CardTitle>
       </CardHeader>

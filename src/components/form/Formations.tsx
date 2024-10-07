@@ -7,25 +7,40 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { useFormState } from 'react-dom'
 import { ErrorMessage } from '@/components/common/ErrorMessage'
 import { SubmitButton } from '@/components/common/SubmitButton'
 import { upsertFormation } from '@/server/services'
+import { Category } from '@/lib/types'
 
-export function FormationForm() {
+export function FormationForm({ categories }: { categories: Category[] }) {
   const [formState, action] = useFormState(upsertFormation, { errors: {} })
 
   return (
-    <Card className="bg-background">
+    <Card>
       <CardHeader>
         <CardTitle>Cadastrar Nova Formação</CardTitle>
       </CardHeader>
       <form action={action}>
         <CardContent>
-          <div className="grid w-full items-baseline gap-4 md:grid-cols-3">
+          <div className="grid w-full items-baseline gap-4 md:grid-cols-2">
             <input type="hidden" name="id" value="" />
+            <div className="flex flex-col space-y-1.5">
+              <Label htmlFor="title">Título</Label>
+              <Input id="title" name="title" placeholder="Informe o título" />
+              <ErrorMessage message={formState?.errors.title} />
+            </div>
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="institution">Instituição</Label>
               <Input
@@ -36,21 +51,35 @@ export function FormationForm() {
               <ErrorMessage message={formState?.errors.institution} />
             </div>
             <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="title">Título</Label>
-              <Input id="title" name="title" placeholder="Informe o título" />
-              <ErrorMessage message={formState?.errors.title} />
+              <Label htmlFor="duration_time">Categoria</Label>
+              <Select name="category">
+                <SelectTrigger>
+                  <SelectValue placeholder="Selecionar categoria" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectLabel>Categorias</SelectLabel>
+                    {categories.map((category) => (
+                      <SelectItem key={category.id} value={String(category.id)}>
+                        {category.title}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+              <ErrorMessage message={formState?.errors.duration_time} />
             </div>
             <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="duration_time">Duração (em meses)</Label>
+              <Label htmlFor="duration_time">Duração (em horas)</Label>
               <Input
                 id="duration_time"
                 name="duration_time"
                 type="number"
-                placeholder="Informe a duração em meses"
+                placeholder="Informe a duração em horas"
               />
               <ErrorMessage message={formState?.errors.duration_time} />
             </div>
-            <div className="flex flex-col space-y-1.5 md:col-span-3">
+            <div className="flex flex-col space-y-1.5 md:col-span-2">
               <Label htmlFor="certificate_url">URL do Certificado</Label>
               <Input
                 id="certificate_url"

@@ -9,10 +9,10 @@ export function AdminDashboard() {
   return (
     <Tabs defaultValue="categories">
       <TabsList className="mb-5">
-        <TabsTrigger value="categories">Categories</TabsTrigger>
-        <TabsTrigger value="formations">Formations</TabsTrigger>
-        <TabsTrigger value="technologies">Technologies</TabsTrigger>
-        <TabsTrigger value="projects">Projects</TabsTrigger>
+        <TabsTrigger value="categories">Categorias</TabsTrigger>
+        <TabsTrigger value="formations">Formações</TabsTrigger>
+        <TabsTrigger value="technologies">Tecnologias</TabsTrigger>
+        <TabsTrigger value="projects">Projetos</TabsTrigger>
       </TabsList>
       <TabsContent value="categories">
         <Categories />

@@ -11,7 +11,7 @@ export async function Technologies() {
       <h2 className="mt-6 text-xl font-semibold">Tecnologias Cadastradas</h2>
       <div className="mt-4">
         {technologies.length > 0 ? (
-          <ul className="list-inside list-disc space-y-2">
+          <ul className="space-y-3">
             {technologies.map((technology) => (
               <TechnologyItem technology={technology} key={technology.id} />
             ))}
