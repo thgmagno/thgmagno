@@ -1,9 +1,18 @@
+import { unstable_cache as cache } from 'next/cache'
 import { ProjectForm } from '../form/Projects'
 import { findManyProjects } from '@/server/actions'
 import { ProjectItem } from './ProjectItem'
 
 export async function Projects() {
-  const { projects } = await findManyProjects()
+  const getProjects = cache(
+    async () => {
+      return await findManyProjects()
+    },
+    ['projects'],
+    { revalidate: 7 * 24 * 60 * 60, tags: ['projects'] },
+  )
+
+  const { projects } = await getProjects()
 
   return (
     <div>

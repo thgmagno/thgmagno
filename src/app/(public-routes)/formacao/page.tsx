@@ -1,9 +1,18 @@
+import { unstable_cache as cache } from 'next/cache'
 import { Formation } from '@/lib/types'
 import { findManyFormations } from '@/server/actions'
 import Link from 'next/link'
 
 export default async function Formacoes() {
-  const formations = await findManyFormations()
+  const getFormations = cache(
+    async () => {
+      return await findManyFormations()
+    },
+    ['formations'],
+    { revalidate: 7 * 24 * 60 * 60, tags: ['formations'] },
+  )
+
+  const formations = await getFormations()
 
   return (
     <section className="space-y-6">

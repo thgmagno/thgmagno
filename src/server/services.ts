@@ -12,8 +12,9 @@ import {
   ProjectFormState,
   TechnologyFormState,
 } from '@/lib/states'
+import { tags } from '@/lib/tags'
 import { db } from '@/server/db'
-import { revalidatePath } from 'next/cache'
+import { revalidateTag } from 'next/cache'
 
 const createSlug = (text: string) => text.toLowerCase().split(' ').join('-')
 
@@ -56,7 +57,7 @@ export async function upsertCategory(
     }
   }
 
-  revalidatePath('/')
+  revalidateTag(tags.categories)
   return { success: true, errors: {} }
 }
 
@@ -101,7 +102,7 @@ export async function upsertTechnology(
     }
   }
 
-  revalidatePath('/')
+  revalidateTag(tags.technologies)
   return { success: true, errors: {} }
 }
 
@@ -176,7 +177,7 @@ export async function upsertFormation(
     }
   }
 
-  revalidatePath('/')
+  revalidateTag(tags.formations)
   return { success: true, errors: {} }
 }
 
@@ -231,7 +232,7 @@ export async function upsertProject(
     }
   }
 
-  revalidatePath('/')
+  revalidateTag(tags.projects)
   return { success: true, errors: {} }
 }
 
@@ -248,7 +249,7 @@ export async function deleteCategory(id: number) {
       }
     }
   }
-  revalidatePath('/')
+  revalidateTag(tags.categories)
 }
 
 export async function deleteTechnology(id: number) {
@@ -264,7 +265,7 @@ export async function deleteTechnology(id: number) {
       }
     }
   }
-  revalidatePath('/')
+  revalidateTag(tags.technologies)
 }
 
 export async function deleteFormation(id: number) {
@@ -280,7 +281,7 @@ export async function deleteFormation(id: number) {
       }
     }
   }
-  revalidatePath('/')
+  revalidateTag(tags.formations)
 }
 
 export async function deleteProject(id: number) {
@@ -296,5 +297,5 @@ export async function deleteProject(id: number) {
       }
     }
   }
-  revalidatePath('/')
+  revalidateTag(tags.projects)
 }
