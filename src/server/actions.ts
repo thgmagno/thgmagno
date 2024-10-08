@@ -2,6 +2,7 @@
 
 import { db } from '@/server/db'
 import { redirect } from 'next/navigation'
+import { env } from '../../env'
 
 export async function findManyFormations() {
   const formations = await db
@@ -55,7 +56,7 @@ export async function findManyProjects(
     .execute()
 
   const getPageUrl = (pageNumber: number) =>
-    `http://localhost:3000/projetos?pagina=${pageNumber}&limite=${limit}`
+    `${env.BASE_URL}/projetos?pagina=${pageNumber}&limite=${limit}`
 
   const links = []
 
