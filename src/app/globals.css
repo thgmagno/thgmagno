@@ -84,4 +84,11 @@ body {
   .danger {
     @apply text-red-500
   }
+  .no-scrollbar {
+    &::-webkit-scrollbar {
+     display: none;
+   }
+   -ms-overflow-style: none;
+   scrollbar-width: none;
+  }
 }

@@ -1,36 +1,23 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Thiago Magno - Full-Stack Web Developer
 
-## Getting Started
+Bem-vindo ao meu portfólio! Aqui você vai conhecer mais sobre minha trajetória, projetos e o que me motiva no mundo da tecnologia.
 
-First, run the development server:
+## Sobre Mim
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Sou **Thiago Magno**, desenvolvedor web full-stack. Minha jornada na programação começou em 2017, quando fiz meu primeiro curso técnico profissionalizante. Desde então, venho me dedicando ao desenvolvimento de software com o objetivo de criar soluções inovadoras, sempre aplicando as melhores práticas do mercado e me mantendo atualizado com as últimas tecnologias.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Acredito no poder transformador da tecnologia tanto para as pessoas quanto para os negócios, e busco sempre unir criatividade e tecnologia para fazer a diferença.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Seções do Portfólio
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Formação**: Aqui você encontra detalhes sobre minha educação e qualificações.
+- **Projetos**: Uma seleção dos projetos mais recentes e desafiadores nos quais trabalhei, com foco em soluções criativas e tecnológicas.
+- **Toggle Theme**: Mude o tema do site entre modos claro e escuro para a melhor experiência visual.
 
-## Learn More
+## Contato
 
-To learn more about Next.js, take a look at the following resources:
+Quer saber mais ou discutir uma ideia? Sinta-se à vontade para entrar em contato!
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+© 2024 - Thiago Magno - CNPJ: 53.274.431/0001-02

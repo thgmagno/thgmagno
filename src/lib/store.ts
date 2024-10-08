@@ -5,6 +5,7 @@ import {
   Project,
   Technology,
 } from '@/lib/types'
+import { isDate } from 'date-fns'
 
 interface BaseStore {
   id: string
@@ -25,9 +26,9 @@ interface TechnologyStore extends BaseStore {
 
 interface ProjectStore extends BaseStore {
   description: string
-  websiteUrl: string | null
-  presentationVideoUrl: string | null
-  createdAt: Date | null
+  websiteUrl: string
+  presentationVideoUrl: string
+  createdAt: Date
   setDescription: (value: string) => void
   setWebsiteUrl: (value: string) => void
   setPresentationVideoUrl: (value: string) => void
@@ -38,7 +39,7 @@ interface ProjectStore extends BaseStore {
 interface FormationStore extends BaseStore {
   institution: string
   duration_time: string
-  certificate_url: string | null
+  certificate_url: string
   categoryId?: string
   setInstitution: (value: string) => void
   setDurationTime: (value: string) => void
@@ -92,7 +93,7 @@ export const useProjectStore = create<ProjectStore>()((set) => ({
   description: '',
   websiteUrl: '',
   presentationVideoUrl: '',
-  createdAt: null,
+  createdAt: new Date(),
 
   setTitle: (value) => {
     if (value.trim() === '') return
@@ -114,15 +115,18 @@ export const useProjectStore = create<ProjectStore>()((set) => ({
     set({ presentationVideoUrl: value })
   },
 
-  setCreatedAt: (date) => set({ createdAt: date }),
+  setCreatedAt: (date) => {
+    if (!isDate(date)) return
+    set({ createdAt: date || new Date() })
+  },
 
   onEdit: (project) =>
     set({
       id: String(project.id),
       title: project.title,
       description: project.description,
-      websiteUrl: project.website_url,
-      presentationVideoUrl: project.presentation_video_url,
+      websiteUrl: project.website_url || '#',
+      presentationVideoUrl: project.presentation_video_url || '#',
       createdAt: new Date(project.created_at),
     }),
 
@@ -133,7 +137,7 @@ export const useProjectStore = create<ProjectStore>()((set) => ({
       description: '',
       websiteUrl: '',
       presentationVideoUrl: '',
-      createdAt: null,
+      createdAt: new Date(),
     }),
 }))
 
@@ -173,7 +177,7 @@ export const useFormationStore = create<FormationStore>()((set) => ({
       title: formation.title,
       institution: formation.institution,
       duration_time: String(formation.duration_time),
-      certificate_url: formation.certificate_url,
+      certificate_url: formation.certificate_url || '',
       categoryId: String(formation.category_id),
     }),
 

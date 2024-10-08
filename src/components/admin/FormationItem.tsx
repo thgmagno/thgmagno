@@ -7,6 +7,17 @@ import {
   CardDescription,
   CardFooter,
 } from '@/components/ui/card'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog'
 import { useFormationStore } from '@/lib/store'
 import { FormationWithCategory } from '@/lib/types'
 import { deleteFormation } from '@/server/services'
@@ -21,11 +32,11 @@ export function FormationItem({
 }) {
   const { onEdit } = useFormationStore()
 
-  const onDelete = () => {
+  const onConfirmDelete = () => {
     toast.promise(deleteFormation(formation.id as number), {
       loading: 'Processando...',
-      success: 'Formação deletada com sucesso.',
-      error: 'Falha ao deletar a formação.',
+      success: 'Categoria deletada com sucesso.',
+      error: 'Falha ao deletar a categoria.',
     })
   }
 
@@ -49,16 +60,38 @@ export function FormationItem({
         </CardHeader>
         <CardFooter className="absolute right-0 top-5 space-x-2">
           <button
-            onClick={() => onEdit(formation)}
+            onClick={() => {
+              onEdit(formation)
+              window.scrollTo({ top: 100, behavior: 'smooth' })
+            }}
             className="success hover:underline"
           >
             <Edit className="h-5 w-5" />
             <span className="sr-only">Editar</span>
           </button>
-          <button onClick={onDelete} className="danger hover:underline">
-            <Trash2 className="h-5 w-5" />
-            <span className="sr-only">Excluir</span>
-          </button>
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <button className="danger hover:underline">
+                <Trash2 className="h-5 w-5" />
+                <span className="sr-only">Excluir</span>
+              </button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Confirmar Exclusão</AlertDialogTitle>
+                <AlertDialogDescription>
+                  Esta ação não pode ser desfeita. Tem certeza de que deseja
+                  continuar?
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                <AlertDialogAction onClick={onConfirmDelete}>
+                  Continuar
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </CardFooter>
       </Card>
     </li>

@@ -107,8 +107,8 @@ export const ProjectSchema = z.object({
     }
     return val
   }, z.date()),
-  website_url: z.string().url().nullable(),
-  presentation_video_url: z.string().url().nullable(),
+  website_url: z.string().optional().nullable(),
+  presentation_video_url: z.string().optional().nullable(),
 })
 
 export const FormationCategoriesSchema = z.object({

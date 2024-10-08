@@ -8,6 +8,17 @@ import {
   CardDescription,
   CardFooter,
 } from '@/components/ui/card'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog'
 import { format } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 import { Project } from '@/lib/types'
@@ -20,11 +31,11 @@ import { useProjectStore } from '@/lib/store'
 export function ProjectItem({ project }: { project: Project }) {
   const { onEdit } = useProjectStore()
 
-  const onDelete = () => {
+  const onConfirmDelete = () => {
     toast.promise(deleteProject(project.id as number), {
       loading: 'Processando...',
-      success: 'Projeto deletado com sucesso.',
-      error: 'Falha ao deletar o projeto.',
+      success: 'Categoria deletada com sucesso.',
+      error: 'Falha ao deletar a categoria.',
     })
   }
 
@@ -67,16 +78,38 @@ export function ProjectItem({ project }: { project: Project }) {
         </CardContent>
         <CardFooter className="absolute right-0 top-5 space-x-2">
           <button
-            onClick={() => onEdit(project)}
+            onClick={() => {
+              onEdit(project)
+              window.scrollTo({ top: 100, behavior: 'smooth' })
+            }}
             className="success hover:underline"
           >
             <Edit className="h-5 w-5" />
             <span className="sr-only">Editar</span>
           </button>
-          <button onClick={onDelete} className="danger hover:underline">
-            <Trash2 className="h-5 w-5" />
-            <span className="sr-only">Excluir</span>
-          </button>
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <button className="danger hover:underline">
+                <Trash2 className="h-5 w-5" />
+                <span className="sr-only">Excluir</span>
+              </button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Confirmar Exclusão</AlertDialogTitle>
+                <AlertDialogDescription>
+                  Esta ação não pode ser desfeita. Tem certeza de que deseja
+                  continuar?
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                <AlertDialogAction onClick={onConfirmDelete}>
+                  Continuar
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </CardFooter>
       </Card>
     </li>

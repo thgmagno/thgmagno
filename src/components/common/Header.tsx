@@ -3,7 +3,7 @@ import { ModeToggle } from '@/components/common/ModeToggle'
 
 export function Header() {
   return (
-    <nav className="mb-12 flex py-4 lg:mb-16">
+    <nav className="mb-12 flex flex-col py-4 md:flex-row lg:mb-16">
       <div className="flex flex-col justify-between md:flex-row md:items-center">
         <Link href="/" className="text-[28px] font-semibold tracking-tight">
           Thiago Magno

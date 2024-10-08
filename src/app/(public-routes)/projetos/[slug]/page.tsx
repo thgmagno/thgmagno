@@ -12,6 +12,9 @@ export default async function SlugProjeto({
       <h1 className="mb-8 text-2xl font-medium tracking-tight">
         {project.title}
       </h1>
+      <p className="prose prose-neutral dark:prose-invert pt-3">
+        {project.description}
+      </p>
     </section>
   )
 }

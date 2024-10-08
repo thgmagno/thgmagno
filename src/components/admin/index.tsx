@@ -8,12 +8,14 @@ import { Technologies } from './Technologies'
 export function AdminDashboard() {
   return (
     <Tabs defaultValue="categories">
-      <TabsList className="mb-5">
-        <TabsTrigger value="categories">Categorias</TabsTrigger>
-        <TabsTrigger value="formations">Formações</TabsTrigger>
-        <TabsTrigger value="technologies">Tecnologias</TabsTrigger>
-        <TabsTrigger value="projects">Projetos</TabsTrigger>
-      </TabsList>
+      <div className="no-scrollbar overflow-x-scroll">
+        <TabsList className="mb-5">
+          <TabsTrigger value="categories">Categorias</TabsTrigger>
+          <TabsTrigger value="formations">Formações</TabsTrigger>
+          <TabsTrigger value="technologies">Tecnologias</TabsTrigger>
+          <TabsTrigger value="projects">Projetos</TabsTrigger>
+        </TabsList>
+      </div>
       <TabsContent value="categories">
         <Categories />
       </TabsContent>

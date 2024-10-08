@@ -18,7 +18,8 @@ export default async function Formacoes() {
 function Formacao({ formation }: { formation: Formation }) {
   return (
     <Link
-      href="/blog/getting-started"
+      target="_blank"
+      href={formation.certificate_url || '#'}
       className="mb-4 flex flex-col space-y-1 transition-opacity duration-200 hover:opacity-80"
     >
       <div className="flex w-full flex-col items-start justify-between space-y-1 sm:flex-row sm:items-center sm:space-x-2 sm:space-y-0">
