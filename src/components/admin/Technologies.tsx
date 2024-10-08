@@ -1,9 +1,18 @@
+import { unstable_cache as cache } from 'next/cache'
 import { TechnologyForm } from '../form/Technologies'
 import { findManyTechnologies } from '@/server/actions'
 import { TechnologyItem } from './TechnologyItem'
 
 export async function Technologies() {
-  const technologies = await findManyTechnologies()
+  const getTechnologies = cache(
+    async () => {
+      return await findManyTechnologies()
+    },
+    ['technologies'],
+    { revalidate: 7 * 24 * 60 * 60, tags: ['technologies'] },
+  )
+
+  const technologies = await getTechnologies()
 
   return (
     <div>

@@ -1,3 +1,4 @@
+import { unstable_cache as cache } from 'next/cache'
 import { Pagination } from '@/components/common/Pagination'
 import { SortSelector } from '@/components/common/SortSelector'
 import { Project } from '@/lib/types'
@@ -11,11 +12,15 @@ export default async function Projetos({
 }) {
   const page = Number(searchParams.pagina) || 1
   const limit = Number(searchParams.limite) || 10
-  const pagination = await findManyProjects(
-    page,
-    limit,
-    !!searchParams.ordenacao,
+  const getProjects = cache(
+    async () => {
+      return await findManyProjects(page, limit, !!searchParams.ordenacao)
+    },
+    ['projects'],
+    { revalidate: 7 * 24 * 60 * 60, tags: ['projects'] },
   )
+
+  const pagination = await getProjects()
 
   return (
     <section className="space-y-6">
