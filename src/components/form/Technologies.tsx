@@ -70,7 +70,7 @@ export function TechnologyForm() {
             className="text-center"
           />
         </CardContent>
-        <CardFooter className="flex justify-end">
+        <CardFooter className="flex justify-end space-x-2">
           <Button type="button" onClick={onReset} variant="ghost">
             Resetar
           </Button>

@@ -48,7 +48,7 @@ export function Login() {
             />
           </div>
         </CardContent>
-        <CardFooter className="flex justify-end">
+        <CardFooter className="flex justify-end space-x-2">
           <SubmitButton title="Acessar" />
         </CardFooter>
       </form>

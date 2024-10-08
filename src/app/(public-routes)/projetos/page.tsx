@@ -1,3 +1,4 @@
+import { Pagination } from '@/components/common/Pagination'
 import { SortSelector } from '@/components/common/SortSelector'
 import { Project } from '@/lib/types'
 import { findManyProjects } from '@/server/actions'
@@ -8,11 +9,11 @@ export default async function Projetos({
 }: {
   searchParams: { ordenacao?: string; pagina?: string; limite?: string }
 }) {
-  const pagina = Number(searchParams.pagina) || 1
-  const limite = Number(searchParams.limite) || 10
-  const projetos = await findManyProjects(
-    pagina,
-    limite,
+  const page = Number(searchParams.pagina) || 1
+  const limit = Number(searchParams.limite) || 10
+  const pagination = await findManyProjects(
+    page,
+    limit,
     !!searchParams.ordenacao,
   )
 
@@ -22,9 +23,10 @@ export default async function Projetos({
         <h1 className="mb-8 text-2xl font-medium tracking-tight">Projetos</h1>
         <SortSelector ordenacao={searchParams.ordenacao} />
       </div>
-      {projetos.map((project) => (
+      {pagination.projects.map((project) => (
         <Projeto key={project.id} project={project} />
       ))}
+      {pagination.totalPages > 1 && <Pagination pagination={pagination} />}
     </section>
   )
 }
@@ -33,8 +35,7 @@ const Projeto = ({ project }: { project: Project }) => {
   return (
     <article>
       <Link
-        target="_blank"
-        href={project.website_url ?? '#'}
+        href={`/projetos/${project.slug}`}
         className="group block transition-opacity duration-200 hover:opacity-80"
       >
         <div className="flex flex-col">
@@ -50,7 +51,7 @@ const Projeto = ({ project }: { project: Project }) => {
             </span>
           </div>
           <p className="prose prose-neutral dark:prose-invert pt-3">
-            {project.description}
+            {project.description.slice(0, 180).concat('...')}
           </p>
         </div>
       </Link>
