@@ -1,9 +1,11 @@
-import { unstable_cache as cache } from 'next/cache'
+import { format } from 'date-fns'
+import { ptBR } from 'date-fns/locale'
 import { Pagination } from '@/components/common/Pagination'
 import { SortSelector } from '@/components/common/SortSelector'
 import { Project } from '@/lib/types'
 import { findManyProjects } from '@/server/actions'
 import Link from 'next/link'
+import { Suspense } from 'react'
 
 export default async function Projetos({
   searchParams,
@@ -12,27 +14,25 @@ export default async function Projetos({
 }) {
   const page = Number(searchParams.pagina) || 1
   const limit = Number(searchParams.limite) || 10
-  const getProjects = cache(
-    async () => {
-      return await findManyProjects(page, limit, !!searchParams.ordenacao)
-    },
-    ['projects'],
-    { revalidate: 7 * 24 * 60 * 60, tags: ['projects'] },
+  const pagination = await findManyProjects(
+    page,
+    limit,
+    !!searchParams.ordenacao,
   )
 
-  const pagination = await getProjects()
-
   return (
-    <section className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h1 className="mb-8 text-2xl font-medium tracking-tight">Projetos</h1>
-        <SortSelector ordenacao={searchParams.ordenacao} />
-      </div>
-      {pagination.projects.map((project) => (
-        <Projeto key={project.id} project={project} />
-      ))}
-      {pagination.totalPages > 1 && <Pagination pagination={pagination} />}
-    </section>
+    <Suspense fallback={'Carregando...'}>
+      <section className="space-y-6">
+        <div className="flex items-center justify-between">
+          <h1 className="mb-8 text-2xl font-medium tracking-tight">Projetos</h1>
+          <SortSelector ordenacao={searchParams.ordenacao} />
+        </div>
+        {pagination.projects.map((project) => (
+          <Projeto key={project.id} project={project} />
+        ))}
+        {pagination.totalPages > 1 && <Pagination pagination={pagination} />}
+      </section>
+    </Suspense>
   )
 }
 
@@ -49,9 +49,8 @@ const Projeto = ({ project }: { project: Project }) => {
               {project.title}
             </span>
             <span className="text-sm tabular-nums text-neutral-600 dark:text-neutral-400">
-              {project.created_at.toLocaleDateString('pt-br', {
-                month: 'short',
-                year: '2-digit',
+              {format(new Date(project.created_at), "MMM'. de 'yy", {
+                locale: ptBR,
               })}
             </span>
           </div>
