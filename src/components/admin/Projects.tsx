@@ -3,7 +3,7 @@ import { findManyProjects } from '@/server/actions'
 import { ProjectItem } from './ProjectItem'
 
 export async function Projects() {
-  const projects = await findManyProjects()
+  const { projects } = await findManyProjects()
 
   return (
     <div>
