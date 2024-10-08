@@ -1,37 +1,34 @@
 'use client'
 
-import { Moon, Sun } from 'lucide-react'
+import { Loader, Moon, Sun } from 'lucide-react'
 import { useTheme } from 'next-themes'
-import clsx from 'clsx'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 export function ModeToggle() {
-  const { setTheme, theme } = useTheme()
+  const [mounted, setMounted] = useState(false)
+  const { setTheme, resolvedTheme } = useTheme()
 
-  useEffect(() => {
-    const storagedTheme = localStorage.getItem('theme')
-    if (storagedTheme && storagedTheme !== theme) {
-      localStorage.setItem('theme', theme || 'dark')
-    }
-  }, [theme])
+  useEffect(() => setMounted(true), [])
 
-  return (
-    <button>
+  if (!mounted) {
+    return <Loader className="h-5 w-5 animate-spin" />
+  }
+
+  if (resolvedTheme === 'dark') {
+    return (
       <Sun
         onClick={() => setTheme('light')}
-        className={clsx(
-          'h-5 w-5 hover:text-neutral-800 dark:hover:text-neutral-200',
-          { hidden: theme === 'light' },
-        )}
+        className="h-5 w-5 cursor-pointer hover:text-neutral-800 dark:hover:text-neutral-200"
       />
+    )
+  }
+
+  if (resolvedTheme === 'light') {
+    return (
       <Moon
         onClick={() => setTheme('dark')}
-        className={clsx(
-          'h-5 w-5 hover:text-neutral-800 dark:hover:text-neutral-200',
-          { hidden: !theme || theme === 'dark' },
-        )}
+        className="h-5 w-5 cursor-pointer hover:text-neutral-800 dark:hover:text-neutral-200"
       />
-      <span className="sr-only">Toggle theme</span>
-    </button>
-  )
+    )
+  }
 }
