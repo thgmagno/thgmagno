@@ -81,7 +81,7 @@ export default async function SlugProjeto({
 
         {project.technologies.length > 0 && (
           <div className="pt-6">
-            <h3>Tecnologias utilizadas:</h3>
+            <h3 className="my-3 text-lg">Tecnologias utilizadas:</h3>
             <div className="flex flex-wrap gap-1">
               {project.technologies.map((tech) => (
                 <Link
