@@ -12,7 +12,9 @@ export default async function SlugProjeto({
   const project = await findOneProject(params.slug)
 
   const youtubeVideoUrl = project.presentation_video_url || ''
-  const youtubeVideoId = youtubeVideoUrl.split('/').pop() || ''
+  const youtubeVideoId = youtubeVideoUrl.includes('https://')
+    ? youtubeVideoUrl.split('/').pop()
+    : ''
 
   return (
     <Suspense fallback={'Carregando...'}>
