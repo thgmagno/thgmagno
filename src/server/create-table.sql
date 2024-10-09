@@ -42,3 +42,9 @@ CREATE TABLE port_project_technologies (
     technology_id INT REFERENCES port_technologies(id) ON DELETE CASCADE,
     PRIMARY KEY (project_id, technology_id)
 );
+
+CREATE TABLE port_visitors (
+  id SERIAL PRIMARY KEY,
+  visitor_id VARCHAR(255) UNIQUE NOT NULL,
+  visit_date TIMESTAMP DEFAULT NOW()
+);
