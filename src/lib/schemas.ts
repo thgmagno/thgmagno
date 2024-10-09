@@ -109,6 +109,7 @@ export const ProjectSchema = z.object({
   }, z.date()),
   website_url: z.string().optional().nullable(),
   presentation_video_url: z.string().optional().nullable(),
+  repository: z.string().optional().nullable(),
   technologies: z
     .array(z.number())
     .min(1, 'Selecione pelo menos uma tecnologia')

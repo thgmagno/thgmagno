@@ -55,12 +55,14 @@ export function ProjectForm({
     websiteUrl,
     presentationVideoUrl,
     technologies,
+    repository,
     setTitle,
     setCreatedAt,
     setDescription,
     setWebsiteUrl,
     setPresentationVideoUrl,
     setTechnologies,
+    setRepository,
     onReset,
   } = useProjectStore()
 
@@ -187,6 +189,18 @@ export function ProjectForm({
               <ErrorMessage
                 message={formState?.errors.presentation_video_url}
               />
+            </div>
+
+            <div className="flex flex-col space-y-1.5">
+              <Label htmlFor="repository">Repositório Github</Label>
+              <Input
+                id="repository"
+                name="repository"
+                placeholder="Informe a URL do repositório	no github (opcional)"
+                value={repository || ''}
+                onChange={(e) => setRepository(e.target.value)}
+              />
+              <ErrorMessage message={formState?.errors.repository} />
             </div>
 
             <div className="flex flex-col space-y-1.5">

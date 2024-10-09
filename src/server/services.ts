@@ -213,7 +213,7 @@ export async function upsertProject(
         .where('id', '=', parsed.data.id)
         .execute()
 
-      if (parsed.data.technologies?.length) {
+      if (parsed.data.technologies && parsed.data.technologies.length > 0) {
         await linkProjectsTechnologies(parsed.data.id, parsed.data.technologies)
       }
     } else {
@@ -230,7 +230,11 @@ export async function upsertProject(
         .returning('id')
         .executeTakeFirst()
 
-      if (project?.id && parsed.data.technologies?.length) {
+      if (
+        project?.id &&
+        parsed.data.technologies &&
+        parsed.data.technologies.length > 0
+      ) {
         await linkProjectsTechnologies(project.id, parsed.data.technologies)
       }
     }

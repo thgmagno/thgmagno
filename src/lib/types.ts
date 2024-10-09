@@ -67,6 +67,7 @@ export interface Project {
   created_at: Date
   website_url: string | null
   presentation_video_url: string | null
+  repository: string | null
 }
 
 export interface FormationCategories {
