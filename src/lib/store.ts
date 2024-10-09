@@ -29,6 +29,8 @@ interface ProjectStore extends BaseStore {
   websiteUrl: string
   presentationVideoUrl: string
   createdAt: Date
+  technologies: number[]
+  setTechnologies: (techs: number[]) => void
   setDescription: (value: string) => void
   setWebsiteUrl: (value: string) => void
   setPresentationVideoUrl: (value: string) => void
@@ -94,6 +96,7 @@ export const useProjectStore = create<ProjectStore>()((set) => ({
   websiteUrl: '',
   presentationVideoUrl: '',
   createdAt: new Date(),
+  technologies: [],
 
   setTitle: (value) => {
     if (value.trim() === '') return
@@ -120,6 +123,11 @@ export const useProjectStore = create<ProjectStore>()((set) => ({
     set({ createdAt: date || new Date() })
   },
 
+  setTechnologies: (techs: number[]) => {
+    if (!techs.length) return
+    set({ technologies: techs })
+  },
+
   onEdit: (project) =>
     set({
       id: String(project.id),
@@ -138,6 +146,7 @@ export const useProjectStore = create<ProjectStore>()((set) => ({
       websiteUrl: '',
       presentationVideoUrl: '',
       createdAt: new Date(),
+      technologies: [],
     }),
 }))
 
