@@ -29,9 +29,24 @@ import { Textarea } from '@/components/ui/textarea'
 import { useProjectStore } from '@/lib/store'
 import { useEffect } from 'react'
 import { toast } from 'sonner'
+import Select, { MultiValue } from 'react-select'
+import { getCustomStylesReactSelect } from '../ui/get-custom-styles-react-select'
+import { useTheme } from 'next-themes'
 
-export function ProjectForm() {
+interface TechnologyOption {
+  value: number
+  label: string
+}
+
+export function ProjectForm({
+  technologyOptions,
+}: {
+  technologyOptions: TechnologyOption[]
+}) {
   const [formState, action] = useFormState(upsertProject, { errors: {} })
+  const { resolvedTheme } = useTheme()
+  const isDarkMode = resolvedTheme === 'dark'
+
   const {
     id,
     title,
@@ -39,11 +54,13 @@ export function ProjectForm() {
     description,
     websiteUrl,
     presentationVideoUrl,
+    technologies,
     setTitle,
     setCreatedAt,
     setDescription,
     setWebsiteUrl,
     setPresentationVideoUrl,
+    setTechnologies,
     onReset,
   } = useProjectStore()
 
@@ -57,6 +74,15 @@ export function ProjectForm() {
       formState.success = false
     }
   }, [formState?.success])
+
+  const handleTechnologyChange = (
+    selectedOptions: MultiValue<TechnologyOption> | null,
+  ) => {
+    const selectedIds = selectedOptions
+      ? selectedOptions.map((option) => option.value)
+      : []
+    setTechnologies(selectedIds)
+  }
 
   return (
     <Card>
@@ -161,6 +187,24 @@ export function ProjectForm() {
               <ErrorMessage
                 message={formState?.errors.presentation_video_url}
               />
+            </div>
+
+            <div className="flex flex-col space-y-1.5">
+              <Label htmlFor="technologies">Tecnologias</Label>
+              <Select
+                id="technologies"
+                name="technologies"
+                isMulti
+                options={technologyOptions}
+                value={technologyOptions.filter((option) =>
+                  technologies.includes(option.value),
+                )}
+                onChange={handleTechnologyChange}
+                classNamePrefix="react-select"
+                styles={getCustomStylesReactSelect(isDarkMode)}
+                isClearable={false}
+              />
+              <ErrorMessage message={formState?.errors.technologies} />
             </div>
           </div>
           <ErrorMessage

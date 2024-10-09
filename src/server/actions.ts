@@ -89,7 +89,26 @@ export async function findOneProject(slug: string) {
 
   if (!project) redirect('/projetos')
 
-  return project
+  const technologies = await db
+    .selectFrom('port_project_technologies')
+    .leftJoin(
+      'port_technologies',
+      'port_project_technologies.technology_id',
+      'port_technologies.id',
+    )
+    .where('port_project_technologies.project_id', '=', project.id as number)
+    .select([
+      'port_technologies.id as technology_id',
+      'port_technologies.title as technology_title',
+      'port_technologies.url as technology_url',
+    ])
+    .orderBy('title')
+    .execute()
+
+  return {
+    ...project,
+    technologies,
+  }
 }
 
 export async function findManyCategories() {

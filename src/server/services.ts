@@ -192,6 +192,7 @@ export async function upsertProject(
     created_at: formData.get('created_at'),
     website_url: formData.get('website_url'),
     presentation_video_url: formData.get('presentation_video_url'),
+    technologies: formData.getAll('technologies').map(Number),
   })
 
   if (!parsed.success) {
@@ -211,8 +212,12 @@ export async function upsertProject(
         })
         .where('id', '=', parsed.data.id)
         .execute()
+
+      if (parsed.data.technologies?.length) {
+        await linkProjectsTechnologies(parsed.data.id, parsed.data.technologies)
+      }
     } else {
-      await db
+      const project = await db
         .insertInto('port_projects')
         .values({
           title: parsed.data.title,
@@ -222,7 +227,12 @@ export async function upsertProject(
           website_url: parsed.data.website_url,
           presentation_video_url: parsed.data.presentation_video_url,
         })
-        .execute()
+        .returning('id')
+        .executeTakeFirst()
+
+      if (project?.id && parsed.data.technologies?.length) {
+        await linkProjectsTechnologies(project.id, parsed.data.technologies)
+      }
     }
   } catch (error) {
     if (error instanceof Error) {
@@ -234,6 +244,26 @@ export async function upsertProject(
 
   revalidateTag(tags.projects)
   return { success: true, errors: {} }
+}
+
+async function linkProjectsTechnologies(
+  projectId: number,
+  technologyIds: number[],
+) {
+  const deletePromise = db
+    .deleteFrom('port_project_technologies')
+    .where('project_id', '=', projectId)
+    .execute()
+  const insertPromises = technologyIds.map((techId) =>
+    db
+      .insertInto('port_project_technologies')
+      .values({
+        project_id: projectId as number,
+        technology_id: techId,
+      })
+      .execute(),
+  )
+  return Promise.all([deletePromise, ...insertPromises])
 }
 
 export async function deleteCategory(id: number) {

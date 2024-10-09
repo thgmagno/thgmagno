@@ -1,3 +1,4 @@
+import { Badge } from '@/components/ui/badge'
 import { findOneProject } from '@/server/actions'
 import { ArrowUpRight } from 'lucide-react'
 import Link from 'next/link'
@@ -9,6 +10,7 @@ export default async function SlugProjeto({
   params: { slug: string }
 }) {
   const project = await findOneProject(params.slug)
+
   const youtubeVideoUrl = project.presentation_video_url || ''
   const youtubeVideoId = youtubeVideoUrl.split('/').pop() || ''
 
@@ -46,6 +48,22 @@ export default async function SlugProjeto({
             Conhecer o site
             <ArrowUpRight className="ml-2 h-5 w-5" />
           </Link>
+        )}
+        {project.technologies.length > 0 && (
+          <div className="mx-auto w-[95%] max-w-2xl pt-6">
+            <h3>Tecnologias utilizadas:</h3>
+            <div className="flex flex-wrap gap-1">
+              {project.technologies.map((tech) => (
+                <Link
+                  target="_blank"
+                  key={tech.technology_id}
+                  href={tech.technology_url || '#'}
+                >
+                  <Badge>{tech.technology_title}</Badge>
+                </Link>
+              ))}
+            </div>
+          </div>
         )}
       </section>
     </Suspense>

@@ -43,6 +43,7 @@ export interface ProjectFormState {
     created_at?: string[]
     website_url?: string[]
     presentation_video_url?: string[]
+    technologies?: string[]
     _form?: string
   }
 }
