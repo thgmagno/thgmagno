@@ -29,6 +29,7 @@ CREATE TABLE port_projects (
 );
 -- ALTER TABLE port_projects ADD CONSTRAINT unique_slug UNIQUE (slug);
 -- ALTER TABLE port_projects ADD COLUMN created_at DATE DEFAULT CURRENT_DATE NOT NULL;
+-- ALTER TABLE port_projects ADD COLUMN repository VARCHAR(255);
 
 CREATE TABLE port_formation_categories (
     formation_id INT REFERENCES port_formations(id) ON DELETE CASCADE,

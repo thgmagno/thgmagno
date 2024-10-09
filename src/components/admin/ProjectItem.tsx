@@ -71,6 +71,16 @@ export function ProjectItem({ project }: { project: Project }) {
                 {project.presentation_video_url || 'Não informado'}
               </Link>
             </p>
+            <p>
+              Repositório:{' '}
+              <Link
+                target="_blank"
+                href={project.repository || '#'}
+                className="hover:underline"
+              >
+                {project.repository || 'Não informado'}
+              </Link>
+            </p>
           </CardDescription>
         </CardHeader>
         <CardContent className="min-w-fit space-x-2 self-start">
