@@ -16,7 +16,15 @@ import { tags } from '@/lib/tags'
 import { db } from '@/server/db'
 import { revalidateTag } from 'next/cache'
 
-const createSlug = (text: string) => text.toLowerCase().split(' ').join('-')
+const createSlug = (text: string) => {
+  return text
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '')
+}
 
 export async function upsertCategory(
   formState: CategoryFormState,
