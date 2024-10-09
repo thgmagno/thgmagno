@@ -10,9 +10,12 @@ export async function countVisitors(visitorId: string) {
     .executeTakeFirst()
 
   if (!sessionExists?.id) {
+    const visitDate = new Date()
+    visitDate.setHours(visitDate.getHours() - 3)
+
     await db
       .insertInto('port_visitors')
-      .values({ visitor_id: visitorId, visit_date: new Date() })
+      .values({ visitor_id: visitorId, visit_date: visitDate })
       .execute()
   }
 }
