@@ -99,7 +99,7 @@ export const ProjectSchema = z.object({
     .min(1, 'O campo é obrigatório')
     .max(100)
     .transform((val) => capitalizeString(val)),
-  description: z.string().min(1, 'O campo é obrigatório').max(500),
+  description: z.string().min(1, 'O campo é obrigatório').max(600),
   created_at: z.preprocess((val) => {
     if (typeof val === 'string') {
       const parsed = new Date(val)
