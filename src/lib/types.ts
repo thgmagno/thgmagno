@@ -1,17 +1,19 @@
+import { Generated } from 'kysely'
+
 export interface Category {
-  id?: number
+  id: Generated<number>
   slug: string
   title: string
 }
 
 export interface Technology {
-  id?: number
+  id: Generated<number>
   title: string
   url: string
 }
 
 export interface Formation {
-  id?: number
+  id: Generated<number>
   institution: string
   title: string
   duration_time: number
@@ -19,16 +21,16 @@ export interface Formation {
 }
 
 export interface FormationWithCategory extends Formation {
-  category_id?: number | null
+  category_id: number | null
   category_title: string | null
 }
 
 export interface Project {
-  id?: number
+  id: Generated<number>
   title: string
   description: string
   slug: string
-  created_at: Date
+  created_at: Generated<Date>
   website_url: string | null
   presentation_video_url: string | null
   repository: string | null
@@ -45,7 +47,7 @@ export interface ProjectTechnologies {
 }
 
 export interface Visitors {
-  id?: number
+  id: Generated<number>
   visitor_id: string
   visit_date?: Date
 }
