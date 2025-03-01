@@ -1,7 +1,7 @@
 'use client'
 
 import { SortSelector } from '@/components/common/SortSelector'
-import { Pagination } from '@/components/ui/pagination'
+// import { Pagination } from '@/components/ui/pagination'
 import { Project } from '@/lib/types'
 import { ptBR } from 'date-fns/locale'
 import { motion } from 'framer-motion'
@@ -58,7 +58,7 @@ export function ProjetosAnimated({
           <Projeto project={project} />
         </motion.div>
       ))}
-      {pagination.totalPages > 1 && <Pagination pagination={pagination} />}
+      {/* {pagination.totalPages > 1 && <Pagination pagination={pagination} />} */}
     </>
   )
 }
