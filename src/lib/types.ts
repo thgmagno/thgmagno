@@ -1,4 +1,4 @@
-import { ColumnType, Generated, Selectable } from 'kysely'
+import { Generated, Selectable } from 'kysely'
 
 interface CategoryTable {
   id: Generated<number>
@@ -61,7 +61,7 @@ export type ProjectTechnologies = Selectable<ProjectTechnologiesTable>
 export interface VisitorsTable {
   id: Generated<number>
   visitor_id: string
-  visit_date?: ColumnType<Date, string | undefined, never>
+  visit_date?: Date
 }
 
 export type Visitors = Selectable<VisitorsTable>
