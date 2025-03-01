@@ -11,12 +11,12 @@ interface SlugProjetoAnimatedProps {
   project: {
     title: string
     description: string
-    website_url: string
-    repository: string
+    website_url?: string | null
+    repository?: string | null
     technologies: {
-      technology_id: string
-      technology_title: string
-      technology_url: string
+      technology_id: number | null
+      technology_title: string | null
+      technology_url: string | null
     }[]
   }
 }
