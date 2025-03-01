@@ -4,7 +4,7 @@ export function Footer() {
   const currentYear = new Date().getFullYear()
   return (
     <small className="mt-16 block cursor-default text-[#1C1C1C] dark:text-[#D4D4D4] lg:mt-24">
-      <time>© {currentYear} - CNPJ: 53.274.431/0001-02</time>
+      <time>© {currentYear} - Thiago Magno</time>
       <div className="float-right flex gap-3.5 text-lg transition-opacity duration-300 hover:opacity-90">
         <Link href="https://github.com/thgmagno" target="_blank">
           <svg
