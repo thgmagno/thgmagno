@@ -1,30 +1,38 @@
-export interface Category {
-  id: number
+import { ColumnType, Generated, Selectable } from 'kysely'
+
+interface CategoryTable {
+  id: Generated<number>
   slug: string
   title: string
 }
 
-export interface Technology {
-  id: number
+export type Category = Selectable<CategoryTable>
+
+interface TechnologyTable {
+  id: Generated<number>
   title: string
   url: string
 }
 
-export interface Formation {
-  id: number
+export type Technology = Selectable<TechnologyTable>
+
+interface FormationTable {
+  id: Generated<number>
   institution: string
   title: string
   duration_time: number
   certificate_url: string | null
 }
 
+export type Formation = Selectable<FormationTable>
+
 export interface FormationWithCategory extends Formation {
   category_id: number | null
   category_title: string | null
 }
 
-export interface Project {
-  id: number
+export interface ProjectTable {
+  id: Generated<number>
   title: string
   description: string
   slug: string
@@ -34,28 +42,36 @@ export interface Project {
   repository: string | null
 }
 
-export interface FormationCategories {
+export type Project = Selectable<ProjectTable>
+
+export interface FormationCategoriesTable {
   formation_id: number
   category_id: number
 }
 
-export interface ProjectTechnologies {
+export type FormationCategories = Selectable<FormationCategoriesTable>
+
+export interface ProjectTechnologiesTable {
   project_id: number
   technology_id: number
 }
 
-export interface Visitors {
-  id: number
+export type ProjectTechnologies = Selectable<ProjectTechnologiesTable>
+
+export interface VisitorsTable {
+  id: Generated<number>
   visitor_id: string
-  visit_date?: Date
+  visit_date?: ColumnType<Date, string | undefined, never>
 }
 
+export type Visitors = Selectable<VisitorsTable>
+
 export interface Database {
-  port_categories: Category
-  port_technologies: Technology
-  port_formations: Formation
-  port_projects: Project
-  port_visitors: Visitors
-  port_formation_categories: FormationCategories
-  port_project_technologies: ProjectTechnologies
+  port_categories: CategoryTable
+  port_technologies: TechnologyTable
+  port_formations: FormationTable
+  port_projects: ProjectTable
+  port_visitors: VisitorsTable
+  port_formation_categories: FormationCategoriesTable
+  port_project_technologies: ProjectTechnologiesTable
 }
