@@ -201,6 +201,7 @@ export async function upsertProject(
     website_url: formData.get('website_url'),
     presentation_video_url: formData.get('presentation_video_url'),
     technologies: formData.getAll('technologies').map(Number),
+    repository: formData.get('repository'),
   })
 
   if (!parsed.success) {
@@ -217,6 +218,7 @@ export async function upsertProject(
           created_at: parsed.data.created_at,
           website_url: parsed.data.website_url,
           presentation_video_url: parsed.data.presentation_video_url,
+          repository: parsed.data.repository,
         })
         .where('id', '=', parsed.data.id)
         .execute()
@@ -234,6 +236,7 @@ export async function upsertProject(
           created_at: parsed.data.created_at,
           website_url: parsed.data.website_url,
           presentation_video_url: parsed.data.presentation_video_url,
+          repository: parsed.data.repository,
         })
         .returning('id')
         .executeTakeFirst()

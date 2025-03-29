@@ -67,7 +67,7 @@ export function SlugProjetoAnimated({
           </div>
         )}
 
-        <div className="flex gap-2">
+        <div className="mt-5 flex gap-2">
           {project.website_url?.includes('https://') && (
             <Link
               target="_blank"

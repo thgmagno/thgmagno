@@ -34,8 +34,8 @@ export function ProjectItem({ project }: { project: Project }) {
   const onConfirmDelete = () => {
     toast.promise(deleteProject(project.id as number), {
       loading: 'Processando...',
-      success: 'Categoria deletada com sucesso.',
-      error: 'Falha ao deletar a categoria.',
+      success: 'Projeto deletado com sucesso.',
+      error: 'Falha ao deletar a projeto.',
     })
   }
 
