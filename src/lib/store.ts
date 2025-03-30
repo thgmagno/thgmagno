@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { Category, FormationWithCategory } from '@/lib/types'
+import { Category, FormationWithCategory } from '@/server/database.types'
 
 interface BaseStore {
   id: string

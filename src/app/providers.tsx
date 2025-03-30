@@ -1,8 +1,7 @@
 'use client'
 
 import { countVisitors } from '@/server/visitors'
-import { ThemeProvider } from 'next-themes'
-import { type ThemeProviderProps } from 'next-themes/dist/types'
+import { ThemeProvider, ThemeProviderProps } from 'next-themes'
 import { useEffect } from 'react'
 import { Toaster } from 'sonner'
 

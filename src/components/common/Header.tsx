@@ -9,7 +9,7 @@ export function Header() {
           Thiago Magno
         </Link>
       </div>
-      <div className="mt-6 flex flex-row items-center gap-4 md:ml-auto md:mt-0">
+      <div className="mt-6 flex flex-row items-center gap-4 md:mt-0 md:ml-auto">
         <Item href="/formacao" label="Formação" />
         <Item href="/projetos" label="Projetos" />
         <ModeToggle />

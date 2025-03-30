@@ -1,13 +1,12 @@
 import { z } from 'zod'
 
 const schema = z.object({
+  AUTH_GITHUB_ID: z.string(),
   POSTGRES_URL: z.string().url(),
-  ADMIN_USER: z.string(),
-  ADMIN_PASSWORD: z.string(),
   AUTH_SECRET: z.string(),
-  COOKIE_NAME: z.string(),
-  BASE_URL: z.string().url(),
   GITHUB_TOKEN: z.string(),
+  AUTH_GITHUB_SECRET: z.string(),
+  ADMIN_EMAIL: z.string(),
 })
 
 export const env = schema.parse(process.env)

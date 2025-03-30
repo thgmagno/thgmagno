@@ -1,5 +1,6 @@
 'use server'
 
+import { signIn } from '@/auth'
 import { db } from '@/server/db'
 
 export async function findManyFormations() {
@@ -38,4 +39,8 @@ export async function findManyCategories() {
     .execute()
 
   return categories
+}
+
+export async function signInWithGithub() {
+  return signIn('github')
 }

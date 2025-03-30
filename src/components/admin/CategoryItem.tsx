@@ -19,7 +19,7 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
 import { useCategoryStore } from '@/lib/store'
-import { Category } from '@/lib/types'
+import { Category } from '@/server/database.types'
 import { deleteCategory } from '@/server/services'
 import { Edit, Trash2 } from 'lucide-react'
 import { toast } from 'sonner'
@@ -42,7 +42,7 @@ export function CategoryItem({ category }: { category: Category }) {
           <CardTitle>{category.title}</CardTitle>
           <CardDescription>Slug: {category.slug}</CardDescription>
         </CardHeader>
-        <CardFooter className="absolute right-0 top-5 space-x-2">
+        <CardFooter className="absolute top-5 right-0 space-x-2">
           <button
             onClick={() => {
               onEdit(category)

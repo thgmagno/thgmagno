@@ -82,7 +82,7 @@ const Projeto = ({ project }: { project: GithubProject }) => {
             <span className="font-semibold tracking-tight text-black dark:text-white">
               {generateTitle(project.name)}
             </span>
-            <span className="text-sm tabular-nums text-neutral-600 dark:text-neutral-400">
+            <span className="text-sm text-neutral-600 tabular-nums dark:text-neutral-400">
               {format(new Date(project.created_at), "MMM'. de 'yy", {
                 locale: ptBR,
               })}

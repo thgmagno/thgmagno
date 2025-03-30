@@ -19,7 +19,7 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
 import { useFormationStore } from '@/lib/store'
-import { FormationWithCategory } from '@/lib/types'
+import { FormationWithCategory } from '@/server/database.types'
 import { deleteFormation } from '@/server/services'
 import { Edit, Trash2 } from 'lucide-react'
 import Link from 'next/link'
@@ -58,7 +58,7 @@ export function FormationItem({
             </Link>
           </CardDescription>
         </CardHeader>
-        <CardFooter className="absolute right-0 top-5 space-x-2">
+        <CardFooter className="absolute top-5 right-0 space-x-2">
           <button
             onClick={() => {
               onEdit(formation)

@@ -2,6 +2,7 @@ import { Suspense } from 'react'
 import { SlugProjetoAnimated } from './animated'
 import { env } from 'root/env'
 import { redirect } from 'next/navigation'
+import { Params } from '@/lib/types'
 
 const fetcher = async (url: string) => {
   const repository = await fetch(url, {
@@ -12,18 +13,15 @@ const fetcher = async (url: string) => {
   return repository.json()
 }
 
-export default async function SlugProjeto({
-  params,
-}: {
-  params: { slug: string }
-}) {
+export default async function SlugProjeto(props: { params: Params }) {
+  const params = await props.params
+  const slug = params.slug
+
   const [project, readme, packageJson] = await Promise.all([
-    fetcher(`https://api.github.com/repos/thgmagno/${params.slug}`),
+    fetcher(`https://api.github.com/repos/thgmagno/${slug}`),
+    fetcher(`https://api.github.com/repos/thgmagno/${slug}/contents/README.md`),
     fetcher(
-      `https://api.github.com/repos/thgmagno/${params.slug}/contents/README.md`,
-    ),
-    fetcher(
-      `https://api.github.com/repos/thgmagno/${params.slug}/contents/package.json`,
+      `https://api.github.com/repos/thgmagno/${slug}/contents/package.json`,
     ),
   ])
 

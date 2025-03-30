@@ -22,7 +22,7 @@ export default function Home() {
           height={150}
           width={150}
           alt="Foto de Thiago Magno"
-          className="mx-auto mb-10 mt-0 block rounded-full bg-gray-100 sm:float-right sm:mb-5 sm:ml-5 lg:mb-5 lg:mt-5"
+          className="mx-auto mt-0 mb-10 block rounded-full bg-gray-100 sm:float-right sm:mb-5 sm:ml-5 lg:mt-5 lg:mb-5"
         />
       </motion.div>
       <motion.div initial="hidden" animate="visible" variants={contentVariants}>
