@@ -42,5 +42,5 @@ export async function findManyCategories() {
 }
 
 export async function signInWithGithub() {
-  return signIn('github')
+  return signIn('github', { redirectTo: '/admin' })
 }

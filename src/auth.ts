@@ -21,5 +21,11 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
       }
       return token
     },
+    async redirect({ url, baseUrl }) {
+      if (url === baseUrl) {
+        return '/admin'
+      }
+      return url
+    },
   },
 })
