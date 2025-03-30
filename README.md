@@ -1,13 +1,11 @@
-# Thiago Magno - Full-Stack Web Developer
+# 📌 Thiago Magno - Full-Stack Web Developer
 
-Bem-vindo ao meu portfólio! Aqui você vai conhecer mais sobre minha trajetória, projetos e o que me motiva no mundo da tecnologia.
+Portfólio com informações sobre minha trajetória, projetos e habilidades.
 
-## Sobre Mim
+## 📜 Sobre o Projeto
+Sou um desenvolvedor web apaixonado por criar soluções inovadoras. Desde 2017, venho trabalhando no desenvolvimento de software, sempre buscando unir criatividade e tecnologia para impactar positivamente as pessoas e os negócios.
 
-Sou **Thiago Magno**, desenvolvedor web. Minha jornada na programação começou em 2017, quando fiz meu primeiro curso técnico profissionalizante. Desde então, venho me dedicando ao desenvolvimento de software com o objetivo de criar soluções inovadoras, sempre aplicando as melhores práticas do mercado e me mantendo atualizado com as últimas tecnologias.
-
-Acredito no poder transformador da tecnologia tanto para as pessoas quanto para os negócios, e busco sempre unir criatividade e tecnologia para fazer a diferença.
-
----
-
-© 2025 - Thiago Magno
+## 📱 Social
+- [GitHub](https://github.com/thgmagno)
+- [LinkedIn](https://www.linkedin.com/in/thgmagno)
+- [Portfólio](https://thgmagno.vercel.app/)
