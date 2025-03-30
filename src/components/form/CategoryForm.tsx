@@ -1,13 +1,13 @@
 'use client'
 
-import { CardContent, CardFooter } from '@/components/ui/card'
+import { CardContent } from '@/components/ui/card'
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { ErrorMessage } from '@/components/common/ErrorMessage'
-import { Button } from '@/components/ui/button'
 import { CategoryFormState } from '@/lib/states'
 import { Category } from '@prisma/client'
 import { Checkbox } from '../ui/checkbox'
+import { FormFooter } from './FormFooter'
 
 export function CategoryForm({
   action,
@@ -46,7 +46,10 @@ export function CategoryForm({
             <ErrorMessage message={formState?.errors.slug} />
           </div>
           <div className="flex items-center space-x-2">
-            <Checkbox name="active" defaultChecked={category?.active || true} />
+            <Checkbox
+              name="active"
+              defaultChecked={Boolean(category?.active)}
+            />
             <label className="text-sm leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
               Ativo
             </label>
@@ -64,11 +67,7 @@ export function CategoryForm({
           />
         </div>
       </CardContent>
-      <CardFooter className="flex justify-end">
-        <Button type="submit" disabled={isPending}>
-          {isPending ? 'Salvando...' : 'Salvar'}
-        </Button>
-      </CardFooter>
+      <FormFooter isPending={isPending} />
     </form>
   )
 }

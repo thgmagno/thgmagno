@@ -52,9 +52,7 @@ export const CategorySchema = z.object({
     ),
   active: z
     .string()
-    .refine((val) => val === 'on' || val === 'off', {
-      message: 'Informe um valor booleano válido',
-    })
+    .nullable()
     .transform((val) => val === 'on'),
   slug: z.string().optional(),
 })
@@ -88,12 +86,20 @@ export const FormationSchema = z.object({
   certificateUrl: z.string().optional().nullable(),
   active: z
     .string()
-    .refine((val) => val === 'on' || val === 'off', {
-      message: 'Informe um valor booleano válido',
-    })
+    .nullable()
     .transform((val) => val === 'on'),
-  institutionId: z.number({ message: 'Informe a instituição' }),
-  categoryId: z.number({ message: 'Informe a categoria' }),
+  institutionId: z
+    .string()
+    .refine((val) => !isNaN(Number(val)) && Number(val) > 0, {
+      message: 'Informe a instituição',
+    })
+    .transform((val) => Number(val)),
+  categoryId: z
+    .string()
+    .refine((val) => !isNaN(Number(val)) && Number(val) > 0, {
+      message: 'Informe a categoria',
+    })
+    .transform((val) => Number(val)),
 })
 
 export const InstitutionSchema = z.object({

@@ -1,4 +1,5 @@
 import { actions } from '@/actions'
+import { FormationItem } from './FormationItem'
 
 export async function Formations() {
   const [formations] = await Promise.all([
@@ -13,7 +14,7 @@ export async function Formations() {
         {formations.length > 0 ? (
           <ul className="space-y-3">
             {formations.map((formation) => (
-              <p>{formation.title}</p>
+              <FormationItem key={formation.id} formation={formation} />
             ))}
           </ul>
         ) : (

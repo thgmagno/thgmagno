@@ -12,24 +12,30 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
-import { useFormationStore } from '@/lib/store'
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog'
 import { Edit, Trash2 } from 'lucide-react'
 import Link from 'next/link'
 import { toast } from 'sonner'
 import { actions } from '@/actions'
-import { Category, Formation, Institution, Location } from '@prisma/client'
+import { FormationWithRelations } from '@/lib/types'
+import { FormationForm } from '../form/FormationForm'
+import { useActionState } from 'react'
 
-interface FormationComplete extends Formation {
-  instituition:
-    | Institution
-    | (null & {
-        location: Location | null
-      })
-  category: Category | null
-}
-
-export function FormationItem({ formation }: { formation: FormationComplete }) {
-  const { onEdit } = useFormationStore()
+export function FormationItem({
+  formation,
+}: {
+  formation: FormationWithRelations
+}) {
+  const [formState, action, isPending] = useActionState(
+    actions.formation.update,
+    { errors: {} },
+  )
 
   const onConfirmDelete = () => {
     toast.promise(actions.formation.destroy(formation.id), {
@@ -51,7 +57,7 @@ export function FormationItem({ formation }: { formation: FormationComplete }) {
             </p>
             {formation.endedAt && (
               <p>
-                Fim:
+                Término:
                 {new Intl.DateTimeFormat('pt-BR').format(formation.endedAt)}
               </p>
             )}
@@ -66,16 +72,22 @@ export function FormationItem({ formation }: { formation: FormationComplete }) {
           </div>
         </CardHeader>
         <CardFooter className="absolute top-5 right-0 space-x-2">
-          <button
-            onClick={() => {
-              onEdit(formation)
-              window.scrollTo({ top: 100, behavior: 'smooth' })
-            }}
-            className="success hover:underline"
-          >
-            <Edit className="h-5 w-5" />
-            <span className="sr-only">Editar</span>
-          </button>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Edit className="h-5 w-5 text-green-500" />
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Editar</DialogTitle>
+              </DialogHeader>
+              <FormationForm
+                formState={formState}
+                action={action}
+                isPending={isPending}
+                formation={formation}
+              />
+            </DialogContent>
+          </Dialog>
           <AlertDialog>
             <AlertDialogTrigger asChild>
               <button className="danger hover:underline">

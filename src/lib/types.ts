@@ -1,3 +1,5 @@
+import { Category, Formation, Institution, Location } from '@prisma/client'
+
 export type Params = Promise<{ slug: string }>
 export type SearchParams = Promise<{
   [key: string]: string | string[] | undefined
@@ -19,4 +21,9 @@ export interface GithubResponse {
   total_count: number
   incomplete_results: boolean
   items: GithubProject[]
+}
+
+export type FormationWithRelations = Formation & {
+  institution: Institution & { location: Location | null }
+  category: Category
 }

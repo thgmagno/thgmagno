@@ -31,6 +31,7 @@ import { toast } from 'sonner'
 import { actions } from '@/actions'
 import { useActionState } from 'react'
 import { CategoryForm } from '../form/CategoryForm'
+import clsx from 'clsx'
 
 export function CategoryItem({ category }: { category: Category }) {
   const [formState, action, isPending] = useActionState(
@@ -48,9 +49,13 @@ export function CategoryItem({ category }: { category: Category }) {
 
   return (
     <li>
-      <Card className="relative flex flex-col">
+      <Card
+        className={clsx('relative flex flex-col', {
+          'opacity-50': !category.active,
+        })}
+      >
         <CardHeader>
-          <CardTitle>{category.title}</CardTitle>
+          <CardTitle className="flex items-center">{category.title}</CardTitle>
           <CardDescription>Slug: {category.slug}</CardDescription>
         </CardHeader>
         <CardFooter className="absolute top-5 right-0 space-x-2">

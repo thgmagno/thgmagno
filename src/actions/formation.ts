@@ -8,7 +8,12 @@ import { redirect } from 'next/navigation'
 
 export async function index() {
   return prisma.formation.findMany({
-    include: { institution: true, category: true },
+    include: {
+      institution: {
+        include: { location: true },
+      },
+      category: true,
+    },
   })
 }
 
