@@ -1,24 +1,25 @@
-import { findManyProjects } from '@/server/actions'
 import { Suspense } from 'react'
 import { ProjetosAnimated } from './animated'
+import { GithubProject } from '@/lib/types'
+import { env } from 'root/env'
 
-export default async function Projetos({
-  searchParams,
-}: {
-  searchParams: { ordenacao?: string; pagina?: string; limite?: string }
-}) {
-  const page = Number(searchParams.pagina) || 1
-  const limit = Number(searchParams.limite) || 10
-  const pagination = await findManyProjects(
-    page,
-    limit,
-    !!searchParams.ordenacao,
-  )
+const fetcherRepositories = async (): Promise<GithubProject[]> =>
+  fetch(`https://api.github.com/user/repos`, {
+    headers: {
+      Authorization: `Bearer ${env.GITHUB_TOKEN}`,
+    },
+    next: {
+      revalidate: 1800,
+    },
+  }).then((res) => res.json())
+
+export default async function Projetos() {
+  const projects = await fetcherRepositories()
 
   return (
     <Suspense fallback={'Carregando...'}>
       <section className="space-y-6">
-        <ProjetosAnimated searchParams={searchParams} pagination={pagination} />
+        <ProjetosAnimated projects={projects} />
       </section>
     </Suspense>
   )

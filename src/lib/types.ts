@@ -75,3 +75,15 @@ export interface Database {
   port_formation_categories: FormationCategoriesTable
   port_project_technologies: ProjectTechnologiesTable
 }
+
+export interface GithubProject {
+  id: number
+  name: string
+  html_url: string
+  description: string | null
+  created_at: string
+  updated_at: string
+  homepage: string
+  language: string
+  visibility: string
+}

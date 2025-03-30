@@ -7,6 +7,7 @@ const schema = z.object({
   AUTH_SECRET: z.string(),
   COOKIE_NAME: z.string(),
   BASE_URL: z.string().url(),
+  GITHUB_TOKEN: z.string(),
 })
 
 export const env = schema.parse(process.env)

@@ -1,35 +1,22 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Badge } from '@/components/ui/badge'
 import { buttonVariants } from '@/components/ui/button'
 import { ArrowUpRight } from 'lucide-react'
 import Link from 'next/link'
-
-interface SlugProjetoAnimatedProps {
-  youtubeVideoId?: string
-  project: {
-    title: string
-    description: string
-    website_url?: string | null
-    repository?: string | null
-    technologies: {
-      technology_id: number | null
-      technology_title: string | null
-      technology_url: string | null
-    }[]
-  }
-}
+import { GithubProject } from '@/lib/types'
+import { RenderMD } from '@/components/common/RenderMD'
+import { RenderTechnologies } from '@/components/common/RenderTechnologies'
 
 export function SlugProjetoAnimated({
   project,
-  youtubeVideoId,
-}: SlugProjetoAnimatedProps) {
-  const titleVariants = {
-    hidden: { opacity: 0, x: -30 },
-    visible: { opacity: 1, x: 0, transition: { duration: 1 } },
-  }
-
+  readme,
+  packageJson,
+}: {
+  project: GithubProject
+  readme: string
+  packageJson: string
+}) {
   const contentVariants = {
     hidden: { opacity: 0, y: 50 },
     visible: { opacity: 1, y: 0, transition: { duration: 1 } },
@@ -37,41 +24,16 @@ export function SlugProjetoAnimated({
 
   return (
     <>
-      <motion.h1
-        className="mb-8 text-2xl font-medium tracking-tight"
-        initial="hidden"
-        animate="visible"
-        variants={titleVariants}
-      >
-        {project.title}
-      </motion.h1>
       <motion.div initial="hidden" animate="visible" variants={contentVariants}>
-        <p className="prose prose-neutral dark:prose-invert pt-3">
-          {project.description}
-        </p>
-
-        {youtubeVideoId && (
-          <div className="pt-6">
-            <div
-              className="relative h-0 w-full"
-              style={{ paddingTop: '56.25%' }}
-            >
-              <iframe
-                className="absolute left-0 top-0 h-full w-full rounded-xl"
-                src={`https://www.youtube.com/embed/${youtubeVideoId}`}
-                title="YouTube video player"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              ></iframe>
-            </div>
-          </div>
-        )}
+        <div className="prose prose-neutral dark:prose-invert pt-3">
+          <RenderMD md={readme} />
+        </div>
 
         <div className="mt-5 flex gap-2">
-          {project.website_url?.includes('https://') && (
+          {project.homepage?.includes('https://') && (
             <Link
               target="_blank"
-              href={project.website_url}
+              href={project.homepage}
               className={buttonVariants({ variant: 'secondary' })}
             >
               Conhecer o site
@@ -79,10 +41,10 @@ export function SlugProjetoAnimated({
             </Link>
           )}
 
-          {project.repository && (
+          {project.html_url && (
             <Link
               target="_blank"
-              href={project.repository}
+              href={project.html_url}
               className={buttonVariants({ variant: 'secondary' })}
             >
               Repositório
@@ -102,22 +64,30 @@ export function SlugProjetoAnimated({
           )}
         </div>
 
-        {project.technologies.length > 0 && (
-          <div className="pt-6">
-            <h3 className="my-3 text-lg">Tecnologias utilizadas:</h3>
-            <div className="flex flex-wrap gap-1">
-              {project.technologies.map((tech) => (
-                <Link
-                  target="_blank"
-                  key={tech.technology_id}
-                  href={tech.technology_url || '#'}
-                >
-                  <Badge>{tech.technology_title}</Badge>
-                </Link>
-              ))}
-            </div>
-          </div>
-        )}
+        <div className="my-5 border-t" />
+
+        <div className="space-y-2 text-neutral-300">
+          <p>
+            <b>Criado em:</b>{' '}
+            {new Date(project.created_at).toLocaleDateString('pt-BR', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            })}
+          </p>
+          <p>
+            <b>Última atualização:</b>{' '}
+            {new Date(project.updated_at).toLocaleDateString('pt-BR', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            })}
+          </p>
+        </div>
+
+        <div className="my-5 border-t" />
+
+        <RenderTechnologies data={packageJson} />
       </motion.div>
     </>
   )

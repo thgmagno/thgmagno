@@ -1,11 +1,5 @@
 import { create } from 'zustand'
-import {
-  Category,
-  FormationWithCategory,
-  Project,
-  Technology,
-} from '@/lib/types'
-import { isDate } from 'date-fns'
+import { Category, FormationWithCategory } from '@/lib/types'
 
 interface BaseStore {
   id: string
@@ -16,28 +10,6 @@ interface BaseStore {
 
 interface CategoryStore extends BaseStore {
   onEdit: (category: Category) => void
-}
-
-interface TechnologyStore extends BaseStore {
-  url: string
-  setUrl: (value: string) => void
-  onEdit: (technology: Technology) => void
-}
-
-interface ProjectStore extends BaseStore {
-  description: string
-  websiteUrl: string
-  presentationVideoUrl: string
-  createdAt: Date
-  technologies: number[]
-  repository: string | null
-  setRepository: (value: string) => void
-  setTechnologies: (techs: number[]) => void
-  setDescription: (value: string) => void
-  setWebsiteUrl: (value: string) => void
-  setPresentationVideoUrl: (value: string) => void
-  setCreatedAt: (date: Date | null) => void
-  onEdit: (project: Project) => void
 }
 
 interface FormationStore extends BaseStore {
@@ -64,100 +36,6 @@ export const useCategoryStore = create<CategoryStore>()((set) => ({
   onEdit: (category) => set({ id: String(category.id), title: category.title }),
 
   onReset: () => set({ id: '', title: '' }),
-}))
-
-export const useTechnologyStore = create<TechnologyStore>()((set) => ({
-  id: '',
-  title: '',
-  url: '',
-
-  setTitle: (value) => {
-    if (value.trim() === '') return
-    set({ title: value })
-  },
-
-  setUrl: (value) => {
-    if (value.trim() === '') return
-    set({ url: value })
-  },
-
-  onEdit: (technology) =>
-    set({
-      id: String(technology.id),
-      title: technology.title,
-      url: technology.url,
-    }),
-
-  onReset: () => set({ id: '', title: '', url: '' }),
-}))
-
-export const useProjectStore = create<ProjectStore>()((set) => ({
-  id: '',
-  title: '',
-  description: '',
-  websiteUrl: '',
-  presentationVideoUrl: '',
-  createdAt: new Date(),
-  technologies: [],
-  repository: '',
-
-  setTitle: (value) => {
-    if (value.trim() === '') return
-    set({ title: value })
-  },
-
-  setDescription: (value) => {
-    if (value.trim() === '') return
-    set({ description: value })
-  },
-
-  setWebsiteUrl: (value) => {
-    if (value.trim() === '') return
-    set({ websiteUrl: value })
-  },
-
-  setPresentationVideoUrl: (value) => {
-    if (value.trim() === '') return
-    set({ presentationVideoUrl: value })
-  },
-
-  setCreatedAt: (date) => {
-    if (!isDate(date)) return
-    set({ createdAt: date || new Date() })
-  },
-
-  setTechnologies: (techs: number[]) => {
-    if (!techs.length) return
-    set({ technologies: techs })
-  },
-
-  setRepository: (value) => {
-    if (value.trim() === '') return
-    set({ repository: value })
-  },
-
-  onEdit: (project) =>
-    set({
-      id: String(project.id),
-      title: project.title,
-      description: project.description,
-      websiteUrl: project.website_url || '#',
-      presentationVideoUrl: project.presentation_video_url || '#',
-      createdAt: new Date(project.created_at),
-      repository: project.repository,
-    }),
-
-  onReset: () =>
-    set({
-      id: '',
-      title: '',
-      description: '',
-      websiteUrl: '',
-      presentationVideoUrl: '',
-      repository: '',
-      createdAt: new Date(),
-      technologies: [],
-    }),
 }))
 
 export const useFormationStore = create<FormationStore>()((set) => ({

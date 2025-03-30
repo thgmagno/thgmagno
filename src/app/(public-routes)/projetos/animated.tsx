@@ -1,26 +1,17 @@
 'use client'
 
-import { SortSelector } from '@/components/common/SortSelector'
-// import { Pagination } from '@/components/ui/pagination'
-import { Project } from '@/lib/types'
+import { GithubProject } from '@/lib/types'
 import { ptBR } from 'date-fns/locale'
 import { motion } from 'framer-motion'
 import { format } from 'date-fns'
 import Link from 'next/link'
+import { ArrowDownAz, ArrowUpAz } from 'lucide-react'
+import { useState } from 'react'
+import { generateTitle } from '@/lib/utils'
 
-interface ProjetosAnimatedProps {
-  searchParams: { ordenacao?: string; pagina?: string; limite?: string }
-  pagination: {
-    projects: Project[]
-    totalPages: number
-    currentPage: number
-  }
-}
+export function ProjetosAnimated({ projects }: { projects: GithubProject[] }) {
+  const [order, setOrder] = useState<'asc' | 'desc'>('asc')
 
-export function ProjetosAnimated({
-  pagination,
-  searchParams,
-}: ProjetosAnimatedProps) {
   const titleVariants = {
     hidden: { opacity: 0, x: -30 },
     visible: { opacity: 1, x: 0, transition: { duration: 1 } },
@@ -35,6 +26,11 @@ export function ProjetosAnimated({
     },
   })
 
+  const projectsSorted =
+    order === 'asc'
+      ? projects.sort((a, b) => a.name.localeCompare(b.name))
+      : projects.sort((a, b) => b.name.localeCompare(a.name))
+
   return (
     <>
       <div className="flex items-center justify-between">
@@ -46,9 +42,21 @@ export function ProjetosAnimated({
         >
           Projetos
         </motion.h1>
-        <SortSelector ordenacao={searchParams.ordenacao} />
+        <div>
+          {order === 'asc' ? (
+            <ArrowDownAz
+              onClick={() => setOrder('desc')}
+              className="h-5 w-5 cursor-pointer"
+            />
+          ) : (
+            <ArrowUpAz
+              onClick={() => setOrder('asc')}
+              className="h-5 w-5 cursor-pointer"
+            />
+          )}
+        </div>
       </div>
-      {pagination.projects.map((project, index) => (
+      {projectsSorted.map((project, index) => (
         <motion.div
           key={`${project.id}`}
           initial="hidden"
@@ -58,22 +66,21 @@ export function ProjetosAnimated({
           <Projeto project={project} />
         </motion.div>
       ))}
-      {/* {pagination.totalPages > 1 && <Pagination pagination={pagination} />} */}
     </>
   )
 }
 
-const Projeto = ({ project }: { project: Project }) => {
+const Projeto = ({ project }: { project: GithubProject }) => {
   return (
     <article>
       <Link
-        href={`/projetos/${project.slug}`}
+        href={`/projetos/${project.name}`}
         className="group block transition-opacity duration-200 hover:opacity-80"
       >
         <div className="flex flex-col">
           <div className="flex w-full items-baseline justify-between">
             <span className="font-semibold tracking-tight text-black dark:text-white">
-              {project.title}
+              {generateTitle(project.name)}
             </span>
             <span className="text-sm tabular-nums text-neutral-600 dark:text-neutral-400">
               {format(new Date(project.created_at), "MMM'. de 'yy", {
@@ -82,7 +89,7 @@ const Projeto = ({ project }: { project: Project }) => {
             </span>
           </div>
           <p className="prose prose-neutral dark:prose-invert pt-3">
-            {project.description.slice(0, 180).concat('...')}
+            {project.description || 'Sem descrição'}
           </p>
         </div>
       </Link>

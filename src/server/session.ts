@@ -5,7 +5,7 @@ import { LoginFormState } from '@/lib/states'
 import { redirect } from 'next/navigation'
 import * as jose from 'jose'
 import { compare } from 'bcrypt'
-import { env } from '../../env'
+import { env } from 'root/env'
 import { cookies } from 'next/headers'
 
 const secret = new TextEncoder().encode(env.AUTH_SECRET)

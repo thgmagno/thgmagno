@@ -2,8 +2,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 import { Categories } from './Categories'
 import { Formations } from './Formations'
-import { Projects } from './Projects'
-import { Technologies } from './Technologies'
 import { Visitors } from './Visitors'
 
 export function AdminDashboard() {
@@ -14,8 +12,6 @@ export function AdminDashboard() {
           <TabsTrigger value="visitors">Visitantes</TabsTrigger>
           <TabsTrigger value="categories">Categorias</TabsTrigger>
           <TabsTrigger value="formations">Formações</TabsTrigger>
-          <TabsTrigger value="technologies">Tecnologias</TabsTrigger>
-          <TabsTrigger value="projects">Projetos</TabsTrigger>
         </TabsList>
       </div>
       <TabsContent value="visitors">
@@ -26,12 +22,6 @@ export function AdminDashboard() {
       </TabsContent>
       <TabsContent value="formations">
         <Formations />
-      </TabsContent>
-      <TabsContent value="technologies">
-        <Technologies />
-      </TabsContent>
-      <TabsContent value="projects">
-        <Projects />
       </TabsContent>
     </Tabs>
   )
