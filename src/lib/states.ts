@@ -1,35 +1,41 @@
-export interface LoginFormState {
+export interface LocationFormState {
   errors: {
-    user?: string[]
-    password?: string[]
+    id?: string[]
+    title?: string[]
     _form?: string
   }
 }
 
 export interface CategoryFormState {
-  success?: boolean
   errors: {
+    id?: string[]
     title?: string[]
+    active?: string[]
+    slug?: string[]
     _form?: string
   }
 }
 
 export interface FormationFormState {
-  success?: boolean
   errors: {
-    institution?: string[]
+    id?: string[]
     title?: string[]
-    duration_time?: string[]
-    certificate_url?: string[]
-    category?: string[]
+    startedAt?: string[]
+    endedAt?: string[]
+    certificateUrl?: string[]
+    active?: string[]
+    institutionId?: string[]
+    categoryId?: string[]
     _form?: string
   }
 }
 
-export interface FormationCategoriesFormState {
+export interface InstitutionFormState {
   errors: {
-    formation_id?: string[]
-    category_id?: string[]
+    id?: string[]
+    name?: string[]
+    modality?: string[]
+    locationId?: string[]
     _form?: string
   }
 }

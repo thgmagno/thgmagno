@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Formation } from '@/server/database.types'
+import { Formation } from '@prisma/client'
 import Link from 'next/link'
 
 export function FormacoesAnimated({ formations }: { formations: Formation[] }) {
@@ -38,7 +38,7 @@ function Formacao({ formation }: { formation: Formation }) {
   return (
     <Link
       target="_blank"
-      href={formation.certificate_url || '#'}
+      href={formation.certificateUrl || '#'}
       className="mb-4 flex flex-col space-y-1 transition-opacity duration-200 hover:opacity-80"
     >
       <div className="flex w-full flex-col items-start justify-between space-y-1 sm:flex-row sm:items-center sm:space-y-0 sm:space-x-2">
@@ -47,11 +47,13 @@ function Formacao({ formation }: { formation: Formation }) {
             {formation.title}
           </p>
           <p className="text-muted-foreground text-sm">
-            {formation.institution}
+            {formation.institutionId}
           </p>
         </div>
         <p className="text-sm text-neutral-600 tabular-nums dark:text-neutral-400">
-          {formation.duration_time} horas
+          {new Intl.DateTimeFormat('pt-BR', {
+            dateStyle: 'medium',
+          }).format(formation.startedAt)}
         </p>
       </div>
     </Link>

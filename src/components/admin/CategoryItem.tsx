@@ -18,17 +18,28 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
-import { useCategoryStore } from '@/lib/store'
-import { Category } from '@/server/database.types'
-import { deleteCategory } from '@/server/services'
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog'
+import { Category } from '@prisma/client'
 import { Edit, Trash2 } from 'lucide-react'
 import { toast } from 'sonner'
+import { actions } from '@/actions'
+import { useActionState } from 'react'
+import { CategoryForm } from '../form/CategoryForm'
 
 export function CategoryItem({ category }: { category: Category }) {
-  const { onEdit } = useCategoryStore()
+  const [formState, action, isPending] = useActionState(
+    actions.category.update,
+    { errors: {} },
+  )
 
   const onConfirmDelete = () => {
-    toast.promise(deleteCategory(category.id as number), {
+    toast.promise(actions.category.destroy(category.id), {
       loading: 'Processando...',
       success: 'Categoria deletada com sucesso.',
       error: 'Falha ao deletar a categoria.',
@@ -43,16 +54,28 @@ export function CategoryItem({ category }: { category: Category }) {
           <CardDescription>Slug: {category.slug}</CardDescription>
         </CardHeader>
         <CardFooter className="absolute top-5 right-0 space-x-2">
+          <Dialog>
+            <DialogTrigger asChild>
+              <Edit className="h-5 w-5 text-green-500" />
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Editar</DialogTitle>
+              </DialogHeader>
+              <CategoryForm
+                formState={formState}
+                action={action}
+                isPending={isPending}
+                category={category}
+              />
+            </DialogContent>
+          </Dialog>
           <button
             onClick={() => {
-              onEdit(category)
               window.scrollTo({ top: 100, behavior: 'smooth' })
             }}
             className="success hover:underline"
-          >
-            <Edit className="h-5 w-5" />
-            <span className="sr-only">Editar</span>
-          </button>
+          ></button>
           <AlertDialog>
             <AlertDialogTrigger asChild>
               <button className="danger hover:underline">

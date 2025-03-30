@@ -64,7 +64,6 @@ export function RenderTechnologies({ data }: { data: string }) {
     { title: 'kysely', url: 'https://kysely.dev/' },
     { title: 'react-select', url: 'https://react-select.com/' },
     { title: 'recharts', url: 'https://recharts.org/en-US/' },
-    { title: 'react-day-picker', url: 'https://react-day-picker.js.org/' },
     { title: 'next-themes', url: 'https://github.com/pacocoursey/next-themes' },
     { title: 'sonner', url: 'https://sonnerjs.com/' },
   ]

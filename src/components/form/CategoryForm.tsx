@@ -1,0 +1,74 @@
+'use client'
+
+import { CardContent, CardFooter } from '@/components/ui/card'
+import { Label } from '@/components/ui/label'
+import { Input } from '@/components/ui/input'
+import { ErrorMessage } from '@/components/common/ErrorMessage'
+import { Button } from '@/components/ui/button'
+import { CategoryFormState } from '@/lib/states'
+import { Category } from '@prisma/client'
+import { Checkbox } from '../ui/checkbox'
+
+export function CategoryForm({
+  action,
+  formState,
+  isPending,
+  category,
+}: {
+  action: (payload: FormData) => void
+  formState: CategoryFormState
+  isPending: boolean
+  category?: Category
+}) {
+  return (
+    <form action={action}>
+      <CardContent>
+        <div className="grid w-full items-baseline gap-4">
+          <input type="hidden" name="id" defaultValue={category?.id || ''} />
+          <div className="flex flex-col space-y-1.5">
+            <Label htmlFor="title">Título</Label>
+            <Input
+              id="title"
+              name="title"
+              placeholder="Informe o título"
+              defaultValue={category?.title || ''}
+            />
+            <ErrorMessage message={formState?.errors.title} />
+          </div>
+          <div className="flex flex-col space-y-1.5">
+            <Label htmlFor="title">Slug</Label>
+            <Input
+              id="slug"
+              name="slug"
+              placeholder="Informe o título"
+              defaultValue={category?.slug || ''}
+            />
+            <ErrorMessage message={formState?.errors.slug} />
+          </div>
+          <div className="flex items-center space-x-2">
+            <Checkbox name="active" defaultChecked={category?.active || true} />
+            <label className="text-sm leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+              Ativo
+            </label>
+            <ErrorMessage message={formState?.errors.active} />
+          </div>
+        </div>
+        <div className="mt-3 flex">
+          <ErrorMessage
+            message={formState?.errors.id}
+            className="text-center"
+          />
+          <ErrorMessage
+            message={formState?.errors._form}
+            className="text-center"
+          />
+        </div>
+      </CardContent>
+      <CardFooter className="flex justify-end">
+        <Button type="submit" disabled={isPending}>
+          {isPending ? 'Salvando...' : 'Salvar'}
+        </Button>
+      </CardFooter>
+    </form>
+  )
+}

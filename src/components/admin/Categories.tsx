@@ -1,22 +1,11 @@
-import { unstable_cache as cache } from 'next/cache'
-import { CategoryForm } from '@/components/form/Category'
-import { findManyCategories } from '@/server/actions'
 import { CategoryItem } from './CategoryItem'
+import { actions } from '@/actions'
 
 export async function Categories() {
-  const getCategories = cache(
-    async () => {
-      return await findManyCategories()
-    },
-    ['categories'],
-    { revalidate: 7 * 24 * 60 * 60, tags: ['categories'] },
-  )
-
-  const categories = await getCategories()
+  const categories = await actions.category.index()
 
   return (
     <div>
-      <CategoryForm />
       <h2 className="mt-6 text-xl font-semibold">Categorias Cadastradas</h2>
       <div className="mt-4">
         {categories.length > 0 ? (

@@ -13,21 +13,26 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
 import { useFormationStore } from '@/lib/store'
-import { FormationWithCategory } from '@/server/database.types'
-import { deleteFormation } from '@/server/services'
 import { Edit, Trash2 } from 'lucide-react'
 import Link from 'next/link'
 import { toast } from 'sonner'
+import { actions } from '@/actions'
+import { Category, Formation, Institution, Location } from '@prisma/client'
 
-export function FormationItem({
-  formation,
-}: {
-  formation: FormationWithCategory
-}) {
+interface FormationComplete extends Formation {
+  instituition:
+    | Institution
+    | (null & {
+        location: Location | null
+      })
+  category: Category | null
+}
+
+export function FormationItem({ formation }: { formation: FormationComplete }) {
   const { onEdit } = useFormationStore()
 
   const onConfirmDelete = () => {
-    toast.promise(deleteFormation(formation.id as number), {
+    toast.promise(actions.formation.destroy(formation.id), {
       loading: 'Processando...',
       success: 'Categoria deletada com sucesso.',
       error: 'Falha ao deletar a categoria.',
@@ -40,12 +45,20 @@ export function FormationItem({
         <CardHeader>
           <CardTitle>{formation.title}</CardTitle>
           <div className="text-muted-foreground text-sm">
-            <p>Duração: {formation.duration_time} horas</p>
-            <p>Instituição: {formation.institution}</p>
-            <p>Categoria: {formation.category_title || 'Não informado'}</p>
+            <p>
+              Início:{' '}
+              {new Intl.DateTimeFormat('pt-BR').format(formation.startedAt)}
+            </p>
+            {formation.endedAt && (
+              <p>
+                Fim:
+                {new Intl.DateTimeFormat('pt-BR').format(formation.endedAt)}
+              </p>
+            )}
+            <p>Status: {formation.endedAt ? 'Concluído' : 'Em andamento'}</p>
             <Link
               target="_blank"
-              href={formation.certificate_url || '#'}
+              href={formation.certificateUrl || '#'}
               className="hover:underline"
             >
               Acessar o certificado

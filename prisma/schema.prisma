@@ -1,0 +1,68 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("POSTGRES_URL")
+}
+
+model Category {
+  id        Int         @id @default(autoincrement())
+  slug      String      @unique @db.VarChar(32)
+  title     String      @unique @db.VarChar(64)
+  active    Boolean     @default(true)
+  Formation Formation[]
+
+  @@map("category")
+}
+
+model Formation {
+  id             Int         @id @default(autoincrement())
+  institution    Institution @relation(fields: [institutionId], references: [id])
+  title          String      @db.VarChar(64)
+  category       Category    @relation(fields: [categoryId], references: [id])
+  startedAt      DateTime    @map("started_at") @db.Date
+  endedAt        DateTime?   @map("ended_at") @db.Date
+  certificateUrl String?     @unique @map("certificate_url") @db.VarChar(512)
+  active         Boolean     @default(true)
+  institutionId  Int         @map("institution_id")
+  categoryId     Int         @map("category_id")
+
+  @@map("formation")
+}
+
+model Institution {
+  id         Int         @id @default(autoincrement())
+  name       String      @unique @db.VarChar(64)
+  location   Location?   @relation(fields: [locationId], references: [id])
+  modality   Modality
+  Formation  Formation[]
+  locationId Int?        @map("location_id")
+
+  @@map("institution")
+}
+
+model Location {
+  id          Int           @id @default(autoincrement())
+  title       String        @unique @db.VarChar(64)
+  Institution Institution[]
+
+  @@map("location")
+}
+
+model Visit {
+  id        Int      @id @default(autoincrement())
+  ip        String
+  visitDate DateTime @map("visit_date") @db.Date
+
+  @@map("visit")
+}
+
+enum Modality {
+  ONLINE     @map("Online")
+  PRESENCIAL @map("Presencial")
+  HIBRIDO    @map("Híbrido")
+
+  @@map("modality")
+}

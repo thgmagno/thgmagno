@@ -1,17 +1,8 @@
-import { unstable_cache as cache } from 'next/cache'
-import { findManyFormations } from '@/server/actions'
 import { FormacoesAnimated } from './animated'
+import { actions } from '@/actions'
 
 export default async function Formacoes() {
-  const getFormations = cache(
-    async () => {
-      return await findManyFormations()
-    },
-    ['formations'],
-    { revalidate: 7 * 24 * 60 * 60, tags: ['formations'] },
-  )
-
-  const formations = await getFormations()
+  const formations = await actions.formation.index()
 
   return (
     <section className="space-y-6">

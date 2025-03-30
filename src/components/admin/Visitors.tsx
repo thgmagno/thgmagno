@@ -1,13 +1,12 @@
-import { getVisits } from '@/server/visitors'
-import { VisitChart } from './VisitChart'
+import { actions } from '@/actions'
 
 export async function Visitors() {
-  const { visits, totalVisits } = await getVisits()
+  const data = await actions.visit.index()
 
   return (
     <div>
-      <h2 className="mt-6 text-xl font-semibold">Visitantes: {totalVisits}</h2>
-      <VisitChart chartData={visits} />
+      <h2 className="mt-6 text-xl font-semibold">Visitantes:</h2>
+      <pre>{JSON.stringify(data, null, 2)}</pre>
     </div>
   )
 }
