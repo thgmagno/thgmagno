@@ -29,19 +29,28 @@ export default function Home() {
         <h1 className="mb-8 text-2xl font-medium tracking-tight">
           Desenvolvedor web full-stack
         </h1>
-        <div className="prose prose-neutral dark:prose-invert">
+        <div className="prose prose-neutral dark:prose-invert space-y-3">
           <p>
             Sempre fui ligado em tecnologia, e a minha jornada começou em 2017,
             quando realizei um curso técnico profissionalizante.
           </p>
           <p>
-            Desde então, venho me dedicando à programação, buscando aplicar as
-            melhores práticas do mercado e mantendo a mente aberta para novas
-            ideias e tecnologias.
+            Desde então, venho aprimorando minhas habilidades e me aprofundando
+            nas melhores práticas do desenvolvimento de software, sempre com um
+            olhar atento às novas tendências e inovações do setor.
           </p>
           <p>
-            Eu acredito que a tecnologia pode transformar vidas e negócios, e o
-            meu objetivo é combinar criatividade e tecnologia.
+            Atuo como desenvolvedor, unindo lógica e criatividade para construir
+            aplicações escaláveis, seguras e eficientes. Minha experiência
+            inclui o desenvolvimento de APIs, otimização de interfaces e
+            integração de sistemas para proporcionar soluções completas e de
+            alto desempenho.
+          </p>
+          <p>
+            Acredito que a tecnologia tem um impacto transformador, tanto para
+            empresas quanto para pessoas. Meu objetivo é utilizar meu
+            conhecimento para desenvolver aplicações que otimizem processos,
+            melhorem a experiência do usuário e tragam valor aos projetos.
           </p>
         </div>
       </motion.div>
