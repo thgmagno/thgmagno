@@ -88,7 +88,7 @@ const Projeto = ({ project }: { project: GithubProject }) => {
               })}
             </span>
           </div>
-          <p className="prose prose-neutral dark:prose-invert pt-3">
+          <p className="prose prose-neutral dark:prose-invert pt-3 text-sm text-neutral-300">
             {project.description || 'Sem descrição'}
           </p>
         </div>

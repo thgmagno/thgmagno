@@ -1,12 +1,6 @@
 'use client'
 
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardFooter,
-} from '@/components/ui/card'
+import { Card, CardHeader, CardTitle, CardFooter } from '@/components/ui/card'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -45,7 +39,7 @@ export function FormationItem({
       <Card className="relative flex flex-col">
         <CardHeader>
           <CardTitle>{formation.title}</CardTitle>
-          <CardDescription>
+          <div className="text-muted-foreground text-sm">
             <p>Duração: {formation.duration_time} horas</p>
             <p>Instituição: {formation.institution}</p>
             <p>Categoria: {formation.category_title || 'Não informado'}</p>
@@ -56,7 +50,7 @@ export function FormationItem({
             >
               Acessar o certificado
             </Link>
-          </CardDescription>
+          </div>
         </CardHeader>
         <CardFooter className="absolute top-5 right-0 space-x-2">
           <button

@@ -42,15 +42,14 @@ export default function Home() {
           <p>
             Atuo como desenvolvedor, unindo lógica e criatividade para construir
             aplicações escaláveis, seguras e eficientes. Minha experiência
-            inclui o desenvolvimento de APIs, otimização de interfaces e
-            integração de sistemas para proporcionar soluções completas e de
-            alto desempenho.
+            inclui o desenvolvimento de sites, landing-pages, APIs, otimizações
+            de interfaces e integração de sistemas.
           </p>
           <p>
             Acredito que a tecnologia tem um impacto transformador, tanto para
-            empresas quanto para pessoas. Meu objetivo é utilizar meu
-            conhecimento para desenvolver aplicações que otimizem processos,
-            melhorem a experiência do usuário e tragam valor aos projetos.
+            empresas quanto para pessoas. Meu objetivo é desenvolver aplicações
+            que otimizem processos, melhorem a experiência do usuário e que
+            tragam valor aos projetos.
           </p>
         </div>
       </motion.div>

@@ -14,3 +14,9 @@ export interface GithubProject {
   language: string
   visibility: string
 }
+
+export interface GithubResponse {
+  total_count: number
+  incomplete_results: boolean
+  items: GithubProject[]
+}

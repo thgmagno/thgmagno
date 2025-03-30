@@ -5,6 +5,7 @@ const schema = z.object({
   POSTGRES_URL: z.string().url(),
   AUTH_SECRET: z.string(),
   GITHUB_TOKEN: z.string(),
+  GITHUB_USER: z.string(),
   AUTH_GITHUB_SECRET: z.string(),
   ADMIN_EMAIL: z.string(),
 })

@@ -25,7 +25,7 @@ export default async function SlugProjeto(props: { params: Params }) {
     ),
   ])
 
-  if (!project) redirect('/projetos')
+  if (!project.id) redirect('/projetos')
 
   return (
     <Suspense fallback={'Carregando...'}>
