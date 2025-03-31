@@ -5,7 +5,7 @@ import { env } from 'root/env'
 
 const fetcherRepositories = async (): Promise<GithubResponse> =>
   fetch(
-    `https://api.github.com/search/repositories?q=user:${env.GITHUB_USER}+topic:portfolio`,
+    `https://api.github.com/search/repositories?q=user:${env.GITHUB_USER}+topic:portfolio+fork:true`,
     {
       headers: {
         Authorization: `Bearer ${env.GITHUB_TOKEN}`,
