@@ -14,6 +14,7 @@ export async function index() {
       },
       category: true,
     },
+    orderBy: { title: 'asc' },
   })
 }
 
