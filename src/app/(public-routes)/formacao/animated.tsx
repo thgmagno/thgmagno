@@ -73,15 +73,15 @@ function FormationCard({ formation }: { formation: FormationWithRelations }) {
               {dateRange}
             </p>
           </div>
-          <div className="flex min-w-fit flex-col items-end gap-1 md:flex-row md:items-start">
-            <Badge variant="outline" className="">
-              {formation.category.title}
-            </Badge>
+          <div className="flex min-w-fit flex-col-reverse items-end gap-1 md:flex-row md:items-start">
             {!formation.endedAt && (
               <Badge variant="outline" className="text-green-500">
                 Em andamento{' '}
               </Badge>
             )}
+            <Badge variant="outline" className="">
+              {formation.category.title}
+            </Badge>
           </div>
         </div>
       </Link>
