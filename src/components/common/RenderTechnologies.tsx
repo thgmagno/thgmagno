@@ -27,6 +27,7 @@ export function RenderTechnologies({ data }: { data: string }) {
       { title: 'mongodb', url: 'https://www.mongodb.com/' },
       { title: 'mongodb atlas', url: 'https://www.mongodb.com/cloud/atlas' },
       { title: 'nestjs', url: 'https://nestjs.com/' },
+      { title: 'next', url: 'https://nextjs.org/' },
       { title: 'next-intl', url: 'https://next-intl.dev/' },
       { title: 'next.js', url: 'https://nextjs.org/' },
       { title: 'next-themes', url: 'https://github.com/pacocoursey/next-themes' },
