@@ -1,12 +1,6 @@
 'use server'
 
-import { prisma } from '@/lib/prisma'
-
-export async function index() {
-  return prisma.visit.findMany({
-    orderBy: { visitDate: 'desc' },
-  })
-}
+export async function index() {}
 
 export async function check() {}
 
