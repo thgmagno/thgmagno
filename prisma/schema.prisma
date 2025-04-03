@@ -52,9 +52,13 @@ model Location {
 }
 
 model Visit {
-  id        Int      @id @default(autoincrement())
-  ip        String
-  visitDate DateTime @map("visit_date") @db.Date
+  id        String   @id @default(uuid())
+  appName   String   @map("app_name")
+  ipHash    String   @map("ip_hash")
+  userAgent String?  @map("user_agent")
+  city      String?
+  state     String?
+  createdAt DateTime @default(now()) @map("created_at")
 
   @@map("visit")
 }
