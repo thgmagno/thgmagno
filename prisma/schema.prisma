@@ -58,6 +58,7 @@ model Visit {
   userAgent String?  @map("user_agent")
   city      String?
   state     String?
+  country   String?
   createdAt DateTime @default(now()) @map("created_at")
 
   @@map("visit")
