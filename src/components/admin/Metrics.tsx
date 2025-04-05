@@ -2,67 +2,65 @@ import { actions } from '@/actions'
 import { Visitant } from '@/lib/types'
 import { ptBR } from 'date-fns/locale'
 import { format } from 'date-fns'
+import { CustomCard } from './CustomCard'
 
 export async function Metrics() {
   const data = await actions.visit.index()
 
   return (
     <div className="flex flex-col space-y-4">
-      <h2 className="text-lg font-semibold">Visitas recentes:</h2>
-      <LastVisits data={data} />
-      <h2 className="text-lg font-semibold">Totais:</h2>
-      <VisitsByApp data={data} />
-      <VisitsByCity data={data} />
+      {data.length > 0 ? (
+        <>
+          <h2 className="text-lg font-semibold">Visitas recentes:</h2>
+          <LastVisits data={data} />
+          <h2 className="text-lg font-semibold">Totais:</h2>
+          <VisitsByApp data={data} />
+          <VisitsByCity data={data} />
+        </>
+      ) : (
+        <p className="text-muted-foreground">Nenhum registro encontrado</p>
+      )}
     </div>
   )
 }
 
 function LastVisits({ data }: { data: Visitant[] }) {
   return (
-    <section>
-      {data.length > 0 ? (
-        <div className="grid gap-4">
-          {data.slice(0, 5).map((visit) => (
-            <div
-              key={visit.id}
-              className="bg-card flex flex-col gap-2 rounded-2xl border p-4 shadow-sm"
-            >
-              <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-                <div className="overflow-hidden text-sm">
-                  <span className="text-muted-foreground block text-xs font-semibold">
-                    Aplicação:
-                  </span>
-                  <span className="truncate capitalize">{visit.appName}</span>
-                </div>
-                <div className="overflow-hidden text-sm">
-                  <span className="text-muted-foreground block text-xs font-semibold">
-                    Data/Hora:
-                  </span>
-                  <span className="truncate">
-                    {format(new Date(visit.createdAt), 'dd/MM/yyyy HH:mm', {
-                      locale: ptBR,
-                    })}
-                  </span>
-                </div>
-                {visit.city || visit.state || visit.country ? (
-                  <div className="col-span-2 overflow-hidden text-sm">
-                    <span className="text-muted-foreground block text-xs font-semibold">
-                      Localização:
-                    </span>
-                    <span className="truncate">
-                      {[visit.city, visit.state, visit.country]
-                        .filter(Boolean)
-                        .join(', ')}
-                    </span>
-                  </div>
-                ) : null}
-              </div>
+    <section className="grid gap-4">
+      {data.slice(0, 5).map((visit) => (
+        <CustomCard key={visit.id}>
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+            <div className="overflow-hidden text-sm">
+              <span className="text-muted-foreground block text-xs font-semibold">
+                Aplicação:
+              </span>
+              <span className="truncate capitalize">{visit.appName}</span>
             </div>
-          ))}
-        </div>
-      ) : (
-        <p className="text-muted-foreground">Nenhum registro encontrado</p>
-      )}
+            <div className="overflow-hidden text-sm">
+              <span className="text-muted-foreground block text-xs font-semibold">
+                Data/Hora:
+              </span>
+              <span className="truncate">
+                {format(new Date(visit.createdAt), 'dd/MM/yyyy HH:mm', {
+                  locale: ptBR,
+                })}
+              </span>
+            </div>
+            {visit.city || visit.state || visit.country ? (
+              <div className="col-span-2 overflow-hidden text-sm">
+                <span className="text-muted-foreground block text-xs font-semibold">
+                  Localização:
+                </span>
+                <span className="truncate">
+                  {[visit.city, visit.state, visit.country]
+                    .filter(Boolean)
+                    .join(', ')}
+                </span>
+              </div>
+            ) : null}
+          </div>
+        </CustomCard>
+      ))}
     </section>
   )
 }
@@ -104,58 +102,46 @@ function VisitsByApp({ data }: { data: Visitant[] }) {
         <h2 className="text-muted-foreground mb-2 font-semibold">
           Na última semana
         </h2>
-        {visitsThisWeek.length > 0 ? (
-          <div className="bg-card flex flex-col gap-2 rounded-2xl border p-4 shadow-sm">
-            {visitsThisWeek.map(([appName, total]) => (
-              <p key={appName} className="truncate text-sm font-medium">
-                <span className="capitalize">{appName}</span>
-                <span className="text-muted-foreground text-sm">
-                  {' - '} {total} visita{total > 1 ? 's' : ''}
-                </span>
-              </p>
-            ))}
-          </div>
-        ) : (
-          <p className="text-muted-foreground">Nenhum registro encontrado</p>
-        )}
+        <CustomCard>
+          {visitsThisWeek.map(([appName, total]) => (
+            <p key={appName} className="truncate text-sm font-medium">
+              <span className="capitalize">{appName}</span>
+              <span className="text-muted-foreground text-sm">
+                {' - '} {total} visita{total > 1 ? 's' : ''}
+              </span>
+            </p>
+          ))}
+        </CustomCard>
       </article>
       <article>
         <h2 className="text-muted-foreground mb-2 font-semibold">
           No último mês
         </h2>
-        {visitsThisMonth.length > 0 ? (
-          <div className="bg-card flex flex-col gap-2 rounded-2xl border p-4 shadow-sm">
-            {visitsThisMonth.map(([appName, total]) => (
-              <p key={appName} className="truncate text-sm font-medium">
-                <span className="capitalize">{appName}</span>
-                <span className="text-muted-foreground text-sm">
-                  {' - '} {total} visita{total > 1 ? 's' : ''}
-                </span>
-              </p>
-            ))}
-          </div>
-        ) : (
-          <p className="text-muted-foreground">Nenhum registro encontrado</p>
-        )}
+        <CustomCard>
+          {visitsThisMonth.map(([appName, total]) => (
+            <p key={appName} className="truncate text-sm font-medium">
+              <span className="capitalize">{appName}</span>
+              <span className="text-muted-foreground text-sm">
+                {' - '} {total} visita{total > 1 ? 's' : ''}
+              </span>
+            </p>
+          ))}
+        </CustomCard>
       </article>
       <article>
         <h2 className="text-muted-foreground mb-2 font-semibold">
           Todo o período
         </h2>
-        {visitsAllTime.length > 0 ? (
-          <div className="bg-card flex flex-col gap-2 rounded-2xl border p-4 shadow-sm">
-            {visitsAllTime.map(([appName, total]) => (
-              <p key={appName} className="truncate text-sm font-medium">
-                <span className="capitalize">{appName}</span>
-                <span className="text-muted-foreground text-sm">
-                  {' - '} {total} visita{total > 1 ? 's' : ''}
-                </span>
-              </p>
-            ))}
-          </div>
-        ) : (
-          <p className="text-muted-foreground">Nenhum registro encontrado</p>
-        )}
+        <CustomCard>
+          {visitsAllTime.map(([appName, total]) => (
+            <p key={appName} className="truncate text-sm font-medium">
+              <span className="capitalize">{appName}</span>
+              <span className="text-muted-foreground text-sm">
+                {' - '} {total} visita{total > 1 ? 's' : ''}
+              </span>
+            </p>
+          ))}
+        </CustomCard>
       </article>
     </section>
   )
@@ -172,20 +158,16 @@ function VisitsByCity({ data }: { data: Visitant[] }) {
   return (
     <section>
       <h2 className="text-muted-foreground mb-2 font-semibold">Por cidade</h2>
-      {visitsByCity.length > 0 ? (
-        <div className="bg-card flex flex-col gap-2 rounded-2xl border p-4 shadow-sm">
-          {visitsByCity.map(([city, total]) => (
-            <p key={city} className="truncate text-sm font-medium">
-              <span className="capitalize">{city}</span>
-              <span className="text-muted-foreground text-sm">
-                {' - '} {total} visita{total > 1 ? 's' : ''}
-              </span>
-            </p>
-          ))}
-        </div>
-      ) : (
-        <p className="text-muted-foreground">Nenhum registro encontrado</p>
-      )}
+      <CustomCard>
+        {visitsByCity.map(([city, total]) => (
+          <p key={city} className="truncate text-sm font-medium">
+            <span className="capitalize">{city}</span>
+            <span className="text-muted-foreground text-sm">
+              {' - '} {total} visita{total > 1 ? 's' : ''}
+            </span>
+          </p>
+        ))}
+      </CustomCard>
     </section>
   )
 }

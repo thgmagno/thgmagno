@@ -20,16 +20,15 @@ export async function count({
     country: string
   }
 }) {
-  const dataAtualBrasilISO = () => {
-    const now = new Date()
-    now.setHours(now.getHours() - 3)
-    return now.toISOString()
-  }
+  const res = await fetch(
+    'https://worldtimeapi.org/api/timezone/America/Sao_Paulo',
+  )
+  const timeData = await res.json()
 
   return prisma.visit.create({
     data: {
       ...data,
-      createdAt: dataAtualBrasilISO(),
+      createdAt: timeData.datetime,
     },
   })
 }
