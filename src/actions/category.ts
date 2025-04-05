@@ -51,6 +51,9 @@ export async function update(
     active: formData.get('active'),
   })
 
+  console.log(formData)
+  console.log(parsed)
+
   if (!parsed.success) {
     return {
       errors: parsed.error.flatten().fieldErrors,

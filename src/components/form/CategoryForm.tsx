@@ -6,8 +6,8 @@ import { Input } from '@/components/ui/input'
 import { ErrorMessage } from '@/components/common/ErrorMessage'
 import { CategoryFormState } from '@/lib/states'
 import { Category } from '@prisma/client'
-import { Checkbox } from '../ui/checkbox'
 import { FormFooter } from './FormFooter'
+import { useState } from 'react'
 
 export function CategoryForm({
   action,
@@ -20,11 +20,16 @@ export function CategoryForm({
   isPending: boolean
   category?: Category
 }) {
+  const [active, setActive] = useState<boolean>(Boolean(category?.active))
+
   return (
     <form action={action}>
       <CardContent>
         <div className="grid w-full items-baseline gap-4">
           <input type="hidden" name="id" defaultValue={category?.id || ''} />
+          <input type="hidden" name="active" value={active ? 'on' : 'off'} />
+
+          {/* Título */}
           <div className="flex flex-col space-y-1.5">
             <Label htmlFor="title">Título</Label>
             <Input
@@ -35,6 +40,8 @@ export function CategoryForm({
             />
             <ErrorMessage message={formState?.errors.title} />
           </div>
+
+          {/* Slug */}
           <div className="flex flex-col space-y-1.5">
             <Label htmlFor="title">Slug</Label>
             <Input
@@ -44,16 +51,6 @@ export function CategoryForm({
               defaultValue={category?.slug || ''}
             />
             <ErrorMessage message={formState?.errors.slug} />
-          </div>
-          <div className="flex items-center space-x-2">
-            <Checkbox
-              name="active"
-              defaultChecked={Boolean(category?.active)}
-            />
-            <label className="text-sm leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-              Ativo
-            </label>
-            <ErrorMessage message={formState?.errors.active} />
           </div>
         </div>
         <div className="mt-3 flex">
@@ -67,7 +64,7 @@ export function CategoryForm({
           />
         </div>
       </CardContent>
-      <FormFooter isPending={isPending} />
+      <FormFooter isPending={isPending} active={active} setActive={setActive} />
     </form>
   )
 }
