@@ -5,9 +5,29 @@ import { useEffect } from 'react'
 import { Toaster } from 'sonner'
 import crypto from 'crypto'
 
-export function Providers({ children, ...props }: ThemeProviderProps) {
+interface ProvidersProps extends ThemeProviderProps {
+  children: React.ReactNode
+  ipInfoToken: string
+  appApiToken: string
+  appName: string
+  appApiUrl: string
+}
+
+export function Providers({
+  children,
+  ipInfoToken,
+  appApiToken,
+  appName,
+  appApiUrl,
+  ...props
+}: ProvidersProps) {
   return (
-    <AppProvider>
+    <AppProvider
+      ipInfoToken={ipInfoToken}
+      appApiToken={appApiToken}
+      appName={appName}
+      appApiUrl={appApiUrl}
+    >
       <ThemeProvider {...props}>
         {children}
         <Toaster />
@@ -16,7 +36,19 @@ export function Providers({ children, ...props }: ThemeProviderProps) {
   )
 }
 
-function AppProvider({ children }: { children: React.ReactNode }) {
+function AppProvider({
+  children,
+  ipInfoToken,
+  appApiToken,
+  appName,
+  appApiUrl,
+}: {
+  children: React.ReactNode
+  ipInfoToken: string
+  appApiToken: string
+  appName: string
+  appApiUrl: string
+}) {
   useEffect(() => {
     const hasKey = sessionStorage.getItem('app-api-fetcher')
 
@@ -27,7 +59,7 @@ function AppProvider({ children }: { children: React.ReactNode }) {
         const { ip } = await ipResponse.json()
 
         const geoResponse = await fetch(
-          `https://ipinfo.io/${ip}?token=${process.env.NEXT_PUBLIC_IPINFO_TOKEN}`,
+          `https://ipinfo.io/${ip}?token=${ipInfoToken}`,
         )
         const geo = await geoResponse.json()
 
@@ -42,8 +74,8 @@ function AppProvider({ children }: { children: React.ReactNode }) {
           .digest('hex')
 
         const data = JSON.stringify({
-          token: process.env.NEXT_PUBLIC_APP_API_TOKEN,
-          appName: process.env.NEXT_PUBLIC_APP_NAME,
+          token: appApiToken,
+          appName,
           userAgent,
           ipHash,
           city,
@@ -51,7 +83,7 @@ function AppProvider({ children }: { children: React.ReactNode }) {
           country,
         })
 
-        navigator.sendBeacon(process.env.NEXT_PUBLIC_APP_API_URL!, data)
+        navigator.sendBeacon(appApiUrl, data)
 
         sessionStorage.setItem('app-api-fetcher', Date.now().toString())
       }
