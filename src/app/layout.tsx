@@ -33,7 +33,7 @@ export default function RootLayout({
           attribute="class"
           defaultTheme="dark"
           ipInfoToken={env.IPINFO_TOKEN}
-          appApiToken={env.APP_API_TOKEN}
+          appToken={env.APP_TOKEN}
           appName={env.APP_NAME}
           appApiUrl={env.APP_API_URL}
         >

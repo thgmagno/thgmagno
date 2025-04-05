@@ -8,7 +8,7 @@ import crypto from 'crypto'
 interface ProvidersProps extends ThemeProviderProps {
   children: React.ReactNode
   ipInfoToken: string
-  appApiToken: string
+  appToken: string
   appName: string
   appApiUrl: string
 }
@@ -16,7 +16,7 @@ interface ProvidersProps extends ThemeProviderProps {
 export function Providers({
   children,
   ipInfoToken,
-  appApiToken,
+  appToken,
   appName,
   appApiUrl,
   ...props
@@ -24,7 +24,7 @@ export function Providers({
   return (
     <AppProvider
       ipInfoToken={ipInfoToken}
-      appApiToken={appApiToken}
+      appToken={appToken}
       appName={appName}
       appApiUrl={appApiUrl}
     >
@@ -39,13 +39,13 @@ export function Providers({
 function AppProvider({
   children,
   ipInfoToken,
-  appApiToken,
+  appToken,
   appName,
   appApiUrl,
 }: {
   children: React.ReactNode
   ipInfoToken: string
-  appApiToken: string
+  appToken: string
   appName: string
   appApiUrl: string
 }) {
@@ -74,7 +74,7 @@ function AppProvider({
           .digest('hex')
 
         const data = JSON.stringify({
-          token: appApiToken,
+          appToken,
           appName,
           userAgent,
           ipHash,

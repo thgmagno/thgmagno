@@ -9,8 +9,7 @@ const schema = z.object({
   AUTH_GITHUB_SECRET: z.string(),
   ADMIN_EMAIL: z.string(),
 
-  APP_API_SECRET: z.string(),
-  APP_API_TOKEN: z.string(),
+  APP_TOKEN: z.string(),
   APP_NAME: z.string(),
   APP_API_URL: z.string().url(),
   IPINFO_TOKEN: z.string(),
