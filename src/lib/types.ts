@@ -27,3 +27,14 @@ export type FormationWithRelations = Formation & {
   institution: Institution & { location: Location | null }
   category: Category
 }
+
+export interface Visitant {
+  id: string
+  appName: string
+  ipHash: string
+  userAgent: string | null
+  city: string | null
+  state: string | null
+  country: string | null
+  createdAt: Date
+}

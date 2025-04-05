@@ -2,14 +2,16 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 import { Categories } from './Categories'
 import { Formations } from './Formations'
-import { Visitors } from './Visitors'
+import { Metrics } from './Metrics'
+import { Institutions } from './Institutions'
+import { Locations } from './Locations'
 
 const tabs = [
   { value: 'categories', label: 'Categorias', component: Categories },
   { value: 'formations', label: 'Formações', component: Formations },
-  { value: 'visitors', label: 'Visitantes', component: Visitors },
-  { value: 'institutions', label: 'Instituições', component: Visitors },
-  { value: 'localizations', label: 'Localizações', component: Visitors },
+  { value: 'institutions', label: 'Instituições', component: Institutions },
+  { value: 'localizations', label: 'Localizações', component: Locations },
+  { value: 'metrics', label: 'Métricas', component: Metrics },
 ].sort((a, b) => a.label.localeCompare(b.label))
 
 export function AdminDashboard() {

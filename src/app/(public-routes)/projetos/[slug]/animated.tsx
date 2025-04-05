@@ -66,7 +66,7 @@ export function SlugProjetoAnimated({
 
         <div className="my-5 border-t" />
 
-        <div className="space-y-2 text-sm text-neutral-300">
+        <div className="space-y-2 text-sm">
           <p>
             <b>Data de criação:</b>{' '}
             {new Date(project.created_at).toLocaleDateString('pt-BR', {

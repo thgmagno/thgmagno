@@ -1,11 +1,10 @@
-import { prisma } from '@/lib/prisma'
-import { NextRequest, NextResponse } from 'next/server'
+import { actions } from '@/actions'
 
-export async function POST(req: NextRequest) {
-  function validarString(valor: unknown): string | undefined {
-    if (typeof valor !== 'string') return undefined
+export async function POST(req: Request) {
+  function validarString(valor: unknown) {
+    if (typeof valor !== 'string') return 'Não informado'
     const str = valor.trim()
-    return str.length > 0 && str.length <= 30 ? str : undefined
+    return str.length > 0 && str.length <= 30 ? str : 'Não informado'
   }
 
   try {
@@ -18,15 +17,17 @@ export async function POST(req: NextRequest) {
       typeof appName !== 'string' ||
       typeof ipHash !== 'string'
     ) {
-      return new NextResponse(null, { status: 403 })
+      console.log('debug: ', body)
+      console.log(token, appName, userAgent, ipHash, city, state, country)
+      return new Response(null, { status: 401 })
     }
 
-    const isValidToken = token === process.env.APP_API_TOKEN
+    const isValidToken = token === process.env.NEXT_PUBLIC_APP_API_TOKEN
     if (!isValidToken) {
-      return new NextResponse(null, { status: 403 })
+      return new Response(null, { status: 401 })
     }
 
-    await prisma.visit.create({
+    const data = await actions.visit.count({
       data: {
         ipHash,
         appName,
@@ -37,8 +38,9 @@ export async function POST(req: NextRequest) {
       },
     })
 
-    return new NextResponse(null, { status: 200 })
-  } catch {
-    return new NextResponse(null, { status: 204 })
+    return new Response(JSON.stringify(data), { status: 200 })
+  } catch (error) {
+    console.error('debug api: ', error)
+    return new Response(null, { status: 400 })
   }
 }

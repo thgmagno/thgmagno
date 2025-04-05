@@ -4,7 +4,6 @@ import { ThemeProvider, ThemeProviderProps } from 'next-themes'
 import { useEffect } from 'react'
 import { Toaster } from 'sonner'
 import crypto from 'crypto'
-import { env } from 'root/env'
 
 export function Providers({ children, ...props }: ThemeProviderProps) {
   return (
@@ -28,7 +27,7 @@ function AppProvider({ children }: { children: React.ReactNode }) {
         const { ip } = await ipResponse.json()
 
         const geoResponse = await fetch(
-          `https://ipinfo.io/${ip}?token=${env.IPINFO_TOKEN}`,
+          `https://ipinfo.io/${ip}?token=${process.env.NEXT_PUBLIC_IPINFO_TOKEN}`,
         )
         const geo = await geoResponse.json()
 
@@ -43,8 +42,8 @@ function AppProvider({ children }: { children: React.ReactNode }) {
           .digest('hex')
 
         const data = JSON.stringify({
-          token: env.APP_API_TOKEN,
-          app: env.APP_NAME,
+          token: process.env.NEXT_PUBLIC_APP_API_TOKEN,
+          appName: process.env.NEXT_PUBLIC_APP_NAME,
           userAgent,
           ipHash,
           city,
@@ -52,7 +51,7 @@ function AppProvider({ children }: { children: React.ReactNode }) {
           country,
         })
 
-        navigator.sendBeacon(env.APP_API_URL, data)
+        navigator.sendBeacon(process.env.NEXT_PUBLIC_APP_API_URL!, data)
 
         sessionStorage.setItem('app-api-fetcher', Date.now().toString())
       }
