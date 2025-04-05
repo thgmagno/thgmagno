@@ -28,6 +28,10 @@ export type FormationWithRelations = Formation & {
   category: Category
 }
 
+export type InstitutionWithLocation = Institution & {
+  location?: Location | null
+}
+
 export interface Visitant {
   id: string
   appName: string

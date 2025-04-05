@@ -1,3 +1,4 @@
+import { CategoryAdd } from './CategoryAdd'
 import { CategoryItem } from './CategoryItem'
 import { actions } from '@/actions'
 
@@ -6,7 +7,10 @@ export async function Categories() {
 
   return (
     <section className="grid gap-4">
-      <h2 className="mt-6 text-xl font-semibold">Categorias Cadastradas</h2>
+      <div className="flex items-center justify-between">
+        <h2 className="font-semibold sm:text-xl">Categorias cadastradas</h2>
+        <CategoryAdd />
+      </div>
       {categories.length > 0 ? (
         <>
           {categories.map((category) => (

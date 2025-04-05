@@ -7,7 +7,9 @@ import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 
 export async function index() {
-  return prisma.location.findMany()
+  return prisma.location.findMany({
+    orderBy: { title: 'asc' },
+  })
 }
 
 export async function show(id: number) {
@@ -82,5 +84,7 @@ export async function destroy(id: number) {
     return { errors: { _form: 'Localização não encontrada' } }
   }
 
-  return prisma.location.delete({ where: { id } })
+  await prisma.location.delete({ where: { id } })
+
+  revalidatePath('/')
 }

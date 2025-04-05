@@ -23,7 +23,7 @@ export function SelectCategory({
 
   React.useEffect(() => {
     const fetchCategories = async () => {
-      const response = await actions.category.index()
+      const response = await actions.category.index(true)
       setCategories(response)
     }
 

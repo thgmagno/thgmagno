@@ -8,18 +8,23 @@ export function FormFooter({
   setActive,
 }: {
   isPending: boolean
-  active: boolean
-  setActive: (value: boolean) => void
+  active?: boolean
+  setActive?: (value: boolean) => void
 }) {
   return (
-    <CardFooter className="flex items-center justify-between">
-      <div className="flex items-center space-x-2">
-        <Checkbox defaultChecked={active} onClick={() => setActive(!active)} />
-        <label className="text-sm leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-          Ativo
-        </label>
-      </div>
-      <Button type="submit" disabled={isPending}>
+    <CardFooter className="flex items-center">
+      {setActive && (
+        <div className="flex items-center space-x-2">
+          <Checkbox
+            defaultChecked={active}
+            onClick={() => setActive(!active)}
+          />
+          <label className="text-sm leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+            Ativo
+          </label>
+        </div>
+      )}
+      <Button type="submit" disabled={isPending} className="ml-auto">
         {isPending ? 'Salvando...' : 'Salvar'}
       </Button>
     </CardFooter>

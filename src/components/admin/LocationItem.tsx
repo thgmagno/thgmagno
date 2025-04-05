@@ -18,50 +18,39 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import { Category } from '@prisma/client'
 import { Edit, Trash2 } from 'lucide-react'
-import { toast } from 'sonner'
-import { actions } from '@/actions'
-import { useActionState } from 'react'
-import { CategoryForm } from '../form/CategoryForm'
+import { Location } from '@prisma/client'
 import { CustomCard } from './CustomCard'
-import clsx from 'clsx'
+import { useActionState } from 'react'
+import { actions } from '@/actions'
+import { toast } from 'sonner'
+import { LocationForm } from '../form/LocationForm'
 
-export function CategoryItem({ category }: { category: Category }) {
+export function LocationItem({ location }: { location: Location }) {
   return (
     <CustomCard>
       <div className="flex justify-between gap-2">
         <div className="flex flex-1 flex-col space-y-1.5 overflow-hidden text-sm">
-          <span
-            className={clsx('block text-xs font-semibold', {
-              'text-green-500': category.active,
-              'text-red-500': !category.active,
-            })}
-          >
-            {category.active ? 'Ativo' : 'Inativo'}
-          </span>
-          <b className="truncate capitalize">{category.title}</b>
-          <span className="text-muted-foreground block text-xs font-semibold">
-            Slug: {category.slug}
-          </span>
+          {/* Título */}
+          <span className="font-medium capitalize">{location.title}</span>
         </div>
-        <CategoryActions category={category} />
+        <LocationActions location={location} />
       </div>
     </CustomCard>
   )
 }
 
-function CategoryActions({ category }: { category: Category }) {
+function LocationActions({ location }: { location: Location }) {
   const [formState, action, isPending] = useActionState(
-    actions.category.update,
+    actions.location.update,
     { errors: {} },
   )
 
   const onConfirmDelete = () => {
-    toast.promise(actions.category.destroy(category.id), {
+    toast.promise(actions.location.destroy(location.id), {
       loading: 'Processando...',
-      success: 'Categoria deletada com sucesso.',
-      error: 'Falha ao deletar a categoria.',
+      success: 'Localização deletada com sucesso.',
+      error: 'Falha ao deletar a localização.',
     })
   }
 
@@ -75,11 +64,11 @@ function CategoryActions({ category }: { category: Category }) {
           <DialogHeader>
             <DialogTitle>Editar</DialogTitle>
           </DialogHeader>
-          <CategoryForm
+          <LocationForm
             formState={formState}
             action={action}
             isPending={isPending}
-            category={category}
+            location={location}
           />
         </DialogContent>
       </Dialog>
@@ -99,7 +88,7 @@ function CategoryActions({ category }: { category: Category }) {
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle className="text-base">
-              Excluir: {category.title}
+              Excluir: {location.title}
             </AlertDialogTitle>
             <AlertDialogDescription>
               Tem certeza de que deseja continuar?

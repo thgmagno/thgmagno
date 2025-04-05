@@ -6,8 +6,9 @@ import { CategoryFormState } from '@/lib/states'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 
-export async function index() {
+export async function index(activeOnly?: boolean) {
   return prisma.category.findMany({
+    where: { active: { equals: activeOnly } },
     orderBy: { title: 'asc' },
   })
 }
@@ -50,9 +51,6 @@ export async function update(
     slug: formData.get('slug'),
     active: formData.get('active'),
   })
-
-  console.log(formData)
-  console.log(parsed)
 
   if (!parsed.success) {
     return {

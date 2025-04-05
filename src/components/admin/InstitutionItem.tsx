@@ -18,50 +18,75 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import { Category } from '@prisma/client'
 import { Edit, Trash2 } from 'lucide-react'
-import { toast } from 'sonner'
-import { actions } from '@/actions'
-import { useActionState } from 'react'
-import { CategoryForm } from '../form/CategoryForm'
-import { CustomCard } from './CustomCard'
 import clsx from 'clsx'
+import { CustomCard } from './CustomCard'
+import { InstitutionWithLocation } from '@/lib/types'
+import { actions } from '@/actions'
+import { Institution } from '@prisma/client'
+import { useActionState } from 'react'
+import { toast } from 'sonner'
+import { InstitutionForm } from '../form/InstitutionForm'
 
-export function CategoryItem({ category }: { category: Category }) {
+export function InstitutionItem({
+  institution,
+}: {
+  institution: InstitutionWithLocation
+}) {
+  const formatCase = (str: string) => {
+    return str.charAt(0).toUpperCase() + str.slice(1).toLocaleLowerCase()
+  }
+
   return (
     <CustomCard>
       <div className="flex justify-between gap-2">
         <div className="flex flex-1 flex-col space-y-1.5 overflow-hidden text-sm">
-          <span
-            className={clsx('block text-xs font-semibold', {
-              'text-green-500': category.active,
-              'text-red-500': !category.active,
-            })}
-          >
-            {category.active ? 'Ativo' : 'Inativo'}
-          </span>
-          <b className="truncate capitalize">{category.title}</b>
-          <span className="text-muted-foreground block text-xs font-semibold">
-            Slug: {category.slug}
-          </span>
+          {/* Nome */}
+          <span className="font-medium capitalize">{institution.name}</span>
+
+          {/* Modalidade */}
+          <p className="text-muted-foreground block text-xs font-semibold">
+            Modalidade:{' '}
+            <span
+              className={clsx({
+                'text-green-500': institution.modality === 'ONLINE',
+                'text-yellow-500': institution.modality === 'HIBRIDO',
+                'text-blue-500': institution.modality === 'PRESENCIAL',
+              })}
+            >
+              {formatCase(institution.modality)}
+            </span>
+          </p>
+
+          {/* Localização */}
+          <p className="text-muted-foreground block text-xs font-semibold">
+            Localização:{' '}
+            <span
+              className={clsx({
+                'text-green-500': !!institution.location,
+              })}
+            >
+              {institution.location?.title ?? 'Não informada'}
+            </span>
+          </p>
         </div>
-        <CategoryActions category={category} />
+        <InstitutionActions institution={institution} />
       </div>
     </CustomCard>
   )
 }
 
-function CategoryActions({ category }: { category: Category }) {
+function InstitutionActions({ institution }: { institution: Institution }) {
   const [formState, action, isPending] = useActionState(
-    actions.category.update,
+    actions.institution.update,
     { errors: {} },
   )
 
   const onConfirmDelete = () => {
-    toast.promise(actions.category.destroy(category.id), {
+    toast.promise(actions.institution.destroy(institution.id), {
       loading: 'Processando...',
-      success: 'Categoria deletada com sucesso.',
-      error: 'Falha ao deletar a categoria.',
+      success: 'Instituição deletada com sucesso.',
+      error: 'Falha ao deletar a instituição.',
     })
   }
 
@@ -75,11 +100,11 @@ function CategoryActions({ category }: { category: Category }) {
           <DialogHeader>
             <DialogTitle>Editar</DialogTitle>
           </DialogHeader>
-          <CategoryForm
+          <InstitutionForm
             formState={formState}
             action={action}
             isPending={isPending}
-            category={category}
+            institution={institution}
           />
         </DialogContent>
       </Dialog>
@@ -99,7 +124,7 @@ function CategoryActions({ category }: { category: Category }) {
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle className="text-base">
-              Excluir: {category.title}
+              Excluir: {institution.name}
             </AlertDialogTitle>
             <AlertDialogDescription>
               Tem certeza de que deseja continuar?

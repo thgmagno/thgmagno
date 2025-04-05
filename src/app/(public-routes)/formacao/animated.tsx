@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { FormationWithRelations } from '@/lib/types'
 import { Badge } from '@/components/ui/badge'
+import { dateFormatBR } from '@/lib/utils'
 
 export function FormacoesAnimated({
   formations,
@@ -40,14 +41,9 @@ export function FormacoesAnimated({
 }
 
 function FormationCard({ formation }: { formation: FormationWithRelations }) {
-  const formatDate = (date: Date | null) => {
-    if (!date) return 'Present'
-    return new Intl.DateTimeFormat('pt-BR', { dateStyle: 'short' }).format(date)
-  }
-
   const dateRange = formation.endedAt
-    ? `${formatDate(formation.startedAt)} - ${formatDate(formation.endedAt)}`
-    : `${formatDate(formation.startedAt)} - Atual`
+    ? `${dateFormatBR(formation.startedAt)} - ${dateFormatBR(formation.endedAt)}`
+    : `${dateFormatBR(formation.startedAt)} - Atual`
 
   return (
     <div className="mb-4 flex flex-col space-y-1">
@@ -64,7 +60,7 @@ function FormationCard({ formation }: { formation: FormationWithRelations }) {
             <p className="text-muted-foreground text-sm">
               {formation.institution.name}
               {formation.institution.location && (
-                <span className="text-muted-foreground ml-2 text-xs">
+                <span className="text-muted-foreground ml-2 text-xs capitalize">
                   ({formation.institution.location.title})
                 </span>
               )}

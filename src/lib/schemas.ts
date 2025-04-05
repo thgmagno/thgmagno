@@ -1,43 +1,39 @@
 import { z } from 'zod'
 
 export const LocationSchema = z.object({
+  // ID
   id: z
     .string()
     .optional()
     .refine(
       (val) => {
-        if (!val) return true
-        return !isNaN(Number(val)) && Number(val) > 0
+        return !val || (!isNaN(Number(val)) && Number(val) > 0)
       },
       { message: 'O id precisa ser numérico' },
     )
     .transform((val) => (val ? Number(val) : undefined)),
+
+  // Title
   title: z
     .string()
     .min(1, { message: 'Título é obrigatório' })
-    .max(32, 'Título ultrapassa o limite de 32 caracteres')
-    .transform((value) =>
-      value
-        .split(' ')
-        .map(
-          (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase(),
-        )
-        .join(' '),
-    ),
+    .max(32, 'Título ultrapassa o limite de 32 caracteres'),
 })
 
 export const CategorySchema = z.object({
+  // ID
   id: z
     .string()
     .optional()
     .refine(
       (val) => {
-        if (!val) return true
-        return !isNaN(Number(val)) && Number(val) > 0
+        return !val || (!isNaN(Number(val)) && Number(val) > 0)
       },
       { message: 'O id precisa ser numérico' },
     )
     .transform((val) => (val ? Number(val) : undefined)),
+
+  // Title
   title: z
     .string()
     .min(1, { message: 'Título é obrigatório' })
@@ -50,6 +46,8 @@ export const CategorySchema = z.object({
         )
         .join(' '),
     ),
+
+  // Ativo
   active: z
     .string()
     .nullable()
@@ -58,17 +56,19 @@ export const CategorySchema = z.object({
 })
 
 export const FormationSchema = z.object({
+  // ID
   id: z
     .string()
     .optional()
     .refine(
       (val) => {
-        if (!val) return true
-        return !isNaN(Number(val)) && Number(val) > 0
+        return !val || (!isNaN(Number(val)) && Number(val) > 0)
       },
       { message: 'O id precisa ser numérico' },
     )
     .transform((val) => (val ? Number(val) : undefined)),
+
+  // Título
   title: z
     .string()
     .min(1, { message: 'Título é obrigatório' })
@@ -81,19 +81,44 @@ export const FormationSchema = z.object({
         )
         .join(' '),
     ),
-  startedAt: z.date({ message: 'Data de início é obrigatória' }),
-  endedAt: z.date().optional().nullable(),
+
+  // Início
+  startedAt: z
+    .string()
+    .min(1, { message: 'Data de início é obrigatória' })
+    .refine((val) => !isNaN(new Date(val).getTime()), {
+      message: 'Data de início inválida',
+    })
+    .transform((val) => new Date(val)),
+
+  // Fim
+  endedAt: z
+    .string()
+    .optional()
+    .nullable()
+    .refine((val) => !val || !isNaN(new Date(val).getTime()), {
+      message: 'Data de término inválida',
+    })
+    .transform((val) => (val ? new Date(val) : undefined)),
+
+  // URL do certificado
   certificateUrl: z.string().optional().nullable(),
+
+  // Ativo
   active: z
     .string()
     .nullable()
     .transform((val) => val === 'on'),
+
+  // ID da instituição
   institutionId: z
     .string()
     .refine((val) => !isNaN(Number(val)) && Number(val) > 0, {
       message: 'Informe a instituição',
     })
     .transform((val) => Number(val)),
+
+  // ID da categoria
   categoryId: z
     .string()
     .refine((val) => !isNaN(Number(val)) && Number(val) > 0, {
@@ -103,17 +128,19 @@ export const FormationSchema = z.object({
 })
 
 export const InstitutionSchema = z.object({
+  // ID
   id: z
     .string()
     .optional()
     .refine(
       (val) => {
-        if (!val) return true
-        return !isNaN(Number(val)) && Number(val) > 0
+        return !val || (!isNaN(Number(val)) && Number(val) > 0)
       },
       { message: 'O id precisa ser numérico' },
     )
     .transform((val) => (val ? Number(val) : undefined)),
+
+  // Nome
   name: z
     .string()
     .min(1, { message: 'Título é obrigatório' })
@@ -126,8 +153,19 @@ export const InstitutionSchema = z.object({
         )
         .join(' '),
     ),
+
+  // Modalidade
   modality: z.enum(['ONLINE', 'PRESENCIAL', 'HIBRIDO'], {
     message: 'Informe a modalidade',
   }),
-  locationId: z.number().optional(),
+
+  // ID da localização
+  locationId: z
+    .string()
+    .optional()
+    .nullable()
+    .transform((val) => {
+      if (!val || isNaN(Number(val))) return null
+      return Number(val)
+    }),
 })

@@ -12,7 +12,7 @@ export function ErrorMessage({ message, className, ...rest }: Props) {
   return (
     <p
       title={formattedMessage}
-      className={clsx('truncate text-sm text-red-400', className)}
+      className={clsx('truncate text-xs text-red-400 md:text-sm', className)}
       {...rest}
     >
       {formattedMessage}

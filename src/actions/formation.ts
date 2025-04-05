@@ -6,8 +6,9 @@ import { FormationFormState } from '@/lib/states'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 
-export async function index() {
+export async function index(activeOnly?: boolean) {
   return prisma.formation.findMany({
+    where: { active: { equals: activeOnly } },
     include: {
       institution: {
         include: { location: true },
@@ -90,5 +91,7 @@ export async function destroy(id: number) {
     return { errors: { _form: 'Formação não encontrada' } }
   }
 
-  return prisma.formation.delete({ where: { id } })
+  await prisma.formation.delete({ where: { id } })
+
+  revalidatePath('/')
 }

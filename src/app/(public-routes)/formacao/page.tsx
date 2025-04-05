@@ -2,7 +2,7 @@ import { FormacoesAnimated } from './animated'
 import { actions } from '@/actions'
 
 export default async function Formacoes() {
-  const formations = await actions.formation.index()
+  const formations = await actions.formation.index(true)
 
   return (
     <section className="space-y-6">

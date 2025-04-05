@@ -12,3 +12,8 @@ export const generateTitle = (name: string) => {
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(' ')
 }
+
+export function dateFormatBR(data: Date) {
+  const [ano, mes, dia] = data.toISOString().split('T')[0].split('-')
+  return `${dia}/${mes}/${ano}`
+}
