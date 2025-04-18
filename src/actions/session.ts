@@ -1,7 +1,9 @@
 'use server'
 
 import { signIn } from '@/auth'
+import { redirect } from 'next/navigation'
 
 export async function signInWithGithub() {
-  return signIn('github')
+  await signIn('github')
+  redirect('/admin')
 }

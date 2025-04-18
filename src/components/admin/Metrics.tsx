@@ -85,7 +85,7 @@ async function VisitsByAppWithLocation({ data }: { data: Visitant[] }) {
               {app.appName} – {app.total} visita{app.total > 1 ? 's' : ''}
             </h2>
             <CustomCard>
-              <ScrollArea className="h-[20rem]">
+              <ScrollArea className="max-h-[20rem]">
                 {app.locations.map((loc) => (
                   <Dialog key={`${loc.locationPart}-${loc.countryName}`}>
                     <DialogTrigger asChild className="w-full">
