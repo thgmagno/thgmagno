@@ -42,7 +42,7 @@ export function CommentArea({
   }, [formState])
 
   return (
-    <div className="space-y-4 rounded-xl border bg-neutral-900 py-4 md:p-4">
+    <div className="bg-background space-y-4 rounded-xl border py-4 md:p-4">
       <ScrollArea className="max-h-[600px]">
         {comments.length ? (
           comments.map((comment) => (
@@ -97,7 +97,7 @@ export function CommentArea({
 
         <Textarea
           name="comment"
-          className={clsx('border-none bg-neutral-800 p-2 text-base')}
+          className={clsx('bg-accent border-none p-2 text-base')}
           placeholder="Escreva um comentário..."
           disabled={!session?.user.email}
           value={comment}

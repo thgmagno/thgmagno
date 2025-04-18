@@ -87,7 +87,7 @@ export function Reactions({
         {reactions.map((react) => (
           <div
             key={react.emoji}
-            className="space-x-2 rounded-xl bg-neutral-800 px-2 py-1"
+            className="bg-accent space-x-2 rounded-xl px-2 py-1"
           >
             {react.emoji}{' '}
             <span className="text-sm font-medium">{react._count}</span>
