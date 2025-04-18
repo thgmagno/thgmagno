@@ -52,7 +52,7 @@ export async function Footer() {
             </Tooltip>
           </TooltipProvider>
         </Link>
-        {session && (
+        {session?.user.isAdmin && (
           <Link href="/admin">
             <TooltipProvider>
               <Tooltip>

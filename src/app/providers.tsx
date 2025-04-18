@@ -11,6 +11,7 @@ interface ProvidersProps extends ThemeProviderProps {
   appToken: string
   appName: string
   appApiUrl: string
+  isAdmin: boolean
 }
 
 export function Providers({
@@ -19,6 +20,7 @@ export function Providers({
   appToken,
   appName,
   appApiUrl,
+  isAdmin,
   ...props
 }: ProvidersProps) {
   return (
@@ -27,6 +29,7 @@ export function Providers({
       appToken={appToken}
       appName={appName}
       appApiUrl={appApiUrl}
+      isAdmin={isAdmin}
     >
       <ThemeProvider {...props}>
         {children}
@@ -42,17 +45,19 @@ function AppProvider({
   appToken,
   appName,
   appApiUrl,
+  isAdmin,
 }: {
   children: React.ReactNode
   ipInfoToken: string
   appToken: string
   appName: string
   appApiUrl: string
+  isAdmin: boolean
 }) {
   useEffect(() => {
     const hasKey = sessionStorage.getItem('app-api-fetcher')
 
-    if (!hasKey) {
+    if (!hasKey && !isAdmin) {
       const sendVisitData = async () => {
         const userAgent = navigator.userAgent
         const ipResponse = await fetch('https://api64.ipify.org?format=json')

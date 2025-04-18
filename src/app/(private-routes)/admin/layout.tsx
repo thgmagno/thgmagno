@@ -8,6 +8,7 @@ export default async function PrivateLayout({
 }>) {
   const session = await auth()
   if (!session) redirect('/login')
+  if (!session.user?.isAdmin) redirect('/')
 
   return <main>{children}</main>
 }

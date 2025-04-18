@@ -169,3 +169,25 @@ export const InstitutionSchema = z.object({
       return Number(val)
     }),
 })
+
+export const ReactionSchema = z.object({
+  projectId: z
+    .string()
+    .refine((val) => !isNaN(Number(val)) && Number(val) > 0, {
+      message: 'Informe o projeto',
+    })
+    .transform((val) => Number(val)),
+  emoji: z.string(),
+})
+
+export const CommentSchema = z.object({
+  projectId: z
+    .string()
+    .refine((val) => !isNaN(Number(val)) && Number(val) > 0, {
+      message: 'Informe o projeto',
+    })
+    .transform((val) => Number(val)),
+  commentId: z.string().optional(),
+  comment: z.string().min(1, 'Por favor, escreva seu comentário'),
+  comentParentId: z.string().optional(),
+})

@@ -4,6 +4,7 @@ import * as institution from './institution'
 import * as location from './location'
 import * as visit from './visit'
 import * as session from './session'
+import * as social from './social'
 
 export const actions = {
   category,
@@ -12,4 +13,5 @@ export const actions = {
   location,
   visit,
   session,
+  social,
 }

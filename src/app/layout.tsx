@@ -3,6 +3,8 @@ import { Geist, Geist_Mono as GeistMono } from 'next/font/google'
 import './globals.css'
 import { Providers } from './providers'
 import { env } from 'root/env'
+import { auth } from '@/auth'
+import { SessionProvider } from 'next-auth/react'
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -20,11 +22,13 @@ export const metadata: Metadata = {
     'Portfólio virtual, apresentando uma visão geral dos projetos que desenvolvi, minhas habilidades técnicas e a experiências na área de tecnologia.',
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const session = await auth()
+
   return (
     <html lang="pt-br">
       <body
@@ -37,8 +41,9 @@ export default function RootLayout({
           appToken={env.APP_TOKEN}
           appName={env.APP_NAME}
           appApiUrl={env.APP_API_URL}
+          isAdmin={Boolean(session?.user.isAdmin)}
         >
-          {children}
+          <SessionProvider session={session}>{children}</SessionProvider>
         </Providers>
       </body>
     </html>

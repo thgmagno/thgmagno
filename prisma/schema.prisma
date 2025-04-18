@@ -64,6 +64,28 @@ model Visit {
   @@map("visit")
 }
 
+model Reaction {
+  authorEmail String
+  projectId   Int    @map("project_id")
+  emoji       String
+
+  @@unique([authorEmail, projectId])
+  @@map("reactions")
+}
+
+model Comment {
+  id          String   @id @default(uuid())
+  projectId   Int      @map("project_id")
+  comment     String
+  authorEmail String   @map("author_email")
+  authorName  String?  @map("author_name")
+  avatarUrl   String?  @map("avatar_url")
+  parentId    String?  @map("parent_id")
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  @@map("comments")
+}
+
 enum Modality {
   ONLINE     @map("Online")
   PRESENCIAL @map("Presencial")

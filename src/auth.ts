@@ -5,14 +5,19 @@ import { env } from 'root/env'
 export const { auth, handlers, signIn, signOut } = NextAuth({
   providers: [GitHub],
   callbacks: {
-    async signIn({ user }) {
-      if (user.email !== env.ADMIN_EMAIL) {
+    async signIn({ user, account }) {
+      const callbackUrl = String(account?.callbackUrl || '')
+      const isAdminPage = callbackUrl.includes('/admin')
+
+      if (isAdminPage && user.email !== env.ADMIN_EMAIL) {
         return '/nao-autorizado'
       }
+
       return true
     },
     async session({ session, token }) {
-      session.accessToken = token.accessToken
+      session.accessToken = token.accessToken as unknown as string
+      session.user.isAdmin = session.user.email === env.ADMIN_EMAIL
       return session
     },
     async jwt({ token, account }) {

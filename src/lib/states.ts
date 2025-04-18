@@ -39,3 +39,21 @@ export interface InstitutionFormState {
     _form?: string
   }
 }
+
+export interface ReactionFormState {
+  errors: {
+    projectId?: string[]
+    emoji?: string[]
+    _form?: string
+  }
+}
+
+export interface CommentFormState {
+  errors: {
+    projectId?: string[]
+    commentId?: string[]
+    comment?: string[]
+    comentParentId?: string[]
+    _form?: string
+  }
+}

@@ -1,4 +1,10 @@
-import { Category, Formation, Institution, Location } from '@prisma/client'
+import {
+  Category,
+  Formation,
+  Institution,
+  Location,
+  Prisma,
+} from '@prisma/client'
 
 export type Params = Promise<{ slug: string }>
 export type SearchParams = Promise<{
@@ -42,3 +48,14 @@ export interface Visitant {
   country: string | null
   createdAt: Date
 }
+
+export type React = '👍' | '👎' | '😄' | '🎉' | '❤️' | '🚀' | '🔥'
+
+export const Reacts: React[] = ['👍', '👎', '😄', '🎉', '❤️', '🚀', '🔥']
+
+export type ReactionWithCount = (Prisma.PickEnumerable<
+  Prisma.ReactionGroupByOutputType,
+  'emoji'[]
+> & {
+  _count: number
+})[]

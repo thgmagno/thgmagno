@@ -4,18 +4,25 @@ import { motion } from 'framer-motion'
 import { buttonVariants } from '@/components/ui/button'
 import { ArrowUpRight } from 'lucide-react'
 import Link from 'next/link'
-import { GithubProject } from '@/lib/types'
+import { GithubProject, React, ReactionWithCount } from '@/lib/types'
 import { RenderMD } from '@/components/common/RenderMD'
 import { RenderTechnologies } from '@/components/common/RenderTechnologies'
+import { Reactions } from '@/components/common/Reactions'
+import { CommentArea } from '@/components/common/CommentArea'
+import { Comment } from '@prisma/client'
 
 export function SlugProjetoAnimated({
   project,
   readme,
   packageJson,
+  comments,
+  reactions,
 }: {
   project: GithubProject
   readme: string
   packageJson: string
+  comments: Comment[]
+  reactions: ReactionWithCount
 }) {
   const contentVariants = {
     hidden: { opacity: 0, y: 50 },
@@ -88,6 +95,9 @@ export function SlugProjetoAnimated({
         <div className="my-5 border-t" />
 
         <RenderTechnologies data={packageJson} />
+
+        <Reactions projectId={project.id} reactions={reactions} />
+        <CommentArea projectId={project.id} comments={comments} />
       </motion.div>
     </>
   )
