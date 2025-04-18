@@ -1,17 +1,18 @@
 'use client'
 
-import { actions } from '@/actions'
 import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from '@/components/ui/hover-card'
-import { React, ReactionWithCount, Reacts } from '@/lib/types'
-import { Loader2, Smile } from 'lucide-react'
-import { useActionState, useEffect } from 'react'
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
+import { ReactionWithCount, Reacts } from '@/lib/types'
 import { useSession, signIn } from 'next-auth/react'
+import { useActionState, useEffect } from 'react'
+import { buttonVariants } from '../ui/button'
+import { Loader2, Smile } from 'lucide-react'
+import { actions } from '@/actions'
 import { toast } from 'sonner'
-import { Button } from '../ui/button'
 import clsx from 'clsx'
 
 export function Reactions({
@@ -45,39 +46,44 @@ export function Reactions({
         {reactionsCountTotal} {reactionsCountTotal > 1 ? 'reações' : 'reação'}
       </h1>
       <div className="flex items-center justify-center gap-2">
-        <HoverCard>
-          <HoverCardTrigger>
+        <DropdownMenu>
+          <DropdownMenuTrigger>
             {isPending ? (
               <Loader2 className="h-6 w-6 animate-spin" />
             ) : (
               <Smile className="h-6 w-6" />
             )}
-          </HoverCardTrigger>
-          <HoverCardContent>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="p-3">
             <>
               <div className="flex gap-2.5">
                 {Reacts.map((react, i) => (
                   <form
                     action={action}
-                    key={i}
+                    key={`${react}-${i}`}
                     className={clsx({ 'opacity-30': !session })}
                   >
                     <input type="hidden" name="emoji" value={react} />
                     <input type="hidden" name="projectId" value={projectId} />
-                    <button>{react}</button>
+                    <button type="submit">{react}</button>
                   </form>
                 ))}
               </div>
               {!session && (
-                <div className="mt-3 flex items-center justify-center">
-                  <Button onClick={() => signIn('github')} variant="secondary">
-                    Entrar com Github
-                  </Button>
-                </div>
+                <DropdownMenuItem
+                  onClick={() => signIn('github')}
+                  className={clsx(
+                    'mt-3 w-full',
+                    buttonVariants({ variant: 'secondary' }),
+                  )}
+                >
+                  Entrar com Github
+                </DropdownMenuItem>
               )}
             </>
-          </HoverCardContent>
-        </HoverCard>
+          </DropdownMenuContent>
+        </DropdownMenu>
+
         {reactions.map((react) => (
           <div
             key={react.emoji}

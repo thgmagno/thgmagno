@@ -129,9 +129,43 @@ export async function findComments(projectId: number) {
   })
 }
 
-export async function deleteComment(projectId: number, commentId: string) {
-  const session = await auth()
-  // return prisma.comment.delete({
-  //   where: { id: commentId, authorEmail: session?.user?.email, projectId },
-  // })
+export async function deleteComment(
+  formState: CommentFormState,
+  formData: FormData,
+): Promise<CommentFormState> {
+  const parsed = CommentSchema.safeParse(Object.fromEntries(formData))
+
+  if (!parsed.success) {
+    console.log(parsed.error)
+    return {
+      errors: parsed.error.flatten().fieldErrors,
+    }
+  }
+
+  try {
+    const session = await auth()
+
+    if (!session?.user?.email) {
+      return { errors: { _form: 'Usuário não autenticado' } }
+    }
+
+    const commentExists = await prisma.comment.findUnique({
+      where: { id: parsed.data.commentId, authorEmail: session.user.email },
+    })
+
+    if (!commentExists) {
+      return { errors: { _form: 'Comentário não encontrado' } }
+    }
+
+    await prisma.comment.delete({
+      where: { id: parsed.data.commentId, authorEmail: session.user.email },
+    })
+  } catch {
+    return {
+      errors: { _form: 'Falha ao conectar-se ao banco de dados' },
+    }
+  }
+
+  revalidatePath('/')
+  return { errors: {} }
 }
