@@ -85,82 +85,87 @@ async function VisitsByAppWithLocation({ data }: { data: Visitant[] }) {
               {app.appName} – {app.total} visita{app.total > 1 ? 's' : ''}
             </h2>
             <CustomCard>
-              {app.locations.map((loc) => (
-                <Dialog key={`${loc.locationPart}-${loc.countryName}`}>
-                  <DialogTrigger asChild>
-                    <button className="text-start text-sm font-medium hover:underline">
-                      {loc.locationPart}:{' '}
-                      <span className="text-emerald-500">
-                        {loc.visits} visita{loc.visits > 1 ? 's' : ''}
-                      </span>
-                    </button>
-                  </DialogTrigger>
-                  <DialogContent>
-                    <DialogHeader>
-                      <DialogTitle className="capitalize">
-                        {app.appName}
-                      </DialogTitle>
-                      <DialogDescription>
-                        {loc.subregion}
-                        <br />
-                        {loc.locationPart}
-                        <br />
-                        {loc.translation?.official ?? loc.countryName}{' '}
-                        {loc.flag}
-                      </DialogDescription>
-                    </DialogHeader>
-                    <ScrollArea className="h-72 w-full">
-                      <div className="p-4">
-                        {Object.entries(
-                          data
-                            .filter(
-                              (v) =>
-                                v.appName === app.appName &&
-                                v.city === loc.city &&
-                                v.state === loc.state &&
-                                v.country === loc.country,
-                            )
-                            .reduce<Record<string, Visitant[]>>(
-                              (acc, visit) => {
-                                const date = new Intl.DateTimeFormat('pt-BR', {
-                                  dateStyle: 'medium',
-                                }).format(new Date(visit.createdAt))
+              <ScrollArea className="h-[20rem]">
+                {app.locations.map((loc) => (
+                  <Dialog key={`${loc.locationPart}-${loc.countryName}`}>
+                    <DialogTrigger asChild className="w-full">
+                      <button className="text-start text-sm font-medium hover:underline">
+                        {loc.locationPart}:{' '}
+                        <span className="text-emerald-500">
+                          {loc.visits} visita{loc.visits > 1 ? 's' : ''}
+                        </span>
+                      </button>
+                    </DialogTrigger>
+                    <DialogContent>
+                      <DialogHeader>
+                        <DialogTitle className="capitalize">
+                          {app.appName}
+                        </DialogTitle>
+                        <DialogDescription>
+                          {loc.subregion}
+                          <br />
+                          {loc.locationPart}
+                          <br />
+                          {loc.translation?.official ?? loc.countryName}{' '}
+                          {loc.flag}
+                        </DialogDescription>
+                      </DialogHeader>
+                      <ScrollArea className="h-72 w-full">
+                        <div className="p-4">
+                          {Object.entries(
+                            data
+                              .filter(
+                                (v) =>
+                                  v.appName === app.appName &&
+                                  v.city === loc.city &&
+                                  v.state === loc.state &&
+                                  v.country === loc.country,
+                              )
+                              .reduce<Record<string, Visitant[]>>(
+                                (acc, visit) => {
+                                  const date = new Intl.DateTimeFormat(
+                                    'pt-BR',
+                                    {
+                                      dateStyle: 'medium',
+                                    },
+                                  ).format(new Date(visit.createdAt))
 
-                                if (!acc[date]) acc[date] = []
-                                acc[date].push(visit)
-                                return acc
-                              },
-                              {},
-                            ),
-                        ).map(([date, visits]) => (
-                          <div
-                            key={date}
-                            className="mb-2 space-y-1 border-b pb-2"
-                          >
-                            <h4 className="text-muted-foreground mb-1.5 text-sm font-medium">
-                              📅 {date} - {visits.length} visita
-                              {visits.length > 1 ? 's' : ''}
-                            </h4>
-                            <p>
-                              {visits
-                                .map((v) =>
-                                  new Intl.DateTimeFormat('pt-BR', {
-                                    timeStyle: 'short',
-                                  }).format(new Date(v.createdAt)),
-                                )
-                                .reverse()
-                                .join(', ')}
-                            </p>
-                          </div>
-                        ))}
-                      </div>
-                    </ScrollArea>
-                    <DialogFooter className="text-muted-foreground text-sm">
-                      Os horários são aproximados!
-                    </DialogFooter>
-                  </DialogContent>
-                </Dialog>
-              ))}
+                                  if (!acc[date]) acc[date] = []
+                                  acc[date].push(visit)
+                                  return acc
+                                },
+                                {},
+                              ),
+                          ).map(([date, visits]) => (
+                            <div
+                              key={date}
+                              className="mb-2 space-y-1 border-b pb-2"
+                            >
+                              <h4 className="text-muted-foreground mb-1.5 text-sm font-medium">
+                                📅 {date} - {visits.length} visita
+                                {visits.length > 1 ? 's' : ''}
+                              </h4>
+                              <p>
+                                {visits
+                                  .map((v) =>
+                                    new Intl.DateTimeFormat('pt-BR', {
+                                      timeStyle: 'short',
+                                    }).format(new Date(v.createdAt)),
+                                  )
+                                  .reverse()
+                                  .join(', ')}
+                              </p>
+                            </div>
+                          ))}
+                        </div>
+                      </ScrollArea>
+                      <DialogFooter className="text-muted-foreground text-sm">
+                        Os horários são aproximados!
+                      </DialogFooter>
+                    </DialogContent>
+                  </Dialog>
+                ))}
+              </ScrollArea>
             </CustomCard>
           </article>
         ))}

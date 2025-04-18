@@ -31,13 +31,13 @@ export async function getCountryName(sigla: string | null) {
     `https://restcountries.com/v3.1/alpha/${sigla}`,
   ).then((response) => response.json())
 
-  const countryName = response[0].name.common
-    ? String(response[0].name.common)
+  const countryName = response[0]?.name?.common
+    ? String(response[0]?.name.common)
     : 'Não encontrado'
 
-  const flag = response[0].flag ? String(response[0].flag) : null
+  const flag = response[0]?.flag ? String(response[0]?.flag) : null
 
-  const subregion = response[0].region ? String(response[0].subregion) : null
+  const subregion = response[0]?.region ? String(response[0]?.subregion) : null
   const translatedSubregion = subregion
     ? await fetch(
         `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=pt&dt=t&q=${encodeURIComponent(
@@ -49,8 +49,8 @@ export async function getCountryName(sigla: string | null) {
     : null
 
   const translation = {
-    official: String(response[0].translations.por.official),
-    common: String(response[0].translations.por.common),
+    official: String(response[0]?.translations.por.official),
+    common: String(response[0]?.translations.por.common),
   }
 
   return { countryName, flag, subregion: translatedSubregion, translation }
