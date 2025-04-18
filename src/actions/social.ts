@@ -180,7 +180,7 @@ export async function deleteComment(
       where: { id: parsed.data.commentId, authorEmail: session.user.email },
     })
 
-    if (!commentExists) {
+    if (!commentExists && !session.user.isAdmin) {
       return { errors: { _form: 'Comentário não encontrado' } }
     }
 
