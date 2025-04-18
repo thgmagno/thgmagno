@@ -1,23 +1,9 @@
 import { Suspense } from 'react'
 import { ProjetosAnimated } from './animated'
-import { GithubResponse } from '@/lib/types'
-import { env } from 'root/env'
-
-const fetcherRepositories = async (): Promise<GithubResponse> =>
-  fetch(
-    `https://api.github.com/search/repositories?q=user:${env.GITHUB_USER}+topic:portfolio+fork:true`,
-    {
-      headers: {
-        Authorization: `Bearer ${env.GITHUB_TOKEN}`,
-      },
-      next: {
-        revalidate: 600,
-      },
-    },
-  ).then((res) => res.json())
+import { actions } from '@/actions'
 
 export default async function Projetos() {
-  const response = await fetcherRepositories()
+  const response = await actions.repository.fetcherRepositories()
 
   if (response.incomplete_results) return <IncompleteResults />
   if (!response.total_count) return <EmptyResults />

@@ -5,9 +5,11 @@ import { Formations } from './Formations'
 import { Metrics } from './Metrics'
 import { Institutions } from './Institutions'
 import { Locations } from './Locations'
+import { Comments } from './Comments'
 
 const tabs = [
   { value: 'categories', label: 'Categorias', component: Categories },
+  { value: 'comments', label: 'Comentários', component: Comments },
   { value: 'formations', label: 'Formações', component: Formations },
   { value: 'institutions', label: 'Instituições', component: Institutions },
   { value: 'localizations', label: 'Localizações', component: Locations },

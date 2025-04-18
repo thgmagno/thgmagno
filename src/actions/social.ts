@@ -6,6 +6,7 @@ import { prisma } from '@/lib/prisma'
 import { CommentSchema, ReactionSchema } from '@/lib/schemas'
 import { CommentFormState, ReactionFormState } from '@/lib/states'
 import { revalidatePath } from 'next/cache'
+import { actions } from '.'
 
 export async function react(
   formState: ReactionFormState,
@@ -136,6 +137,26 @@ export async function findComments(projectId: number) {
   })
 }
 
+export async function findAllComments() {
+  const { items } = await actions.repository.fetcherRepositories()
+
+  const mapProjectNameId = items.map((i) => ({
+    name: i.name,
+    id: i.id,
+  }))
+
+  const comments = await prisma.comment.findMany({
+    orderBy: { createdAt: 'desc' },
+  })
+
+  return comments.map((comment) => ({
+    ...comment,
+    projectName:
+      mapProjectNameId.find((i) => i.id === comment.projectId)?.name ||
+      'Não encontrado',
+  }))
+}
+
 export async function deleteComment(
   formState: CommentFormState,
   formData: FormData,
@@ -143,7 +164,6 @@ export async function deleteComment(
   const parsed = CommentSchema.safeParse(Object.fromEntries(formData))
 
   if (!parsed.success) {
-    console.log(parsed.error)
     return {
       errors: parsed.error.flatten().fieldErrors,
     }

@@ -3,8 +3,8 @@ import * as formation from './formation'
 import * as institution from './institution'
 import * as location from './location'
 import * as visit from './visit'
-import * as session from './session'
 import * as social from './social'
+import * as repository from './repository'
 
 export const actions = {
   category,
@@ -12,6 +12,6 @@ export const actions = {
   institution,
   location,
   visit,
-  session,
   social,
+  repository,
 }
