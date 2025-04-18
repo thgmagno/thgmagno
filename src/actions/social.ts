@@ -176,16 +176,18 @@ export async function deleteComment(
       return { errors: { _form: 'Usuário não autenticado' } }
     }
 
-    const commentExists = await prisma.comment.findUnique({
-      where: { id: parsed.data.commentId, authorEmail: session.user.email },
-    })
+    const where = session.user.isAdmin
+      ? { id: parsed.data.commentId }
+      : { id: parsed.data.commentId, authorEmail: session.user.email }
 
-    if (!commentExists && !session.user.isAdmin) {
+    const commentExists = await prisma.comment.findUnique({ where })
+
+    if (!commentExists) {
       return { errors: { _form: 'Comentário não encontrado' } }
     }
 
     await prisma.comment.delete({
-      where: { id: parsed.data.commentId, authorEmail: session.user.email },
+      where: { id: parsed.data.commentId },
     })
   } catch {
     return {
