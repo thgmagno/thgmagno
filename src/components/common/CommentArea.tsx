@@ -8,7 +8,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
-import { useActionState } from 'react'
+import { useActionState, useEffect, useState } from 'react'
 import { actions } from '@/actions'
 import { Comment } from '@prisma/client'
 import { formatDistanceToNow } from 'date-fns'
@@ -29,10 +29,17 @@ export function CommentArea({
 }) {
   const [formState, action, isPending] = useActionState(
     actions.social.comment,
-    { errors: {} },
+    { errors: {}, success: false },
   )
 
   const { data: session } = useSession()
+  const [comment, setCommet] = useState('')
+
+  useEffect(() => {
+    if (formState.success) {
+      setCommet('')
+    }
+  }, [formState])
 
   return (
     <div className="space-y-4 rounded-xl border bg-neutral-900 py-4 md:p-4">
@@ -93,6 +100,8 @@ export function CommentArea({
           className={clsx('border-none bg-neutral-800 p-2 text-base')}
           placeholder="Escreva um comentário..."
           disabled={!session?.user.email}
+          value={comment}
+          onChange={(e) => setCommet(e.target.value)}
         />
         {formState.errors && renderFormErrors(formState.errors)}
         <div className="mb-4 space-y-2.5">

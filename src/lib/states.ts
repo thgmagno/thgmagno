@@ -49,6 +49,7 @@ export interface ReactionFormState {
 }
 
 export interface CommentFormState {
+  success?: boolean
   errors: {
     projectId?: string[]
     commentId?: string[]

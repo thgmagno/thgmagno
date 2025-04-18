@@ -1,6 +1,7 @@
 'use server'
 
 import { auth } from '@/auth'
+import { isValidComment } from '@/lib/filter'
 import { prisma } from '@/lib/prisma'
 import { CommentSchema, ReactionSchema } from '@/lib/schemas'
 import { CommentFormState, ReactionFormState } from '@/lib/states'
@@ -81,6 +82,12 @@ export async function comment(
     }
   }
 
+  if (!isValidComment(parsed.data.comment)) {
+    return {
+      errors: { comment: ['Sua mensagem foi rejeitada pelo moderador'] },
+    }
+  }
+
   try {
     const session = await auth()
 
@@ -111,7 +118,7 @@ export async function comment(
   }
 
   revalidatePath('/')
-  return { errors: {} }
+  return { errors: {}, success: true }
 }
 
 export async function findReactions(projectId: number) {
