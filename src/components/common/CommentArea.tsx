@@ -9,7 +9,15 @@ import { format } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { ScrollArea } from '@/components/ui/scroll-area'
-import { useSession } from 'next-auth/react'
+import { signIn, signOut, useSession } from 'next-auth/react'
+import clsx from 'clsx'
+import { Ellipsis } from 'lucide-react'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
 
 export function CommentArea({
   projectId,
@@ -34,9 +42,10 @@ export function CommentArea({
               <div className="flex justify-between">
                 <div className="flex space-x-2">
                   <Avatar className="h-9 w-9">
-                    <AvatarImage src={session?.user?.image || ''} />
+                    <AvatarImage src={comment.avatarUrl || ''} />
                     <AvatarFallback>
-                      {session?.user?.name?.slice(0, 2).toUpperCase()}
+                      {comment.authorName?.slice(0, 2).toUpperCase() ||
+                        comment.authorEmail?.slice(0, 2).toUpperCase()}
                     </AvatarFallback>
                   </Avatar>
                   <div>
@@ -63,27 +72,45 @@ export function CommentArea({
         )}
       </ScrollArea>
 
-      <form action={action} className="space-y-4 px-4 pb-4 md:p-0">
+      <form action={action} className="px-4 md:p-0">
         <input type="hidden" name="projectId" value={projectId} />
         <input type="hidden" name="commentId" value="" />
         <input type="hidden" name="comentParentId" value="" />
 
-        <div>
-          <Textarea
-            name="comment"
-            className="border-none bg-neutral-800 p-2"
-            placeholder="Escreva um comentário..."
-          />
-          {formState.errors && renderFormErrors(formState.errors)}
-          <Button
-            type="submit"
-            disabled={isPending}
-            className="w-full"
-            variant="secondary"
-            size="sm"
-          >
-            {isPending ? 'Aguarde...' : 'Publicar'}
-          </Button>
+        <Textarea
+          name="comment"
+          className={clsx('border-none bg-neutral-800 p-2 text-base', {
+            'bg-red-900/40': formState.errors?.comment,
+          })}
+          placeholder="Escreva um comentário..."
+          disabled={!session?.user.email}
+        />
+        {formState.errors && renderFormErrors(formState.errors)}
+        <div className="mb-4 space-y-2.5">
+          {session?.user.email ? (
+            <div className="flex gap-1.5">
+              <Button
+                type="submit"
+                disabled={isPending || !session?.user.email}
+                className="w-full cursor-pointer disabled:cursor-not-allowed"
+                variant="secondary"
+                size="sm"
+              >
+                {isPending ? 'Aguarde...' : 'Publicar'}
+              </Button>
+              {formState.errors && optionsDropdown()}
+            </div>
+          ) : (
+            <Button
+              onClick={() => signIn('github')}
+              className="w-full"
+              variant="secondary"
+              type="button"
+              size="sm"
+            >
+              Entrar com Github
+            </Button>
+          )}
         </div>
       </form>
     </div>
@@ -92,7 +119,7 @@ export function CommentArea({
 
 function renderFormErrors(errors: Record<string, string | string[]>) {
   return (
-    <ul className="m-2 space-y-1 text-sm text-red-400">
+    <ul className="mt-1 mb-2.5 space-y-1 text-sm text-red-400">
       {Object.entries(errors).map(([field, msgs]) => {
         if (Array.isArray(msgs)) {
           return msgs.map((msg, i) => <li key={`${field}-${i}`}>{msg}</li>)
@@ -100,5 +127,22 @@ function renderFormErrors(errors: Record<string, string | string[]>) {
         return <li key={field}>{msgs}</li>
       })}
     </ul>
+  )
+}
+
+function optionsDropdown() {
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger>
+        <Button size="sm" variant="secondary">
+          <Ellipsis size="16" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent>
+        <DropdownMenuItem onClick={() => signOut()}>
+          Encerrar sessão
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   )
 }

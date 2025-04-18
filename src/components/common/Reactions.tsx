@@ -70,7 +70,7 @@ export function Reactions({
               </div>
               {!session && (
                 <div className="mt-3 flex items-center justify-center">
-                  <Button onClick={() => signIn('github')} variant="outline">
+                  <Button onClick={() => signIn('github')} variant="secondary">
                     Entrar com Github
                   </Button>
                 </div>

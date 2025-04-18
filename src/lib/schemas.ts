@@ -188,6 +188,9 @@ export const CommentSchema = z.object({
     })
     .transform((val) => Number(val)),
   commentId: z.string().optional(),
-  comment: z.string().min(1, 'Por favor, escreva seu comentário'),
+  comment: z
+    .string()
+    .min(1, 'Por favor, escreva seu comentário')
+    .max(140, 'O comentário ultrapassa o limite de 140 caracteres'),
   comentParentId: z.string().optional(),
 })
