@@ -24,7 +24,7 @@ export function Header({ categories }: { categories: CategoryProject[] }) {
   const handleChange = (value: string) => {
     const params = new URLSearchParams(searchParams)
 
-    if (value === 'all-projects') {
+    if (value === 'mostrar-todos') {
       params.delete('categoria')
     } else {
       params.set('categoria', value)
@@ -47,7 +47,7 @@ export function Header({ categories }: { categories: CategoryProject[] }) {
           defaultValue={searchParams.get('categoria') || 'mostrar-todos'}
           onValueChange={handleChange}
         >
-          <SelectTrigger className="bg-card w-[140px] border-none sm:w-[180px]">
+          <SelectTrigger className="bg-card w-fit border-none">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
