@@ -1,7 +1,6 @@
 import { Suspense } from 'react'
 import { ProjetosAnimated } from './animated'
 import { actions } from '@/actions'
-import { Header } from './header'
 
 type SearchParams = Promise<{ [key: string]: string | undefined }>
 
@@ -9,33 +8,10 @@ export default async function Projetos(props: { searchParams: SearchParams }) {
   const searchParams = await props.searchParams
   const category = searchParams.categoria
 
-  const [response, categories] = await Promise.all([
-    actions.repository.fetcherRepositories(category),
-    actions.repository.fetcherCategoriesProject(),
-  ])
+  const response = await actions.repository.fetcherRepositories(category)
 
-  if (response.incomplete_results) {
-    return (
-      <>
-        <Header
-          categories={categories}
-          selectedCategory={category || 'all-projects'}
-        />
-        <IncompleteResults />
-      </>
-    )
-  }
-  if (!response.total_count) {
-    return (
-      <>
-        <Header
-          categories={categories}
-          selectedCategory={category || 'all-projects'}
-        />
-        <EmptyResults />
-      </>
-    )
-  }
+  if (response.incomplete_results) return <IncompleteResults />
+  if (!response.total_count) return <EmptyResults />
 
   return (
     <Suspense fallback={'Carregando...'}>
@@ -44,8 +20,6 @@ export default async function Projetos(props: { searchParams: SearchParams }) {
           projects={
             response.items.sort((a, b) => a.name.localeCompare(b.name)) || []
           }
-          categories={categories}
-          selectedCategory={category || 'all-projects'}
         />
       </section>
     </Suspense>

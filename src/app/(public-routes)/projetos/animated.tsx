@@ -6,18 +6,8 @@ import { ptBR } from 'date-fns/locale'
 import { motion } from 'framer-motion'
 import { format } from 'date-fns'
 import Link from 'next/link'
-import { Header } from './header'
-import { CategoryProject } from '@prisma/client'
 
-export function ProjetosAnimated({
-  projects,
-  categories,
-  selectedCategory,
-}: {
-  projects: GithubProject[]
-  categories: CategoryProject[]
-  selectedCategory: string
-}) {
+export function ProjetosAnimated({ projects }: { projects: GithubProject[] }) {
   const contentVariants = (delay: number) => ({
     hidden: { opacity: 0, x: -50 },
     visible: {
@@ -29,7 +19,6 @@ export function ProjetosAnimated({
 
   return (
     <>
-      <Header categories={categories} selectedCategory={selectedCategory} />
       {projects.map((project, index) => (
         <motion.div
           key={`${project.id}`}
@@ -39,7 +28,7 @@ export function ProjetosAnimated({
         >
           <article>
             <Link
-              href={`/projetos/${project.name}`}
+              href={`/projeto/${project.name}`}
               className="group block transition-opacity duration-200 hover:opacity-80"
             >
               <div className="flex flex-col">

@@ -31,7 +31,7 @@ export async function Comments() {
                     </Avatar>
                     <div>
                       <Link
-                        href={`/projetos/${comment.projectName}`}
+                        href={`/projeto/${comment.projectName}`}
                         className="group block text-sm text-blue-500 transition-opacity duration-200 hover:opacity-80"
                       >
                         {comment.projectName}

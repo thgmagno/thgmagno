@@ -11,13 +11,7 @@ import { CategoryProject } from '@prisma/client'
 import { motion } from 'framer-motion'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
-export function Header({
-  selectedCategory,
-  categories,
-}: {
-  selectedCategory: string
-  categories: CategoryProject[]
-}) {
+export function Header({ categories }: { categories: CategoryProject[] }) {
   const titleVariants = {
     hidden: { opacity: 0, x: -30 },
     visible: { opacity: 1, x: 0, transition: { duration: 1 } },
@@ -49,12 +43,15 @@ export function Header({
       >
         <h1 className="text-2xl font-medium tracking-tight">Projetos</h1>
 
-        <Select defaultValue={selectedCategory} onValueChange={handleChange}>
+        <Select
+          defaultValue={searchParams.get('categoria') || 'mostrar-todos'}
+          onValueChange={handleChange}
+        >
           <SelectTrigger className="bg-card w-[140px] border-none sm:w-[180px]">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all-projects">Mostrar todos</SelectItem>
+            <SelectItem value="mostrar-todos">Mostrar todos</SelectItem>
             {categories.map((category) => (
               <SelectItem key={category.value} value={category.value}>
                 {category.label}
