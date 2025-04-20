@@ -55,6 +55,32 @@ export const CategorySchema = z.object({
   slug: z.string().optional(),
 })
 
+export const CategoryProjectSchema = z.object({
+  // Value
+  value: z
+    .string()
+    .min(1, { message: 'Valor é obrigatório' })
+    .max(32, 'Valor ultrapassa o limite de 32 caracteres')
+    .transform((value) =>
+      value
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase()
+        .replace(/[^a-z0-9-_]/g, '-')
+        .replace(/-+/g, '-')
+        .replace(/^-|-$/g, ''),
+    ),
+
+  // Label
+  label: z
+    .string()
+    .min(1, { message: 'Título é obrigatório' })
+    .max(32, 'Título ultrapassa o limite de 32 caracteres')
+    .transform(
+      (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase(),
+    ),
+})
+
 export const FormationSchema = z.object({
   // ID
   id: z

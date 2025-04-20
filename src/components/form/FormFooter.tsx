@@ -15,10 +15,7 @@ export function FormFooter({
     <CardFooter className="flex items-center">
       {setActive && (
         <div className="flex items-center space-x-2">
-          <Checkbox
-            defaultChecked={active}
-            onClick={() => setActive(!active)}
-          />
+          <Checkbox defaultChecked={true} onClick={() => setActive(!active)} />
           <label className="text-sm leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
             Ativo
           </label>

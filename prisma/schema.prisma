@@ -86,6 +86,14 @@ model Comment {
   @@map("comments")
 }
 
+model CategoryProject {
+  value  String  @id @db.VarChar(32)
+  label  String  @unique @db.VarChar(64)
+  active Boolean @default(true)
+
+  @@map("category_project")
+}
+
 enum Modality {
   ONLINE     @map("Online")
   PRESENCIAL @map("Presencial")

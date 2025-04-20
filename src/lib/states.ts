@@ -16,6 +16,14 @@ export interface CategoryFormState {
   }
 }
 
+export interface CategoryProjectFormState {
+  errors: {
+    value?: string[]
+    label?: string[]
+    _form?: string
+  }
+}
+
 export interface FormationFormState {
   errors: {
     id?: string[]
