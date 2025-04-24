@@ -157,6 +157,10 @@ export async function findAllComments() {
   }))
 }
 
+export async function findAllReactions() {
+  return prisma.reaction.count()
+}
+
 export async function deleteComment(
   formState: CommentFormState,
   formData: FormData,

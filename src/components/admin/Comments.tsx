@@ -8,13 +8,25 @@ import { ScrollArea } from '../ui/scroll-area'
 import Link from 'next/link'
 
 export async function Comments() {
-  const comments = await actions.social.findAllComments()
+  const [comments, totalReactions] = await Promise.all([
+    actions.social.findAllComments(),
+    actions.social.findAllReactions(),
+  ])
 
   return (
     <>
-      <div className="mb-4 flex items-center justify-between">
-        <h2 className="font-semibold sm:text-xl">Comentários dos projetos</h2>
+      <div className="mb-4 flex flex-col space-y-1.5">
+        <h2 className="font-semibold sm:text-xl">Feedbacks dos projetos</h2>
+        <h3 className="text-muted-foreground text-sm font-semibold sm:text-base">
+          Total de {totalReactions} reações registradas.
+        </h3>
+        <h3 className="text-muted-foreground text-sm font-semibold sm:text-base">
+          {comments.length > 0
+            ? `Total de ${comments.length} comentários registrados.`
+            : 'Nenhum comentário registrado até o momento.'}
+        </h3>
       </div>
+
       <ScrollArea className="h-[36rem] pr-4">
         <div className="grid gap-4">
           {comments.map((comment) => (
