@@ -27,7 +27,7 @@ export default function Home() {
       </motion.div>
       <motion.div initial="hidden" animate="visible" variants={contentVariants}>
         <h1 className="mb-8 text-2xl font-medium tracking-tight">
-          Desenvolvedor web full-stack
+          Desenvolvedor Web
         </h1>
         <div className="prose prose-neutral dark:prose-invert space-y-3">
           <p>
