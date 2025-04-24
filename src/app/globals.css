@@ -127,6 +127,9 @@
   .danger {
     @apply text-red-500
   }
+  h3 > span {
+    @apply text-yellow-500
+  }
   .no-scrollbar {
     &::-webkit-scrollbar {
      display: none;

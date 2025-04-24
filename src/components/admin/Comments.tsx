@@ -18,12 +18,16 @@ export async function Comments() {
       <div className="mb-4 flex flex-col space-y-1.5">
         <h2 className="font-semibold sm:text-xl">Feedbacks dos projetos</h2>
         <h3 className="text-muted-foreground text-sm font-semibold sm:text-base">
-          Total de {totalReactions} reações registradas.
+          Total de <span>{totalReactions} reações</span> registradas.
         </h3>
         <h3 className="text-muted-foreground text-sm font-semibold sm:text-base">
-          {comments.length > 0
-            ? `Total de ${comments.length} comentários registrados.`
-            : 'Nenhum comentário registrado até o momento.'}
+          {comments.length > 0 ? (
+            <>
+              Total de <span>{comments.length} comentários</span> registrados.
+            </>
+          ) : (
+            'Nenhum comentário registrado até o momento.'
+          )}
         </h3>
       </div>
 
