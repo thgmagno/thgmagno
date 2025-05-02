@@ -132,7 +132,7 @@ export async function findReactions(projectId: number) {
 
 export async function findComments(projectId: number) {
   return prisma.comment.findMany({
-    where: { projectId },
+    where: { projectId, deletedAt: null },
     orderBy: { createdAt: 'asc' },
   })
 }
@@ -176,15 +176,13 @@ export async function deleteComment(
   try {
     const session = await auth()
 
-    if (!session?.user?.email) {
-      return { errors: { _form: 'Usuário não autenticado' } }
+    if (!session?.user?.email || !session.user.isAdmin) {
+      return { errors: { _form: 'Não autorizado' } }
     }
 
-    const where = session.user.isAdmin
-      ? { id: parsed.data.commentId }
-      : { id: parsed.data.commentId, authorEmail: session.user.email }
-
-    const commentExists = await prisma.comment.findUnique({ where })
+    const commentExists = await prisma.comment.findUnique({
+      where: { id: parsed.data.commentId },
+    })
 
     if (!commentExists) {
       return { errors: { _form: 'Comentário não encontrado' } }
@@ -192,6 +190,47 @@ export async function deleteComment(
 
     await prisma.comment.delete({
       where: { id: parsed.data.commentId },
+    })
+  } catch {
+    return {
+      errors: { _form: 'Falha ao conectar-se ao banco de dados' },
+    }
+  }
+
+  revalidatePath('/')
+  return { errors: {} }
+}
+
+export async function softDeleteComment(
+  formState: CommentFormState,
+  formData: FormData,
+): Promise<CommentFormState> {
+  const parsed = CommentSchema.safeParse(Object.fromEntries(formData))
+
+  if (!parsed.success) {
+    return {
+      errors: parsed.error.flatten().fieldErrors,
+    }
+  }
+
+  try {
+    const session = await auth()
+
+    if (!session?.user?.email) {
+      return { errors: { _form: 'Usuário não autenticado' } }
+    }
+
+    const commentExists = await prisma.comment.findUnique({
+      where: { id: parsed.data.commentId, authorEmail: session.user.email },
+    })
+
+    if (!commentExists) {
+      return { errors: { _form: 'Comentário não encontrado' } }
+    }
+
+    await prisma.comment.update({
+      where: { id: parsed.data.commentId, authorEmail: session.user.email },
+      data: { deletedAt: new Date() },
     })
   } catch {
     return {

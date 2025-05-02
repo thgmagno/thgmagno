@@ -4,6 +4,7 @@ import { useActionState, useEffect } from 'react'
 import { Loader2, Trash2 } from 'lucide-react'
 import { toast } from 'sonner'
 import { actions } from '@/actions'
+import { useSession } from 'next-auth/react'
 
 export function DeleteCommentButton({
   commentId,
@@ -14,8 +15,10 @@ export function DeleteCommentButton({
   projectId: number
   comment: string
 }) {
+  const isAdmin = useSession().data?.user.isAdmin || false
+
   const [formState, action, isPending] = useActionState(
-    actions.social.deleteComment,
+    isAdmin ? actions.social.deleteComment : actions.social.softDeleteComment,
     { errors: {} },
   )
 

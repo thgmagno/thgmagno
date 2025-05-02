@@ -36,6 +36,15 @@ export async function Comments() {
           {comments.map((comment) => (
             <CustomCard key={comment.id}>
               <div className="relative space-y-3 p-1">
+                {comment.deletedAt && (
+                  <p className="border-b pb-3 text-center text-xs text-red-400">
+                    Comentário deletado pelo autor{' '}
+                    {formatDistanceToNow(new Date(comment.deletedAt), {
+                      addSuffix: true,
+                      locale: ptBR,
+                    })}
+                  </p>
+                )}
                 <div className="flex justify-between">
                   <div className="flex space-x-2">
                     <Avatar className="h-9 w-9">
