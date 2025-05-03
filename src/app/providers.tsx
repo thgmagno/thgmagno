@@ -33,7 +33,7 @@ export function Providers({
     >
       <ThemeProvider {...props}>
         {children}
-        <Toaster />
+        <Toaster position="top-center" />
       </ThemeProvider>
     </AppProvider>
   )

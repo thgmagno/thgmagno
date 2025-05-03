@@ -47,20 +47,26 @@ function Project({ project }: { project: ProjectFeedback }) {
             </div>
           ))}
         </div>
-        <div className="mt-2 flex origin-left scale-90 items-center gap-1 text-xs md:scale-100">
-          {Object.entries(project.reactions.emoji).map(([emoji, count]) => (
-            <div
-              key={emoji}
-              className="bg-accent min-w-fit space-x-2 rounded-xl px-2 py-1"
-            >
-              <span className="text-sm font-medium">
-                {emoji} {count}
-              </span>
-            </div>
-          ))}
-          <div className="bg-accent min-w-fit space-x-2 rounded-xl px-2 py-1">
-            <span className="text-sm font-medium">
-              👣 {project.visits.length}
+        <div className="mt-3 mr-1 flex justify-between">
+          <div className="flex origin-left scale-90 items-center gap-1 text-xs md:scale-100">
+            {Object.entries(project.reactions.emoji).map(([emoji, count]) => (
+              <div
+                key={emoji}
+                className="bg-accent min-w-fit space-x-2 rounded-xl px-2 py-1"
+              >
+                <span className="text-sm font-medium">
+                  {emoji} {count}
+                </span>
+              </div>
+            ))}
+          </div>
+          <div
+            className="bg-accent min-w-fit space-x-2 rounded-xl px-2 py-1"
+            hidden={!project.visits.length}
+          >
+            <span className="text-xs font-medium">
+              {project.visits.length}{' '}
+              {project.visits.length === 1 ? 'visita' : 'visitas'}
             </span>
           </div>
         </div>

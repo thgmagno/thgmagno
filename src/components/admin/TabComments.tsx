@@ -5,17 +5,17 @@ import { formatDate } from '@/lib/utils'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import {
   AlertDialog,
-  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
 import { actions } from '@/actions'
-import { useActionState } from 'react'
+import { useActionState, useEffect } from 'react'
+import { Button, buttonVariants } from '@/components/ui/button'
+import { toast } from 'sonner'
+import { AlertDialogDescription } from '@radix-ui/react-alert-dialog'
 
 export function TabComments({ comments }: { comments: Comment[] }) {
   const [formState, action, isPending] = useActionState(
@@ -23,14 +23,19 @@ export function TabComments({ comments }: { comments: Comment[] }) {
     { errors: {} },
   )
 
+  useEffect(() => {
+    if (formState.success) toast.success('Comentário excluído com sucesso')
+    if (formState.errors._form) toast.error(formState.errors._form)
+  }, [formState])
+
   return (
-    <section className="mt-6 max-h-[60vh] overflow-y-scroll">
+    <>
       {comments
         .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
         .map((comment) => (
           <div
             key={`${comment.id}-${comment.createdAt.getTime()}`}
-            className="bg-card mb-2 flex items-center justify-between rounded-md p-2"
+            className="bg-card mb-2 flex items-center justify-between rounded-md p-2 first:mt-4"
           >
             <Avatar>
               <AvatarImage
@@ -42,7 +47,12 @@ export function TabComments({ comments }: { comments: Comment[] }) {
               <small className="text-muted-foreground">
                 {comment.authorName}
               </small>
-              <p className="mt-1">{comment.comment}</p>
+              <p className="my-1">{comment.comment}</p>
+              {comment.deletedAt && (
+                <small className="text-red-400">
+                  Excluído pelo autor {formatDate(comment.deletedAt)}
+                </small>
+              )}
             </div>
             <div className="min-w-fit">
               <small className="text-muted-foreground">
@@ -54,28 +64,42 @@ export function TabComments({ comments }: { comments: Comment[] }) {
                     <button className="text-xs text-red-500">Excluir</button>
                   </AlertDialogTrigger>
                   <AlertDialogContent>
-                    <AlertDialogHeader>
+                    <AlertDialogHeader className="text-start">
                       <AlertDialogTitle>
                         Tem certeza que deseja excluir?
                       </AlertDialogTitle>
-                      <AlertDialogDescription>
-                        Esta ação não pode ser desfeita.
+                      <AlertDialogDescription className="text-muted-foreground text-sm font-medium">
+                        Essa ação não pode ser desfeita.
                       </AlertDialogDescription>
                     </AlertDialogHeader>
-                    <AlertDialogFooter>
-                      <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                    <div className="flex items-center justify-end gap-2">
+                      <AlertDialogCancel
+                        className={buttonVariants({
+                          size: 'sm',
+                          variant: 'outline',
+                          className: 'm-0',
+                        })}
+                      >
+                        Cancelar
+                      </AlertDialogCancel>
                       <form action={action}>
-                        <AlertDialogAction type="submit">
-                          Confirmar
-                        </AlertDialogAction>
+                        <input
+                          type="hidden"
+                          name="commentId"
+                          value={comment.id}
+                        />
+
+                        <Button size="sm" className="cursor-pointer">
+                          {isPending ? 'Aguarde...' : 'Confirmar'}
+                        </Button>
                       </form>
-                    </AlertDialogFooter>
+                    </div>
                   </AlertDialogContent>
                 </AlertDialog>
               </div>
             </div>
           </div>
         ))}
-    </section>
+    </>
   )
 }

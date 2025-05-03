@@ -3,7 +3,11 @@
 import { auth } from '@/auth'
 import { isValidComment } from '@/lib/filter'
 import { prisma } from '@/lib/prisma'
-import { CommentSchema, ReactionSchema } from '@/lib/schemas'
+import {
+  CommentSchema,
+  DeleteCommentSchema,
+  ReactionSchema,
+} from '@/lib/schemas'
 import { CommentFormState, ReactionFormState } from '@/lib/states'
 import { revalidatePath } from 'next/cache'
 import { actions } from '.'
@@ -142,7 +146,7 @@ export async function deleteComment(
   formState: CommentFormState,
   formData: FormData,
 ): Promise<CommentFormState> {
-  const parsed = CommentSchema.safeParse(Object.fromEntries(formData))
+  const parsed = DeleteCommentSchema.safeParse(Object.fromEntries(formData))
 
   if (!parsed.success) {
     return {
@@ -175,7 +179,7 @@ export async function deleteComment(
   }
 
   revalidatePath('/')
-  return { errors: {} }
+  return { success: true, errors: {} }
 }
 
 export async function softDeleteComment(

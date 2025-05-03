@@ -57,16 +57,13 @@ export function CommentArea({
                   </Avatar>
                   <div>
                     <p className="flex flex-col-reverse text-sm sm:flex-row sm:items-center">
-                      <span>{comment.authorName}</span>
                       <span className="min-w-fit text-xs text-neutral-400 sm:ml-2">
                         {formatDistanceToNow(new Date(comment.createdAt), {
                           addSuffix: true,
                           locale: ptBR,
                         })}
                       </span>
-                    </p>
-                    <p className="text-muted-foreground text-xs font-light">
-                      {comment.authorEmail}
+                      <span>{comment.authorName}</span>
                     </p>
                   </div>
                 </div>

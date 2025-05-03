@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import React, { useState } from 'react'
 import clsx from 'clsx'
 import { Visit } from '@prisma/client'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
@@ -32,7 +32,7 @@ export function TabVisits({ visits }: { visits: Visit[] }) {
   const renderVisits = () => {
     if (orderBy === 'date') {
       return Object.entries(grouped).map(([date, locations]) => (
-        <div key={date}>
+        <React.Fragment key={date}>
           {Object.values(locations).map(({ visit, count }) => (
             <div
               key={`${visit.city}-${visit.state}-${visit.country}-${date}`}
@@ -59,7 +59,7 @@ export function TabVisits({ visits }: { visits: Visit[] }) {
               <small className="text-muted-foreground">{date}</small>
             </div>
           ))}
-        </div>
+        </React.Fragment>
       ))
     } else {
       const flatList = Object.entries(grouped).flatMap(([date, locations]) =>
@@ -103,21 +103,25 @@ export function TabVisits({ visits }: { visits: Visit[] }) {
 
   return (
     <>
-      <div className="m-3 mt-0 flex justify-end">
-        <Button
-          size="sm"
-          variant="link"
-          className="p-0"
-          onClick={() =>
-            setOrderBy((prev) => (prev === 'date' ? 'count' : 'date'))
-          }
-        >
-          {orderBy === 'date' ? 'Mais recentes' : 'Mais populares'}
-        </Button>
-      </div>
-      <section className="max-h-[60vh] overflow-y-scroll">
-        {renderVisits()}
-      </section>
+      {visits.length > 0 ? (
+        <div className="m-0 flex justify-end pb-1.5">
+          <Button
+            size="sm"
+            variant="link"
+            className="p-0"
+            onClick={() =>
+              setOrderBy((prev) => (prev === 'date' ? 'count' : 'date'))
+            }
+          >
+            {orderBy === 'date' ? 'Mais recentes' : 'Mais populares'}
+          </Button>
+        </div>
+      ) : (
+        <p className="text-muted-foreground p-3 pt-6 text-center">
+          Nenhuma visita registrada
+        </p>
+      )}
+      {renderVisits()}
     </>
   )
 }
