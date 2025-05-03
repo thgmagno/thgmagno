@@ -15,11 +15,6 @@ export const generateTitle = (name: string) => {
     .join(' ')
 }
 
-export function dateFormatBR(data: Date) {
-  const [ano, mes, dia] = data.toISOString().split('T')[0].split('-')
-  return `${dia}/${mes}/${ano}`
-}
-
 export const formatDate = (date: Date) => {
   const now = new Date()
   const diffInMs = now.getTime() - date.getTime()

@@ -1,8 +1,8 @@
-import { CategoryAdd } from './CategoryAdd'
-import { CategoryItem } from './CategoryItem'
 import { actions } from '@/actions'
-import { CategoryProjectAdd } from './CategoryProjectAdd'
-import { CategoryProjectItem } from './CategoryProjectItem'
+import { CategoryAdd } from '@/components/admin/CategoryAdd'
+import { CategoryItem } from '@/components/admin/CategoryItem'
+import { CategoryProjectAdd } from '@/components/admin/CategoryProjectAdd'
+import { CategoryProjectItem } from '@/components/admin/CategoryProjectItem'
 
 export async function Categories() {
   const [categories, categoriesProject] = await Promise.all([

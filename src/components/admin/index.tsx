@@ -1,9 +1,9 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { Categories } from './Categories'
-import { Formations } from './Formations'
-import { Institutions } from './Institutions'
-import { Locations } from './Locations'
-import { Feedbacks } from './Feedbacks'
+import { Categories } from '@/components/admin/Categories'
+import { Formations } from '@/components/admin/Formations'
+import { Institutions } from '@/components/admin/Institutions'
+import { Locations } from '@/components/admin/Locations'
+import { Feedbacks } from '@/components/admin/Feedbacks'
 
 const tabs = [
   { value: 'categories', label: 'Categorias', component: Categories },
@@ -15,7 +15,7 @@ const tabs = [
 
 export function AdminDashboard() {
   return (
-    <Tabs defaultValue={tabs[1].value}>
+    <Tabs defaultValue={tabs[0].value}>
       <div className="no-scrollbar overflow-x-scroll">
         <TabsList className="mb-5">
           {tabs.map((tab) => (

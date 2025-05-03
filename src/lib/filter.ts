@@ -1,15 +1,14 @@
 import { Filter } from 'bad-words'
 import pt from 'naughty-words/pt.json'
 
-const filter = new Filter({ list: [...pt] })
-
-function normalizar(text: string) {
-  return text
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .toLowerCase()
-}
-
 export function isValidComment(text: string) {
+  const filter = new Filter({ list: [...pt] })
+  const normalizar = (text: string) => {
+    return text
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .toLowerCase()
+  }
+
   return !filter.isProfane(normalizar(text))
 }

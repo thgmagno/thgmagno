@@ -20,11 +20,11 @@ import {
 } from '@/components/ui/dialog'
 import { Edit, Trash2 } from 'lucide-react'
 import { Location } from '@prisma/client'
-import { CustomCard } from './CustomCard'
+import { CustomCard } from '@/components/admin/CustomCard'
 import { useActionState } from 'react'
 import { actions } from '@/actions'
 import { toast } from 'sonner'
-import { LocationForm } from '../form/LocationForm'
+import { LocationForm } from '@/components/form/LocationForm'
 
 export function LocationItem({ location }: { location: Location }) {
   return (

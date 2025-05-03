@@ -23,12 +23,12 @@ import Link from 'next/link'
 import { toast } from 'sonner'
 import { actions } from '@/actions'
 import { FormationWithRelations } from '@/lib/types'
-import { FormationForm } from '../form/FormationForm'
+import { FormationForm } from '@/components/form/FormationForm'
 import { useActionState } from 'react'
-import { CustomCard } from './CustomCard'
+import { CustomCard } from '@/components/admin/CustomCard'
 import { Formation } from '@prisma/client'
-import { dateFormatBR } from '@/lib/utils'
 import clsx from 'clsx'
+import { formatDate } from '@/lib/utils'
 
 export function FormationItem({
   formation,
@@ -59,8 +59,8 @@ export function FormationItem({
 
           {/* Início - Fim */}
           <p className="text-muted-foreground block text-xs font-semibold">
-            {dateFormatBR(formation.startedAt)} -{' '}
-            {formation.endedAt ? dateFormatBR(formation.endedAt) : 'Atual'}
+            {formatDate(formation.startedAt)} -{' '}
+            {formation.endedAt ? formatDate(formation.endedAt) : 'Atual'}
           </p>
 
           {/* URL do certificado */}

@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input'
 import { ErrorMessage } from '@/components/common/ErrorMessage'
 import { CategoryProjectFormState } from '@/lib/states'
 import { CategoryProject } from '@prisma/client'
-import { FormFooter } from './FormFooter'
+import { FormFooter } from '@/components/form/FormFooter'
 
 export function CategoryProjectForm({
   action,

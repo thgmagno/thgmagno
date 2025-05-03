@@ -28,6 +28,14 @@ export function TabComments({ comments }: { comments: Comment[] }) {
     if (formState.errors._form) toast.error(formState.errors._form)
   }, [formState])
 
+  if (!comments.length) {
+    return (
+      <p className="text-muted-foreground p-3 pt-6 text-center">
+        Nenhum comentário registrado
+      </p>
+    )
+  }
+
   return (
     <>
       {comments
@@ -89,7 +97,11 @@ export function TabComments({ comments }: { comments: Comment[] }) {
                           value={comment.id}
                         />
 
-                        <Button size="sm" className="cursor-pointer">
+                        <Button
+                          size="sm"
+                          className="cursor-pointer"
+                          disabled={isPending}
+                        >
                           {isPending ? 'Aguarde...' : 'Confirmar'}
                         </Button>
                       </form>

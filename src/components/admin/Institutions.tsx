@@ -1,6 +1,6 @@
 import { actions } from '@/actions'
-import { InstitutionItem } from './InstitutionItem'
-import { InstitutionAdd } from './InstitutionAdd'
+import { InstitutionItem } from '@/components/admin/InstitutionItem'
+import { InstitutionAdd } from '@/components/admin/InstitutionAdd'
 
 export async function Institutions() {
   const institutions = await actions.institution.index()

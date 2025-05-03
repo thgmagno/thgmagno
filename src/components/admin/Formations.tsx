@@ -1,6 +1,6 @@
 import { actions } from '@/actions'
-import { FormationItem } from './FormationItem'
-import { FormationAdd } from './FormationAdd'
+import { FormationItem } from '@/components/admin/FormationItem'
+import { FormationAdd } from '@/components/admin/FormationAdd'
 
 export async function Formations() {
   const formations = await actions.formation.index()

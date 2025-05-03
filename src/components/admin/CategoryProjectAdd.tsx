@@ -10,7 +10,7 @@ import {
 import { useActionState } from 'react'
 import { actions } from '@/actions'
 import { Button } from '@/components/ui/button'
-import { CategoryProjectForm } from '../form/CategoryProjectForm'
+import { CategoryProjectForm } from '@/components/form/CategoryProjectForm'
 
 export function CategoryProjectAdd() {
   const [formState, action, isPending] = useActionState(

@@ -23,8 +23,8 @@ import { Edit, Trash2 } from 'lucide-react'
 import { toast } from 'sonner'
 import { actions } from '@/actions'
 import { useActionState } from 'react'
-import { CustomCard } from './CustomCard'
-import { CategoryProjectForm } from '../form/CategoryProjectForm'
+import { CustomCard } from '@/components/admin/CustomCard'
+import { CategoryProjectForm } from '@/components/form/CategoryProjectForm'
 
 export function CategoryProjectItem({
   category,

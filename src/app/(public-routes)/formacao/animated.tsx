@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { FormationWithRelations } from '@/lib/types'
 import { Badge } from '@/components/ui/badge'
-import { dateFormatBR } from '@/lib/utils'
+import { formatDate } from '@/lib/utils'
 
 export function FormacoesAnimated({
   formations,
@@ -42,8 +42,8 @@ export function FormacoesAnimated({
 
 function FormationCard({ formation }: { formation: FormationWithRelations }) {
   const dateRange = formation.endedAt
-    ? `${dateFormatBR(formation.startedAt)} - ${dateFormatBR(formation.endedAt)}`
-    : `${dateFormatBR(formation.startedAt)} - Atual`
+    ? `${formatDate(formation.startedAt)} - ${formatDate(formation.endedAt)}`
+    : `${formatDate(formation.startedAt)} - Atual`
 
   return (
     <div className="mb-4 flex flex-col space-y-1">

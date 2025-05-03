@@ -220,8 +220,3 @@ export const CommentSchema = z.object({
     .max(140, 'O comentário ultrapassa o limite de 140 caracteres'),
   comentParentId: z.string().optional(),
 })
-
-export const DeleteCommentSchema = z.object({
-  commentId: z.string(),
-  authorEmail: z.string().optional(),
-})

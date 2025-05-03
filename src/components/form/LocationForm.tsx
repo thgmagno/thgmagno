@@ -4,7 +4,7 @@ import { CardContent } from '@/components/ui/card'
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { ErrorMessage } from '@/components/common/ErrorMessage'
-import { FormFooter } from './FormFooter'
+import { FormFooter } from '@/components/form/FormFooter'
 
 export function LocationForm({
   action,

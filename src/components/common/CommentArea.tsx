@@ -17,7 +17,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { signIn, signOut, useSession } from 'next-auth/react'
 import { Ellipsis } from 'lucide-react'
 import clsx from 'clsx'
-import { DeleteCommentButton } from './DeleteCommentButton'
+import { DeleteCommentButton } from '@/components/common/DeleteCommentButton'
 
 export function CommentArea({
   projectId,

@@ -1,10 +1,10 @@
 import { actions } from '@/actions'
 import { ProjectFeedback } from '@/lib/types'
 import { generateTitle } from '@/lib/utils'
-import { CustomCard } from './CustomCard'
+import { CustomCard } from '@/components/admin/CustomCard'
 import { formatDistanceToNow } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
-import { FeedbackDetails } from './FeedbackDetails'
+import { FeedbackDetails } from '@/components/admin/FeedbackDetails'
 
 export async function Feedbacks() {
   const projectsWithFeedback = await actions.social.findFeedbacks()
@@ -61,7 +61,7 @@ function Project({ project }: { project: ProjectFeedback }) {
             ))}
           </div>
           <div
-            className="bg-accent min-w-fit space-x-2 rounded-xl px-2 py-1"
+            className="bg-accent min-w-fit space-x-2 rounded-xl px-2"
             hidden={!project.visits.length}
           >
             <span className="text-xs font-medium">

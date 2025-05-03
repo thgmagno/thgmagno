@@ -7,7 +7,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import { FormationForm } from '../form/FormationForm'
+import { FormationForm } from '@/components/form/FormationForm'
 import { useActionState } from 'react'
 import { actions } from '@/actions'
 import { Button } from '@/components/ui/button'

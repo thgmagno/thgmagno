@@ -20,13 +20,13 @@ import {
 } from '@/components/ui/dialog'
 import { Edit, Trash2 } from 'lucide-react'
 import clsx from 'clsx'
-import { CustomCard } from './CustomCard'
+import { CustomCard } from '@/components/admin/CustomCard'
 import { InstitutionWithLocation } from '@/lib/types'
 import { actions } from '@/actions'
 import { Institution } from '@prisma/client'
 import { useActionState } from 'react'
 import { toast } from 'sonner'
-import { InstitutionForm } from '../form/InstitutionForm'
+import { InstitutionForm } from '@/components/form/InstitutionForm'
 
 export function InstitutionItem({
   institution,

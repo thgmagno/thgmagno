@@ -9,9 +9,6 @@ import {
 } from '@prisma/client'
 
 export type Params = Promise<{ slug: string }>
-export type SearchParams = Promise<{
-  [key: string]: string | string[] | undefined
-}>
 
 export interface GithubProject {
   id: number
@@ -38,17 +35,6 @@ export type FormationWithRelations = Formation & {
 
 export type InstitutionWithLocation = Institution & {
   location?: Location | null
-}
-
-export interface Visitant {
-  id: string
-  appName: string
-  ipHash: string
-  userAgent: string | null
-  city: string | null
-  state: string | null
-  country: string | null
-  createdAt: Date
 }
 
 export type React = '👍' | '👎' | '😄' | '🎉' | '❤️' | '🚀' | '🔥'

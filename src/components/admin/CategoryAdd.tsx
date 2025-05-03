@@ -7,7 +7,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import { CategoryForm } from '../form/CategoryForm'
+import { CategoryForm } from '@/components/form/CategoryForm'
 import { useActionState } from 'react'
 import { actions } from '@/actions'
 import { Button } from '@/components/ui/button'

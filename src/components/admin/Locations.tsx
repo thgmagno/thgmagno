@@ -1,6 +1,6 @@
 import { actions } from '@/actions'
-import { LocationItem } from './LocationItem'
-import { LocationAdd } from './LocationAdd'
+import { LocationItem } from '@/components/admin/LocationItem'
+import { LocationAdd } from '@/components/admin/LocationAdd'
 
 export async function Locations() {
   const locations = await actions.location.index()

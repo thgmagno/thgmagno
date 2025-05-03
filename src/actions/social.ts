@@ -3,11 +3,7 @@
 import { auth } from '@/auth'
 import { isValidComment } from '@/lib/filter'
 import { prisma } from '@/lib/prisma'
-import {
-  CommentSchema,
-  DeleteCommentSchema,
-  ReactionSchema,
-} from '@/lib/schemas'
+import { CommentSchema, ReactionSchema } from '@/lib/schemas'
 import { CommentFormState, ReactionFormState } from '@/lib/states'
 import { revalidatePath } from 'next/cache'
 import { actions } from '.'
@@ -146,11 +142,11 @@ export async function deleteComment(
   formState: CommentFormState,
   formData: FormData,
 ): Promise<CommentFormState> {
-  const parsed = DeleteCommentSchema.safeParse(Object.fromEntries(formData))
+  const commentId = String(formData.get('commentId'))
 
-  if (!parsed.success) {
+  if (!commentId) {
     return {
-      errors: parsed.error.flatten().fieldErrors,
+      errors: { _form: 'Comentário não encontrado' },
     }
   }
 
@@ -162,7 +158,7 @@ export async function deleteComment(
     }
 
     const commentExists = await prisma.comment.findUnique({
-      where: { id: parsed.data.commentId },
+      where: { id: commentId },
     })
 
     if (!commentExists) {
@@ -170,7 +166,7 @@ export async function deleteComment(
     }
 
     await prisma.comment.delete({
-      where: { id: parsed.data.commentId },
+      where: { id: commentId },
     })
   } catch {
     return {
@@ -186,11 +182,11 @@ export async function softDeleteComment(
   formState: CommentFormState,
   formData: FormData,
 ): Promise<CommentFormState> {
-  const parsed = CommentSchema.safeParse(Object.fromEntries(formData))
+  const commentId = String(formData.get('commentId'))
 
-  if (!parsed.success) {
+  if (!commentId) {
     return {
-      errors: parsed.error.flatten().fieldErrors,
+      errors: { _form: 'Comentário não encontrado' },
     }
   }
 
@@ -202,7 +198,7 @@ export async function softDeleteComment(
     }
 
     const commentExists = await prisma.comment.findUnique({
-      where: { id: parsed.data.commentId, authorEmail: session.user.email },
+      where: { id: commentId, authorEmail: session.user.email },
     })
 
     if (!commentExists) {
@@ -210,7 +206,7 @@ export async function softDeleteComment(
     }
 
     await prisma.comment.update({
-      where: { id: parsed.data.commentId, authorEmail: session.user.email },
+      where: { id: commentId, authorEmail: session.user.email },
       data: { deletedAt: new Date() },
     })
   } catch {

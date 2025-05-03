@@ -7,7 +7,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import { LocationForm } from '../form/LocationForm'
+import { LocationForm } from '@/components/form/LocationForm'
 import { useActionState } from 'react'
 import { actions } from '@/actions'
 import { Button } from '@/components/ui/button'

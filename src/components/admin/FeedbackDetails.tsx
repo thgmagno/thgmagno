@@ -9,12 +9,12 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 import Link from 'next/link'
-import { Button } from '../ui/button'
+import { Button } from '@/components/ui/button'
 import { generateTitle } from '@/lib/utils'
 import { ProjectFeedback } from '@/lib/types'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { TabVisits } from './TabVisits'
-import { TabComments } from './TabComments'
+import { TabVisits } from '@/components/admin/TabVisits'
+import { TabComments } from '@/components/admin/TabComments'
 
 export function FeedbackDetails({ project }: { project: ProjectFeedback }) {
   const tabs = [
