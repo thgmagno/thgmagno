@@ -1,20 +1,22 @@
 'use client'
 
+import {
+  AlertDialog,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog'
 import { useActionState, useEffect } from 'react'
-import { Loader2, Trash2 } from 'lucide-react'
+import { Trash2 } from 'lucide-react'
 import { toast } from 'sonner'
 import { actions } from '@/actions'
 import { useSession } from 'next-auth/react'
+import { buttonVariants, Button } from '@/components/ui/button'
 
-export function DeleteCommentButton({
-  commentId,
-  projectId,
-  comment,
-}: {
-  commentId: string
-  projectId: number
-  comment: string
-}) {
+export function DeleteCommentButton({ commentId }: { commentId: string }) {
   const isAdmin = useSession().data?.user.isAdmin || false
 
   const [formState, action, isPending] = useActionState(
@@ -29,18 +31,36 @@ export function DeleteCommentButton({
   }, [formState])
 
   return (
-    <form action={action}>
-      <input type="hidden" name="commentId" value={commentId} />
-      <input type="hidden" name="projectId" value={projectId} />
-      <input type="hidden" name="comment" value={comment} />
+    <AlertDialog>
+      <AlertDialogTrigger asChild>
+        <Trash2 className="text-muted-foreground h-4 w-4 hover:text-red-400" />
+      </AlertDialogTrigger>
+      <AlertDialogContent>
+        <AlertDialogHeader className="text-start">
+          <AlertDialogTitle>Tem certeza que deseja excluir?</AlertDialogTitle>
+          <AlertDialogDescription className="text-muted-foreground text-sm font-medium">
+            Essa ação não pode ser desfeita.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <div className="flex items-center justify-end gap-2">
+          <AlertDialogCancel
+            className={buttonVariants({
+              size: 'sm',
+              variant: 'outline',
+              className: 'm-0',
+            })}
+          >
+            Cancelar
+          </AlertDialogCancel>
+          <form action={action}>
+            <input type="hidden" name="commentId" value={commentId} />
 
-      {isPending ? (
-        <Loader2 className="h-4 w-4 animate-spin" />
-      ) : (
-        <button type="submit">
-          <Trash2 className="text-muted-foreground h-4 w-4 hover:text-red-400" />
-        </button>
-      )}
-    </form>
+            <Button size="sm" className="cursor-pointer" disabled={isPending}>
+              {isPending ? 'Aguarde...' : 'Confirmar'}
+            </Button>
+          </form>
+        </div>
+      </AlertDialogContent>
+    </AlertDialog>
   )
 }

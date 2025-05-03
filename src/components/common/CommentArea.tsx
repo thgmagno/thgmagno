@@ -46,8 +46,8 @@ export function CommentArea({
         {comments.length ? (
           comments.map((comment) => (
             <div key={comment.id} className="relative space-y-3 border-b p-4">
-              <div className="flex justify-between">
-                <div className="flex space-x-2">
+              <div className="space-y-2">
+                <div className="flex items-center">
                   <Avatar className="h-9 w-9">
                     <AvatarImage src={comment.avatarUrl || ''} />
                     <AvatarFallback>
@@ -55,28 +55,25 @@ export function CommentArea({
                         comment.authorEmail?.slice(0, 2).toUpperCase()}
                     </AvatarFallback>
                   </Avatar>
-                  <div>
-                    <p className="flex flex-col-reverse text-sm sm:flex-row sm:items-center">
-                      <span className="min-w-fit text-xs text-neutral-400 sm:ml-2">
-                        {formatDistanceToNow(new Date(comment.createdAt), {
-                          addSuffix: true,
-                          locale: ptBR,
-                        })}
-                      </span>
-                      <span>{comment.authorName}</span>
-                    </p>
-                  </div>
+                  <span className="mx-2 flex-1 text-sm font-medium">
+                    {comment.authorName}
+                  </span>
+                  <span className="min-w-fit text-xs text-neutral-400">
+                    {formatDistanceToNow(new Date(comment.createdAt), {
+                      addSuffix: true,
+                      locale: ptBR,
+                    })}
+                  </span>
                 </div>
-                {session?.user.email === comment.authorEmail && (
-                  <DeleteCommentButton
-                    comment={comment.comment}
-                    commentId={comment.id}
-                    projectId={projectId}
-                  />
-                )}
+                <div className="flex">
+                  <div className="flex-1 self-end text-sm">
+                    {comment.comment}
+                  </div>
+                  {session?.user.email === comment.authorEmail && (
+                    <DeleteCommentButton commentId={comment.id} />
+                  )}
+                </div>
               </div>
-
-              <div className="text-sm">{comment.comment}</div>
             </div>
           ))
         ) : (
