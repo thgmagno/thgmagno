@@ -6,7 +6,7 @@ export async function Redis() {
 
   return (
     <section className="grid gap-4">
-      <h2 className="font-semibold sm:text-xl">Redis Admin Painel</h2>
+      <h2 className="font-semibold sm:text-xl">Redis admin painel</h2>
 
       <div className="space-y-4">
         {entries.map(({ key, value, ttl }) => (
