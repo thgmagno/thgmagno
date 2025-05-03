@@ -12,7 +12,7 @@ export async function Redis() {
         {entries.map(({ key, value, ttl }) => (
           <div
             key={key}
-            className="bg-card flex items-start justify-between gap-4 rounded border p-4"
+            className="bg-card flex items-start justify-between gap-4 rounded-2xl border p-4"
           >
             <div className="flex-1">
               <p className="font-mono text-sm break-all">
