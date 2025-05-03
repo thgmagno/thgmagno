@@ -15,7 +15,6 @@ import { formatDistanceToNow } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { signIn, signOut, useSession } from 'next-auth/react'
-import { ScrollArea } from '@/components/ui/scroll-area'
 import { Ellipsis } from 'lucide-react'
 import clsx from 'clsx'
 import { DeleteCommentButton } from './DeleteCommentButton'
@@ -43,7 +42,7 @@ export function CommentArea({
 
   return (
     <div className="bg-background space-y-4 rounded-xl border py-4 md:p-4">
-      <ScrollArea className="max-h-[600px]">
+      <section className="max-h-[600px] overflow-y-scroll">
         {comments.length ? (
           comments.map((comment) => (
             <div key={comment.id} className="relative space-y-3 border-b p-4">
@@ -88,7 +87,7 @@ export function CommentArea({
             Seja o primeiro a comentar!
           </p>
         )}
-      </ScrollArea>
+      </section>
 
       <form action={action} className="px-4 md:p-0">
         <input type="hidden" name="projectId" value={projectId} />

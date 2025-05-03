@@ -1,9 +1,11 @@
 import {
   Category,
+  Comment,
   Formation,
   Institution,
   Location,
   Prisma,
+  Visit,
 } from '@prisma/client'
 
 export type Params = Promise<{ slug: string }>
@@ -59,3 +61,11 @@ export type ReactionWithCount = (Prisma.PickEnumerable<
 > & {
   _count: number
 })[]
+
+export interface ProjectFeedback extends GithubProject {
+  comments: Comment[]
+  reactions: {
+    emoji: Record<string, number>
+  }
+  visits: Visit[]
+}

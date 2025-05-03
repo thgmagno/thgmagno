@@ -7,6 +7,7 @@ import { CommentSchema, ReactionSchema } from '@/lib/schemas'
 import { CommentFormState, ReactionFormState } from '@/lib/states'
 import { revalidatePath } from 'next/cache'
 import { actions } from '.'
+import { GithubProject } from '@/lib/types'
 
 export async function react(
   formState: ReactionFormState,
@@ -137,30 +138,6 @@ export async function findComments(projectId: number) {
   })
 }
 
-export async function findAllComments() {
-  const { items } = await actions.repository.fetcherRepositories()
-
-  const mapProjectNameId = items.map((i) => ({
-    name: i.name,
-    id: i.id,
-  }))
-
-  const comments = await prisma.comment.findMany({
-    orderBy: { createdAt: 'desc' },
-  })
-
-  return comments.map((comment) => ({
-    ...comment,
-    projectName:
-      mapProjectNameId.find((i) => i.id === comment.projectId)?.name ||
-      'Não encontrado',
-  }))
-}
-
-export async function findAllReactions() {
-  return prisma.reaction.count()
-}
-
 export async function deleteComment(
   formState: CommentFormState,
   formData: FormData,
@@ -240,4 +217,51 @@ export async function softDeleteComment(
 
   revalidatePath('/')
   return { errors: {} }
+}
+
+export async function findFeedbacks() {
+  const { items } = await actions.repository.fetcherRepositories()
+
+  const parseGithubProject = (project: GithubProject): GithubProject => ({
+    id: project.id,
+    name: project.name,
+    html_url: project.html_url,
+    description: project.description,
+    created_at: project.created_at,
+    updated_at: project.updated_at,
+    homepage: project.homepage,
+    language: project.language,
+    visibility: project.visibility,
+  })
+
+  const [comments, reactions, visits] = await Promise.all([
+    prisma.comment.findMany(),
+    prisma.reaction.findMany(),
+    prisma.visit.findMany(),
+  ])
+
+  const projectFeedbacks = await Promise.all(
+    items.map(async (project) => ({
+      ...parseGithubProject(project),
+      comments: comments.filter((c) => c.projectId === project.id),
+      reactions: {
+        emoji: reactions
+          .filter((r) => r.projectId === project.id)
+          .reduce<Record<string, number>>((acc, { emoji }) => {
+            acc[emoji] = (acc[emoji] || 0) + 1
+            return acc
+          }, {}),
+      },
+      visits: await Promise.all(
+        visits
+          .filter((v) => v.projectId === project.id)
+          .map(async (visit) => ({
+            ...visit,
+            country: await actions.visit.getCountryName(visit.country),
+          })),
+      ),
+    })),
+  )
+
+  return projectFeedbacks
 }
