@@ -5,6 +5,7 @@ import * as location from './location'
 import * as visit from './visit'
 import * as social from './social'
 import * as repository from './repository'
+import * as redis from './redis'
 
 export const actions = {
   category,
@@ -14,4 +15,5 @@ export const actions = {
   visit,
   social,
   repository,
+  redis,
 }
