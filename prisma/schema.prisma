@@ -67,8 +67,11 @@ model Visit {
 
 model Reaction {
   authorEmail String
-  projectId   Int    @map("project_id")
+  projectId   Int       @map("project_id")
   emoji       String
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime? @updatedAt @map("updated_at")
+  viewed      Boolean   @default(false)
 
   @@unique([authorEmail, projectId])
   @@map("reactions")

@@ -44,14 +44,23 @@ export async function FeedbacksNewest() {
 }
 
 function FeedBackNewestItem({ log }: { log: Log }) {
-  if (log.type !== 'visit' && log.type !== 'comment') return null
+  if (log.type !== 'visit' && log.type !== 'comment' && log.type !== 'reaction')
+    return null
 
   const isVisit = log.type === 'visit'
-  const dotColor = isVisit ? 'bg-green-500' : 'bg-blue-500'
+  const isComment = log.type === 'comment'
+
+  const dotColor = isVisit
+    ? 'bg-green-500'
+    : isComment
+      ? 'bg-blue-500'
+      : 'bg-amber-500'
   const title = isVisit
     ? `Visita em ${generateTitle(log.appName)}`
-    : `Comentário de ${log.authorName}`
-  const content = isVisit ? log.location : log.comment
+    : isComment
+      ? `Comentário de ${log.authorName}`
+      : `${log.authorEmail} reagiu`
+  const content = isVisit ? log.location : isComment ? log.comment : log.emoji
 
   return (
     <div

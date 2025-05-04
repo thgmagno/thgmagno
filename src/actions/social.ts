@@ -270,28 +270,21 @@ export async function findFeedbacks() {
 export async function findNewestFeedbacks() {
   const lastMonth = subDays(new Date(), 30)
 
-  const [comments, visits] = await Promise.all([
-    prisma.comment.findMany({
-      where: { createdAt: { gte: lastMonth } },
-      orderBy: { createdAt: 'desc' },
-      take: 20,
-    }),
-    prisma.visit.findMany({
-      where: { createdAt: { gte: lastMonth } },
-      orderBy: { createdAt: 'desc' },
-      take: 20,
-    }),
+  const filters = {
+    where: { createdAt: { gte: lastMonth } },
+    orderBy: {
+      createdAt: 'desc' as 'desc' | 'asc',
+    },
+    take: 20,
+  }
+
+  const [visits, reactions, comments] = await Promise.all([
+    prisma.visit.findMany(filters),
+    prisma.reaction.findMany(filters),
+    prisma.comment.findMany(filters),
   ])
 
   const normalized = [
-    ...comments.map((comment) => ({
-      type: 'comment',
-      createdAt: comment.createdAt,
-      authorName: comment.authorName,
-      comment: comment.comment,
-      projectId: comment.projectId,
-      viewed: comment.viewed,
-    })),
     ...visits.map((visit) => ({
       type: 'visit',
       createdAt: visit.createdAt,
@@ -301,24 +294,43 @@ export async function findNewestFeedbacks() {
         .filter(Boolean)
         .join(', '),
     })),
+    ...reactions.map((reaction) => ({
+      type: 'reaction',
+      createdAt: reaction.createdAt,
+      emoji: reaction.emoji,
+      authorEmail: reaction.authorEmail,
+      projectId: reaction.projectId,
+      viewed: reaction.viewed,
+    })),
+    ...comments.map((comment) => ({
+      type: 'comment',
+      createdAt: comment.createdAt,
+      authorName: comment.authorName,
+      comment: comment.comment,
+      projectId: comment.projectId,
+      viewed: comment.viewed,
+    })),
   ]
 
   const sorted = normalized.sort(
     (a, b) => b.createdAt.getTime() - a.createdAt.getTime(),
   )
 
-  const hasUnviewed = sorted.some((log) => !log.viewed)
+  const shouldUpdateVisits = sorted.some((i) => i.type === 'visit' && !i.viewed)
+  const shouldUpdateReactions = sorted.some(
+    (i) => i.type === 'reaction' && !i.viewed,
+  )
+  const shouldUpdateComments = sorted.some(
+    (i) => i.type === 'comment' && !i.viewed,
+  )
 
-  if (hasUnviewed) {
+  if (shouldUpdateVisits || shouldUpdateReactions || shouldUpdateComments) {
+    const where = { where: { viewed: false }, data: { viewed: true } }
+
     await Promise.all([
-      prisma.comment.updateMany({
-        where: { viewed: false },
-        data: { viewed: true },
-      }),
-      prisma.visit.updateMany({
-        where: { viewed: false },
-        data: { viewed: true },
-      }),
+      shouldUpdateVisits && prisma.visit.updateMany(where),
+      shouldUpdateReactions && prisma.reaction.updateMany(where),
+      shouldUpdateComments && prisma.comment.updateMany(where),
     ])
   }
 

@@ -73,4 +73,13 @@ type VisitLog = {
   viewed: boolean
 }
 
-export type Log = CommentLog | VisitLog
+type ReactionLog = {
+  type: 'reaction'
+  createdAt: Date
+  emoji: string
+  authorEmail: string
+  projectId: number
+  viewed: boolean
+}
+
+export type Log = CommentLog | VisitLog | ReactionLog
