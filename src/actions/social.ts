@@ -275,7 +275,7 @@ export async function findNewestFeedbacks() {
     orderBy: {
       createdAt: 'desc' as 'desc' | 'asc',
     },
-    take: 20,
+    take: 10,
   }
 
   const [visits, reactions, comments] = await Promise.all([
