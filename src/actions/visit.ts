@@ -25,7 +25,9 @@ export async function count({
 
 export async function getCountryName(code: string | null) {
   try {
-    const res = await fetch(`https://restcountries.com/v3.1/alpha/${code}`)
+    const res = await fetch(`https://restcountries.com/v3.1/alpha/${code}`, {
+      next: { revalidate: 600 },
+    })
     if (!res.ok) return code
     const data = await res.json()
     return (

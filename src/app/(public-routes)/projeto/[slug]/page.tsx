@@ -7,9 +7,8 @@ import { actions } from '@/actions'
 
 const fetcher = async (url: string) => {
   const repository = await fetch(url, {
-    headers: {
-      Authorization: `Bearer ${env.GITHUB_TOKEN}`,
-    },
+    headers: { Authorization: `Bearer ${env.GITHUB_TOKEN}` },
+    next: { revalidate: 600 },
   })
   return repository.json()
 }
