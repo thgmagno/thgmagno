@@ -13,6 +13,7 @@ export async function Redis() {
   ).then((res) => res.json())
 
   const data = res.urls?.map((obj: string) => JSON.parse(obj))
+  const hasData = data && data.length > 0
 
   return (
     <section className="grid gap-4">
@@ -24,10 +25,10 @@ export async function Redis() {
             Total de registro encontrados:{' '}
             {res?.total ? String(res.total).padStart(2, '0') : 0}
           </h3>
-          {data?.length && <RedisFlushAllButton />}
+          {hasData && <RedisFlushAllButton />}
         </div>
 
-        {data && data.length > 0 ? (
+        {hasData ? (
           <ul className="space-y-3">
             {data.map((url, index) => (
               <li
