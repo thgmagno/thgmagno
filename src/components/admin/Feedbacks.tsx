@@ -5,13 +5,17 @@ import { CustomCard } from '@/components/admin/CustomCard'
 import { formatDistanceToNow } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 import { FeedbackDetails } from '@/components/admin/FeedbackDetails'
+import { FeedbacksNewest } from './FeedbacksNewest'
 
 export async function Feedbacks() {
   const projectsWithFeedback = await actions.social.findFeedbacks()
 
   return (
     <div className="flex flex-col space-y-4">
-      <h2 className="font-semibold sm:text-xl">Feedbacks dos projetos</h2>
+      <div className="flex items-center justify-between">
+        <h2 className="font-semibold sm:text-xl">Feedbacks dos projetos</h2>
+        <FeedbacksNewest />
+      </div>
 
       {/* Projetos */}
       {projectsWithFeedback
@@ -27,9 +31,9 @@ function Project({ project }: { project: ProjectFeedback }) {
   return (
     <CustomCard>
       <div className="space-y-1.5">
-        <div className="flex items-start justify-between gap-2">
+        <div className="flex items-center gap-2">
           <div className="flex w-full flex-col sm:flex-row sm:items-center sm:gap-2">
-            <b className="flex-1">{generateTitle(project.name)}</b>
+            <b>{generateTitle(project.name)}</b>
           </div>
           <FeedbackDetails project={project} />
         </div>

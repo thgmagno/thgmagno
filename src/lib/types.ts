@@ -8,7 +8,7 @@ import {
   Visit,
 } from '@prisma/client'
 
-export type Params = Promise<{ slug: string }>
+export type Params = Promise<{ slug?: string; id?: string }>
 
 export interface GithubProject {
   id: number
@@ -55,3 +55,21 @@ export interface ProjectFeedback extends GithubProject {
   }
   visits: Visit[]
 }
+
+type CommentLog = {
+  type: 'comment'
+  createdAt: Date
+  authorName: string | null
+  projectId: number
+  comment: string
+  viewed: boolean
+}
+
+type VisitLog = {
+  type: 'visit'
+  createdAt: Date
+  location: string
+  viewed: boolean
+}
+
+export type Log = CommentLog | VisitLog

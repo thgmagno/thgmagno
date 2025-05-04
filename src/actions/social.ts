@@ -7,7 +7,8 @@ import { CommentSchema, ReactionSchema } from '@/lib/schemas'
 import { CommentFormState, ReactionFormState } from '@/lib/states'
 import { revalidatePath } from 'next/cache'
 import { actions } from '.'
-import { GithubProject } from '@/lib/types'
+import { GithubProject, Log } from '@/lib/types'
+import { subDays } from 'date-fns'
 
 export async function react(
   formState: ReactionFormState,
@@ -264,4 +265,61 @@ export async function findFeedbacks() {
   )
 
   return projectFeedbacks
+}
+
+export async function findNewestFeedbacks() {
+  const lastMonth = subDays(new Date(), 30)
+
+  const [comments, visits] = await Promise.all([
+    prisma.comment.findMany({
+      where: { createdAt: { gte: lastMonth } },
+      orderBy: { createdAt: 'desc' },
+      take: 20,
+    }),
+    prisma.visit.findMany({
+      where: { createdAt: { gte: lastMonth } },
+      orderBy: { createdAt: 'desc' },
+      take: 20,
+    }),
+  ])
+
+  const normalized = [
+    ...comments.map((comment) => ({
+      type: 'comment',
+      createdAt: comment.createdAt,
+      authorName: comment.authorName,
+      comment: comment.comment,
+      projectId: comment.projectId,
+      viewed: comment.viewed,
+    })),
+    ...visits.map((visit) => ({
+      type: 'visit',
+      createdAt: visit.createdAt,
+      viewed: visit.viewed,
+      location: [visit.city, visit.state, visit.country]
+        .filter(Boolean)
+        .join(', '),
+    })),
+  ]
+
+  const sorted = normalized.sort(
+    (a, b) => b.createdAt.getTime() - a.createdAt.getTime(),
+  )
+
+  const hasUnviewed = sorted.some((log) => !log.viewed)
+
+  if (hasUnviewed) {
+    await Promise.all([
+      prisma.comment.updateMany({
+        where: { viewed: false },
+        data: { viewed: true },
+      }),
+      prisma.visit.updateMany({
+        where: { viewed: false },
+        data: { viewed: true },
+      }),
+    ])
+  }
+
+  return sorted as Log[]
 }
