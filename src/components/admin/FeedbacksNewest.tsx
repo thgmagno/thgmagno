@@ -50,34 +50,33 @@ function FeedBackNewestItem({ log }: { log: Log }) {
   const isVisit = log.type === 'visit'
   const isComment = log.type === 'comment'
 
-  const dotColor = isVisit
-    ? 'bg-green-500'
-    : isComment
-      ? 'bg-blue-500'
-      : 'bg-amber-500'
-  const borderColor = isVisit
-    ? 'border-green-500/50'
-    : isComment
-      ? 'border-blue-500/50'
-      : 'border-amber-500/50'
+  const color = isVisit ? 'green' : isComment ? 'blue' : 'amber'
   const title = isVisit
     ? `Visita em ${generateTitle(log.appName)}`
     : isComment
       ? `Comentário de ${log.authorName}`
       : `${log.authorEmail} reagiu`
   const content = isVisit ? log.location : isComment ? log.comment : log.emoji
+  const colorClasses = {
+    green: { border: 'border-green-500/50', bg: 'bg-green-500' },
+    blue: { border: 'border-blue-500/50', bg: 'bg-blue-500' },
+    amber: { border: 'border-amber-500/50', bg: 'bg-amber-500' },
+  }
 
   return (
     <div
       className={clsx(
         'bg-card mb-2 grid grid-cols-5 items-center gap-1.5 rounded-md px-4 py-2 text-sm',
-        !log.viewed && ['border', borderColor],
+        !log.viewed && ['border', colorClasses[color].border],
       )}
     >
       <div className="col-span-4 w-full space-y-1">
         <div className="flex items-center gap-1.5">
           <div
-            className={clsx('h-1.5 w-1.5 animate-pulse rounded-full', dotColor)}
+            className={clsx(
+              'h-1.5 w-1.5 animate-pulse rounded-full',
+              colorClasses[color].bg,
+            )}
           />
           <span className="text-muted-foreground truncate text-xs">
             {title}
