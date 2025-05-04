@@ -296,6 +296,7 @@ export async function findNewestFeedbacks() {
       type: 'visit',
       createdAt: visit.createdAt,
       viewed: visit.viewed,
+      appName: visit.appName,
       location: [visit.city, visit.state, visit.country]
         .filter(Boolean)
         .join(', '),

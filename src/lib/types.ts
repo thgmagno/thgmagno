@@ -69,6 +69,7 @@ type VisitLog = {
   type: 'visit'
   createdAt: Date
   location: string
+  appName: string
   viewed: boolean
 }
 
