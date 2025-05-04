@@ -29,7 +29,7 @@ export function FeedbackDetails({ project }: { project: ProjectFeedback }) {
           Detalhes
         </Button>
       </DialogTrigger>
-      <DialogContent className="md:max-w-3xl">
+      <DialogContent className="md:max-w-xl">
         <DialogHeader>
           <DialogTitle asChild>
             <Link
