@@ -264,7 +264,6 @@ export async function findFeedbacks() {
         ),
       })),
     )
-    throw new Error('Falha ao conectar-se ao banco de dados')
 
     return { success: true, data: projectFeedbacks }
   } catch {
