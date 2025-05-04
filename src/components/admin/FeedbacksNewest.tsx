@@ -73,10 +73,7 @@ function FeedBackNewestItem({ log }: { log: Log }) {
       <div className="col-span-4 w-full space-y-1">
         <div className="flex items-center gap-1.5">
           <div
-            className={clsx(
-              'h-1.5 w-1.5 animate-pulse rounded-full',
-              colorClasses[color].bg,
-            )}
+            className={clsx('h-1.5 w-1.5 rounded-full', colorClasses[color].bg)}
           />
           <span className="text-muted-foreground truncate text-xs">
             {title}
