@@ -55,6 +55,11 @@ function FeedBackNewestItem({ log }: { log: Log }) {
     : isComment
       ? 'bg-blue-500'
       : 'bg-amber-500'
+  const borderColor = isVisit
+    ? 'border-green-500/50'
+    : isComment
+      ? 'border-blue-500/50'
+      : 'border-amber-500/50'
   const title = isVisit
     ? `Visita em ${generateTitle(log.appName)}`
     : isComment
@@ -66,7 +71,7 @@ function FeedBackNewestItem({ log }: { log: Log }) {
     <div
       className={clsx(
         'bg-card mb-2 grid grid-cols-5 items-center gap-1.5 rounded-md px-4 py-2 text-sm',
-        { 'border border-emerald-500/50': !log.viewed },
+        !log.viewed && ['border', borderColor],
       )}
     >
       <div className="col-span-4 w-full space-y-1">
