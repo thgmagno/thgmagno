@@ -56,7 +56,6 @@ model Visit {
   appName   String   @map("app_name")
   ipHash    String   @map("ip_hash")
   userAgent String?  @map("user_agent")
-  projectId Int      @default(0) @map("project_id")
   city      String?
   state     String?
   country   String?
