@@ -29,25 +29,6 @@ export async function react(
       return { errors: { _form: 'Usuário não autenticado' } }
     }
 
-    const existingReaction = await prisma.reaction.findFirst({
-      where: {
-        authorEmail: session?.user?.email,
-        projectId: parsed.data.projectId,
-      },
-    })
-
-    if (existingReaction && existingReaction.emoji === parsed.data.emoji) {
-      await prisma.reaction.delete({
-        where: {
-          authorEmail_projectId: {
-            authorEmail: session.user.email!,
-            projectId: parsed.data.projectId,
-          },
-        },
-      })
-      return { errors: {} }
-    }
-
     await prisma.reaction.upsert({
       where: {
         authorEmail_projectId: {
@@ -61,7 +42,7 @@ export async function react(
         projectId: parsed.data.projectId,
         emoji: parsed.data.emoji,
       },
-      update: { emoji: parsed.data.emoji },
+      update: { emoji: parsed.data.emoji, viewed: false },
     })
   } catch {
     return {
@@ -237,9 +218,9 @@ export async function findFeedbacks() {
     })
 
     const [comments, reactions, visits] = await Promise.all([
-      prisma.comment.findMany(),
-      prisma.reaction.findMany(),
-      prisma.visit.findMany(),
+      prisma.comment.findMany({ orderBy: { createdAt: 'desc' } }),
+      prisma.reaction.findMany({ orderBy: { updatedAt: 'desc' } }),
+      prisma.visit.findMany({ orderBy: { createdAt: 'desc' } }),
     ])
 
     const projectFeedbacks = await Promise.all(
