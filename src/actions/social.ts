@@ -254,7 +254,7 @@ export async function findFeedbacks() {
       },
       visits: await Promise.all(
         visits
-          .filter((v) => v.projectId === project.id)
+          .filter((v) => v.appName === project.name)
           .map(async (visit) => ({
             ...visit,
             country: await actions.visit.getCountryName(visit.country),
