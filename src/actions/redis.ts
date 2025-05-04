@@ -1,21 +1,43 @@
 'use server'
 
-import { redis } from '@/lib/redis'
+import { auth } from '@/auth'
+import { FlushAllFormState } from '@/lib/states'
 import { revalidatePath } from 'next/cache'
 
-export async function getEntries() {
-  const keys = await redis.keys('*')
+export async function flushAll(
+  formState: FlushAllFormState,
+  formData: FormData,
+): Promise<FlushAllFormState> {
+  try {
+    const session = await auth()
+    if (!session?.user.isAdmin) {
+      return { status: 'erro', message: 'Não autorizado' }
+    }
 
-  return await Promise.all(
-    keys.map(async (key) => {
-      const [value, ttl] = await Promise.all([redis.get(key), redis.ttl(key)])
+    const res = await fetch(`${process.env.API_GO_URL}/flush-all`)
 
-      return { key, value, ttl }
-    }),
-  )
-}
+    if (!res.ok) {
+      return { status: 'erro', message: 'Erro na requisição ao backend' }
+    }
 
-export async function deleteEntry(key: string) {
-  await redis.del(key)
-  revalidatePath('/')
+    const text = await res.text()
+
+    if (!text) {
+      return { status: 'erro', message: 'Resposta vazia do backend' }
+    }
+
+    const data = JSON.parse(text)
+
+    revalidatePath('/')
+
+    return {
+      status: data.status,
+      message: data.message,
+    }
+  } catch {
+    return {
+      status: 'erro',
+      message: 'Falha ao conectar-se ao banco de dados.',
+    }
+  }
 }

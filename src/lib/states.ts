@@ -66,3 +66,8 @@ export interface CommentFormState {
     _form?: string
   }
 }
+
+export interface FlushAllFormState {
+  status?: 'sucesso' | 'erro'
+  message?: string
+}
