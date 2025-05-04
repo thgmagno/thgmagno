@@ -1,16 +1,9 @@
 import Link from 'next/link'
 import { RedisFlushAllButton } from './RedisFlushAllButton'
-
-interface ApiResponse {
-  total?: number
-  urls?: string[]
-}
+import { actions } from '@/actions'
 
 export async function Redis() {
-  const res: ApiResponse = await fetch(
-    `${process.env.API_GO_URL}/recently-shortened`,
-    { cache: 'no-store' },
-  ).then((res) => res.json())
+  const res = await actions.redis.getRecords()
 
   const data = res.urls?.map((obj: string) => JSON.parse(obj))
   const hasData = data && data.length > 0

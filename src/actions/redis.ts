@@ -41,3 +41,12 @@ export async function flushAll(
     }
   }
 }
+
+export async function getRecords(): Promise<{
+  total?: number
+  urls?: string[]
+}> {
+  return await fetch(`${process.env.API_GO_URL}/recently-shortened`, {
+    next: { revalidate: 3600 },
+  }).then((res) => res.json())
+}
