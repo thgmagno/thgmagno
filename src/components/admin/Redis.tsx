@@ -36,7 +36,7 @@ export async function Redis() {
               >
                 <div className="flex flex-col">
                   <Link
-                    href={url.short}
+                    href={`https://${url.short}`}
                     className="text-blue-600 underline"
                     target="_blank"
                   >
