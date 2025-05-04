@@ -24,7 +24,7 @@ export async function Redis() {
             Total de registro encontrados:{' '}
             {res?.total ? String(res.total).padStart(2, '0') : 0}
           </h3>
-          <RedisFlushAllButton />
+          {data?.length && <RedisFlushAllButton />}
         </div>
 
         {data && data.length > 0 ? (
