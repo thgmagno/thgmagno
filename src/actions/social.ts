@@ -221,50 +221,55 @@ export async function softDeleteComment(
 }
 
 export async function findFeedbacks() {
-  const { items } = await actions.repository.fetcherRepositories()
+  try {
+    const { items } = await actions.repository.fetcherRepositories()
 
-  const parseGithubProject = (project: GithubProject): GithubProject => ({
-    id: project.id,
-    name: project.name,
-    html_url: project.html_url,
-    description: project.description,
-    created_at: project.created_at,
-    updated_at: project.updated_at,
-    homepage: project.homepage,
-    language: project.language,
-    visibility: project.visibility,
-  })
+    const parseGithubProject = (project: GithubProject): GithubProject => ({
+      id: project.id,
+      name: project.name,
+      html_url: project.html_url,
+      description: project.description,
+      created_at: project.created_at,
+      updated_at: project.updated_at,
+      homepage: project.homepage,
+      language: project.language,
+      visibility: project.visibility,
+    })
 
-  const [comments, reactions, visits] = await Promise.all([
-    prisma.comment.findMany(),
-    prisma.reaction.findMany(),
-    prisma.visit.findMany(),
-  ])
+    const [comments, reactions, visits] = await Promise.all([
+      prisma.comment.findMany(),
+      prisma.reaction.findMany(),
+      prisma.visit.findMany(),
+    ])
 
-  const projectFeedbacks = await Promise.all(
-    items.map(async (project) => ({
-      ...parseGithubProject(project),
-      comments: comments.filter((c) => c.projectId === project.id),
-      reactions: {
-        emoji: reactions
-          .filter((r) => r.projectId === project.id)
-          .reduce<Record<string, number>>((acc, { emoji }) => {
-            acc[emoji] = (acc[emoji] || 0) + 1
-            return acc
-          }, {}),
-      },
-      visits: await Promise.all(
-        visits
-          .filter((v) => v.appName === project.name)
-          .map(async (visit) => ({
-            ...visit,
-            country: await actions.visit.getCountryName(visit.country),
-          })),
-      ),
-    })),
-  )
+    const projectFeedbacks = await Promise.all(
+      items.map(async (project) => ({
+        ...parseGithubProject(project),
+        comments: comments.filter((c) => c.projectId === project.id),
+        reactions: {
+          emoji: reactions
+            .filter((r) => r.projectId === project.id)
+            .reduce<Record<string, number>>((acc, { emoji }) => {
+              acc[emoji] = (acc[emoji] || 0) + 1
+              return acc
+            }, {}),
+        },
+        visits: await Promise.all(
+          visits
+            .filter((v) => v.appName === project.name)
+            .map(async (visit) => ({
+              ...visit,
+              country: await actions.visit.getCountryName(visit.country),
+            })),
+        ),
+      })),
+    )
+    throw new Error('Falha ao conectar-se ao banco de dados')
 
-  return projectFeedbacks
+    return { success: true, data: projectFeedbacks }
+  } catch {
+    return { success: false, error: 'Falha ao conectar-se ao banco de dados' }
+  }
 }
 
 export async function findNewestFeedbacks() {

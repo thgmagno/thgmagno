@@ -5,10 +5,27 @@ import { CustomCard } from '@/components/admin/CustomCard'
 import { formatDistanceToNow } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 import { FeedbackDetails } from '@/components/admin/FeedbackDetails'
-import { FeedbacksNewest } from './FeedbacksNewest'
+import { FeedbacksNewest } from '@/components/admin/FeedbacksNewest'
+import { buttonVariants } from '@/components/ui/button'
+import Link from 'next/link'
 
 export async function Feedbacks() {
   const projectsWithFeedback = await actions.social.findFeedbacks()
+
+  if (!projectsWithFeedback.success || !projectsWithFeedback.data) {
+    return (
+      <div className="flex flex-col space-y-4">
+        <h2 className="font-semibold sm:text-xl">
+          {projectsWithFeedback.error}
+        </h2>
+        <Link href="/admin" className={buttonVariants({ size: 'sm' })}>
+          Tentar novamente!
+        </Link>
+      </div>
+    )
+  }
+
+  const projects = projectsWithFeedback.data
 
   return (
     <div className="flex flex-col space-y-4">
@@ -18,7 +35,7 @@ export async function Feedbacks() {
       </div>
 
       {/* Projetos */}
-      {projectsWithFeedback
+      {projects
         .sort((a, b) => a.name.localeCompare(b.name))
         .map((project) => (
           <Project key={project.id} project={project} />
