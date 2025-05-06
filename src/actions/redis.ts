@@ -47,6 +47,6 @@ export async function getRecords(): Promise<{
   urls?: string[]
 }> {
   return await fetch(`${process.env.API_GO_URL}/recently-shortened`, {
-    next: { revalidate: 3600 },
+    next: { revalidate: 60 },
   }).then((res) => res.json())
 }
