@@ -26,7 +26,7 @@ export async function fetcherRepositories(
       Authorization: `Bearer ${env.GITHUB_TOKEN}`,
     },
     next: {
-      revalidate: 600,
+      revalidate: 60,
     },
   }).then((res) => res.json())
 }
