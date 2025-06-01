@@ -8,6 +8,7 @@ import { CategoryFormState } from '@/lib/states'
 import { Category } from '@prisma/client'
 import { FormFooter } from '@/components/form/FormFooter'
 import { useState } from 'react'
+import { Checkbox } from '../ui/checkbox'
 
 export function CategoryForm({
   action,
@@ -64,7 +65,23 @@ export function CategoryForm({
           />
         </div>
       </CardContent>
-      <FormFooter isPending={isPending} active={active} setActive={setActive} />
+      <FormFooter
+        isPending={isPending}
+        options={
+          <div className="flex items-center space-x-2">
+            {/* Define se a categoria está ativa */}
+            <div className="flex items-center space-x-2">
+              <Checkbox
+                defaultChecked={true}
+                onClick={() => setActive(!active)}
+              />
+              <label className="text-sm leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                Ativo
+              </label>
+            </div>
+          </div>
+        }
+      />
     </form>
   )
 }
