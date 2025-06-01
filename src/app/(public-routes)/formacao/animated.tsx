@@ -32,9 +32,26 @@ export function FormacoesAnimated({
         Formação
       </motion.h1>
       <motion.div initial="hidden" animate="visible" variants={contentVariants}>
-        {formations.map((formation) => (
-          <FormationCard key={formation.id} formation={formation} />
-        ))}
+        {formations
+          .filter((formation) => !formation.complementary)
+          .map((formation) => (
+            <FormationCard key={formation.id} formation={formation} />
+          ))}
+      </motion.div>
+      <motion.h1
+        className="mb-8 text-2xl font-medium tracking-tight"
+        initial="hidden"
+        animate="visible"
+        variants={titleVariants}
+      >
+        Cursos Complementares
+      </motion.h1>
+      <motion.div initial="hidden" animate="visible" variants={contentVariants}>
+        {formations
+          .filter((formation) => formation.complementary)
+          .map((formation) => (
+            <FormationCard key={formation.id} formation={formation} />
+          ))}
       </motion.div>
     </>
   )

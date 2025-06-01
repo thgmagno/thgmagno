@@ -32,6 +32,7 @@ export interface FormationFormState {
     endedAt?: string[]
     certificateUrl?: string[]
     active?: string[]
+    complementary?: string[]
     institutionId?: string[]
     categoryId?: string[]
     _form?: string

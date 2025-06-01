@@ -26,6 +26,7 @@ model Formation {
   endedAt        DateTime?   @map("ended_at") @db.Date
   certificateUrl String?     @unique @map("certificate_url") @db.VarChar(512)
   active         Boolean     @default(true)
+  complementary  Boolean     @default(false)
   institutionId  Int         @map("institution_id")
   categoryId     Int         @map("category_id")
 

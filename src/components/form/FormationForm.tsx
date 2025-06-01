@@ -9,6 +9,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { SelectCategory } from '@/components/common/SelectCategory'
 import { SelectInstitution } from '@/components/common/SelectInstitution'
 import { useState } from 'react'
+import { Checkbox } from '../ui/checkbox'
 
 export function FormationForm({
   action,
@@ -22,12 +23,20 @@ export function FormationForm({
   formation?: Formation
 }) {
   const [active, setActive] = useState<boolean>(Boolean(formation?.active))
+  const [complementary, setComplementary] = useState<boolean>(
+    Boolean(formation?.complementary),
+  )
 
   return (
     <form action={action}>
       <CardContent className="space-y-4">
         <input type="hidden" name="id" defaultValue={formation?.id || ''} />
         <input type="hidden" name="active" value={active ? 'on' : 'off'} />
+        <input
+          type="hidden"
+          name="complementary"
+          value={complementary ? 'on' : 'off'}
+        />
 
         {/* Título */}
         <div className="flex flex-col space-y-1.5">
@@ -102,7 +111,52 @@ export function FormationForm({
           />
         </div>
       </CardContent>
-      <FormFooter isPending={isPending} active={active} setActive={setActive} />
+      <FormFooter
+        isPending={isPending}
+        options={
+          <Options
+            active={active}
+            setActive={setActive}
+            complementary={complementary}
+            setComplementary={setComplementary}
+          />
+        }
+      />
     </form>
+  )
+}
+
+function Options({
+  active = true,
+  setActive,
+  complementary = false,
+  setComplementary = () => {},
+}: {
+  active: boolean
+  setActive: (value: boolean) => void
+  complementary?: boolean
+  setComplementary?: (value: boolean) => void
+}) {
+  return (
+    <div className="flex items-center space-x-2">
+      {/* Define se a formação está ativa */}
+      <div className="flex items-center space-x-2">
+        <Checkbox defaultChecked={true} onClick={() => setActive(!active)} />
+        <label className="text-sm leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+          Ativo
+        </label>
+      </div>
+
+      {/* Define se a formação é um curso complementar */}
+      <div className="flex items-center space-x-2">
+        <Checkbox
+          defaultChecked={true}
+          onClick={() => setComplementary(!complementary)}
+        />
+        <label className="text-sm leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+          Complementar
+        </label>
+      </div>
+    </div>
   )
 }

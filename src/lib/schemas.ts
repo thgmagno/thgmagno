@@ -136,6 +136,12 @@ export const FormationSchema = z.object({
     .nullable()
     .transform((val) => val === 'on'),
 
+  // Curso complementar
+  complementary: z
+    .string()
+    .nullable()
+    .transform((val) => val === 'on'),
+
   // ID da instituição
   institutionId: z
     .string()
