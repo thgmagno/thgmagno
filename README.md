@@ -1,10 +1,6 @@
-# Plataforma Profissional - Thiago Magno
+Aplicação para centralizar minhas informações profissionais. Desenvolvida com foco em simplicidade, organização e facilidade de atualização.
 
-Aplicação para centralizar minhas informações profissionais.
-Desenvolvida com foco em simplicidade, organização e facilidade de atualização.
-
-## Funcionalidades
-
+Funcionalidades:
 * Página inicial com resumo profissional e áreas de atuação.
 * Página de formação com cursos e especializações.
 * Página de projetos com descrições, tecnologias e links.
