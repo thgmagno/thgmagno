@@ -1,4 +1,6 @@
-Aplicação para centralizar minhas informações profissionais. Desenvolvida com foco em simplicidade, organização e facilidade de atualização.
+Aplicação para centralizar minhas informações profissionais. 
+
+Desenvolvida com foco em simplicidade, organização e facilidade de atualização.
 
 Funcionalidades:
 * Página inicial com resumo profissional e áreas de atuação.
