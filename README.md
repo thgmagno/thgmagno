@@ -1,4 +1,4 @@
-Aplicação para centralizar minhas informações profissionais. 
+Aplicação para centralizar minhas informações. 
 
 Desenvolvida com foco em simplicidade, organização e facilidade de atualização.
 
