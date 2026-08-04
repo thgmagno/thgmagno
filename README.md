@@ -1,36 +1,74 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Thiago Magno | Portfólio
 
-## Getting Started
+Desenvolvedor Full Stack especializado em **Next.js**, **Node.js** e **Java/Spring Boot**, criando soluções web modernas, escaláveis e seguras.
 
-First, run the development server:
+🎯 **Baseado em:** Biguaçu, Santa Catarina, Brasil  
+📧 **Email:** [thgmgn@gmail.com](mailto:thgmgn@gmail.com)  
+🔗 **GitHub:** [@thgmagno](https://github.com/thgmagno)  
+💼 **LinkedIn:** [thgmagno](https://www.linkedin.com/in/thgmagno)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 Sobre Mim
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Sou desenvolvedor com experiência em desenvolvimento web completo, automação de processos e integrações de APIs complexas. Trabalho com profissionalismo, código limpo e bem documentado, sempre pensando em escalabilidade e performance.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+**Especialidades:**
+- ✅ Desenvolvimento Web (Landing pages, Sites, Web apps)
+- ✅ E-commerce (Stripe, MercadoPago, cálculo de frete)
+- ✅ Sistemas SaaS (CRM, Dashboards, Painéis admin)
+- ✅ APIs & Integrações (WhatsApp, Banco do Brasil, Telegram)
+- ✅ Automação (Web scraping, processamento de dados)
+- ✅ Migração & Refatoração (Modernizar código legado)
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 💻 Stack Tecnológico
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Frontend
+- **Next.js** / React
+- TypeScript
+- Tailwind CSS
+- HTML5 / CSS3
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Backend
+- **Node.js** (Express, NestJS)
+- **Java/Spring Boot**
+- Python
+- APIs REST
 
-## Deploy on Vercel
+### Banco de Dados
+- PostgreSQL
+- Supabase
+- MySQL
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Ferramentas & Infraestrutura
+- **Git/GitHub** (versionamento de código)
+- **Vercel** (deploy de projetos pequenos — sites, landing pages)
+- **Railway, Fly.io** (hosting backend + banco, para projetos estruturados)
+- Docker
+- Testes Unitários
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 📊 Diferenciais
+
+- 🎯 **UX/UI** — Layouts pensados em conversão
+- ⚡ **Performance** — Otimização de velocidade e SEO
+- 🔒 **Segurança** — Código seguro e validações
+- 📚 **Documentação** — Código bem documentado
+- 🚀 **Escalabilidade** — Arquitetura pronta pro crescimento
+- 👥 **Colaboração** — Trabalho com Git/PRs, pronto pra outros devs
+
+---
+
+## 📞 Entre em Contato
+
+📧 **Email:** [thgmgn@gmail.com](mailto:thgmgn@gmail.com)  
+💬 **WhatsApp:** [+55 (48) 99180-8906](https://api.whatsapp.com/send?phone=5548991808906&text=Ol%C3%A1%21%20Vi%20seu%20port%C3%ADf%C3%B3lio%2C%20e%20gostaria%20de%20saber%20mais.)  
+🔗 **GitHub:** [@thgmagno](https://github.com/thgmagno)  
+💼 **LinkedIn:** [thgmagno](https://www.linkedin.com/in/thgmagno)
+
+---
+
+**Criado com ❤️ por Thiago Magno**
