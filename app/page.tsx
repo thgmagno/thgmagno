@@ -1,9 +1,9 @@
-import Image from "next/image";
+import { AppNavbar } from "@/components/app-navbar";
 
 export default function Home() {
   return (
-    <main>
-      <h1>Thgmagno</h1>
+    <main className="w-full max-w-7xl mx-auto">
+      <AppNavbar />
     </main>
   );
 }
