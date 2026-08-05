@@ -2,11 +2,20 @@
 
 import { useTheme } from 'next-themes'
 import { Loader2 } from 'lucide-react'
+import { useSyncExternalStore } from 'react'
+
+const emptySubscribe = () => () => { }
 
 export function ThemeToggleButton() {
-    const { resolvedTheme, setTheme, theme } = useTheme()
+    const { resolvedTheme, setTheme } = useTheme()
 
-    if (!theme) {
+    const mounted = useSyncExternalStore(
+        emptySubscribe,
+        () => true,
+        () => false,
+      )
+    
+      if (!mounted) {
         return (
             <Loader2 className="animate-spin duration-300 opacity-80" size={18} />
         )
