@@ -1,4 +1,4 @@
-import { Mail, MessageCircle } from "lucide-react";
+import { Mail, MapPin, MessageCircle } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/components/brand-icons";
 
 const channels = [
@@ -53,6 +53,11 @@ export default function ContatoPage() {
           </li>
         ))}
       </ul>
+
+      <p className="flex items-center gap-2 text-sm text-muted-foreground">
+        <MapPin className="size-4 shrink-0" aria-hidden />
+        Biguaçu, Santa Catarina, Brasil.
+      </p>
     </section>
   );
 }
