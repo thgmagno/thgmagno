@@ -1,32 +1,35 @@
 import { Mail, MapPin, MessageCircle } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/components/brand-icons";
 
-const channels = [
-  {
-    icon: Mail,
-    label: "E-mail",
-    value: "thgmgn@gmail.com",
-    href: "mailto:thgmgn@gmail.com",
-  },
-  {
-    icon: MessageCircle,
-    label: "WhatsApp",
-    value: "+55 (48) 99180-8906",
-    href: "https://api.whatsapp.com/send?phone=5548991808906&text=Opa%21%20Gostei%20do%20seu%20portf%C3%B3lio.%20Podemos%20conversar%3F",
-  },
-  {
-    icon: GithubIcon,
-    label: "GitHub",
-    value: "@thgmagno",
-    href: "https://github.com/thgmagno",
-  },
-  {
-    icon: LinkedinIcon,
-    label: "LinkedIn",
-    value: "thgmagno",
-    href: "https://www.linkedin.com/in/thgmagno",
-  },
-];
+const data = {
+  channels: [
+    {
+      icon: Mail,
+      label: "E-mail",
+      value: "thgmgn@gmail.com",
+      href: "mailto:thgmgn@gmail.com",
+    },
+    {
+      icon: MessageCircle,
+      label: "WhatsApp",
+      value: "+55 (48) 99180-8906",
+      href: "https://api.whatsapp.com/send?phone=5548991808906&text=Opa%21%20Gostei%20do%20seu%20portf%C3%B3lio.%20Podemos%20conversar%3F",
+    },
+    {
+      icon: GithubIcon,
+      label: "GitHub",
+      value: "@thgmagno",
+      href: "https://github.com/thgmagno",
+    },
+    {
+      icon: LinkedinIcon,
+      label: "LinkedIn",
+      value: "thgmagno",
+      href: "https://www.linkedin.com/in/thgmagno",
+    },
+  ],
+  location: "Biguaçu, Santa Catarina, Brasil."
+}
 
 export default function ContatoPage() {
   return (
@@ -36,7 +39,7 @@ export default function ContatoPage() {
       </header>
 
       <ul className="grid gap-3 sm:grid-cols-2">
-        {channels.map(({ icon: Icon, label, value, href }) => (
+        {data.channels.map(({ icon: Icon, label, value, href }) => (
           <li key={label}>
             <a
               href={href}
@@ -56,7 +59,7 @@ export default function ContatoPage() {
 
       <p className="flex items-center gap-2 text-sm text-muted-foreground">
         <MapPin className="size-4 shrink-0" aria-hidden />
-        Biguaçu, Santa Catarina, Brasil.
+        {data.location}
       </p>
     </section>
   );
