@@ -1,7 +1,5 @@
 # Thiago Magno
 
----
-
 ## 🚀 Sobre Mim
 
 Sou desenvolvedor com experiência em desenvolvimento web completo, automação de processos e integrações de APIs complexas. Trabalho com profissionalismo, código limpo e bem documentado, sempre pensando em escalabilidade e performance.
