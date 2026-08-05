@@ -1,7 +1,7 @@
 import { FolderGit2 } from "lucide-react";
 import { GitHubNotice } from "@/components/github-notice";
 import { ProjectCard } from "@/components/project-card";
-import { getPortfolioProjects, PORTFOLIO_TOPIC } from "@/lib/github";
+import { getPortfolioProjects } from "@/lib/github";
 
 export default async function ProjetosPage() {
   const projects = await getPortfolioProjects();
