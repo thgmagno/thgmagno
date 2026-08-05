@@ -26,6 +26,7 @@ export interface Project {
   topics: string[];
   stars: number;
   updatedAt: string;
+  isPrivate: boolean;
 }
 
 /** Resultado de uma leitura do GitHub, para renderizar erro sem quebrar a página. */
@@ -46,6 +47,7 @@ interface GitHubRepo {
   archived: boolean;
   disabled: boolean;
   fork: boolean;
+  private: boolean;
 }
 
 function buildHeaders(accept: string): HeadersInit {
@@ -123,11 +125,12 @@ export async function getPortfolioProjects(): Promise<GitHubResult<Project[]>> {
   "use cache";
   cacheTag(GITHUB_CACHE_TAG);
 
+  const path = process.env.GITHUB_TOKEN
+    ? "/user/repos?per_page=100&sort=pushed&direction=desc&affiliation=owner&visibility=all"
+    : `/users/${GITHUB_USER}/repos?per_page=100&sort=pushed&direction=desc`;
+
   try {
-    const response = await requestGitHub(
-      `/users/${GITHUB_USER}/repos?per_page=100&sort=pushed&direction=desc`,
-      "application/vnd.github+json",
-    );
+    const response = await requestGitHub(path, "application/vnd.github+json");
     const repos = (await response.json()) as GitHubRepo[];
 
     const projects = repos
@@ -150,6 +153,7 @@ export async function getPortfolioProjects(): Promise<GitHubResult<Project[]>> {
         ),
         stars: repo.stargazers_count,
         updatedAt: repo.pushed_at,
+        isPrivate: repo.private,
       }))
       .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
 

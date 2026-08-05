@@ -1,4 +1,4 @@
-import { ExternalLink, Star } from "lucide-react";
+import { ExternalLink, Lock, Star } from "lucide-react";
 import { GithubIcon } from "@/components/brand-icons";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -9,7 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { buttonVariants } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import type { Project } from "@/lib/github";
 
@@ -31,7 +31,7 @@ export function ProjectCard({ project }: { project: Project }) {
           {project.name}
         </CardTitle>
         <CardDescription>
-          {project.description ?? "Sem descrição."}
+          {project.description ?? "Sem descrição no GitHub."}
         </CardDescription>
       </CardHeader>
 
@@ -74,15 +74,22 @@ export function ProjectCard({ project }: { project: Project }) {
       </CardContent>
 
       <CardFooter className="gap-2">
-        <a
-          href={project.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={cn(buttonVariants({ variant: "outline", size: "sm" }))}
-        >
-          <GithubIcon aria-hidden />
-          Código
-        </a>
+        {project.isPrivate ? (
+          <Button variant="outline" size="sm" disabled>
+            <Lock aria-hidden />
+            Código privado
+          </Button>
+        ) : (
+          <a
+            href={project.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={cn(buttonVariants({ variant: "outline", size: "sm" }))}
+          >
+            <GithubIcon aria-hidden />
+            Código
+          </a>
+        )}
         {project.homepage && (
           <a
             href={project.homepage}
