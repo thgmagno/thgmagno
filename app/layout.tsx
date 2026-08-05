@@ -15,7 +15,10 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Thiago Magno | Desenvolvedor Full Stack",
+  title: {
+    default: "Thiago Magno | Desenvolvedor Full Stack",
+    template: "%s | Thiago Magno"
+  },
   description: "Desenvolvedor Full Stack especializado em Next.js, Node.js e Java/Spring Boot. Criando soluções web modernas, escaláveis e seguras.",
   keywords: "desenvolvedor, full stack, Next.js, Node.js, Java, React, web development, Florianópolis",
   authors: [{ name: "Thiago Magno" }],
