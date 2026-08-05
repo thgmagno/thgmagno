@@ -8,12 +8,11 @@ Sou desenvolvedor com experiência em desenvolvimento web completo, automação 
 
 **Especialidades:**
 
-- Desenvolvimento Web (Landing pages, Sites, Web apps)
-- E-commerce (Stripe, MercadoPago, cálculo de frete)
-- Sistemas SaaS (CRM, Dashboards, Painéis admin)
-- APIs & Integrações (WhatsApp, Banco do Brasil, Telegram)
-- Automação (Web scraping, processamento de dados)
-- Migração & Refatoração (Modernizar código legado)
+- Desenvolvimento Web
+- Sistemas SaaS
+- APIs & Integrações
+- Automação
+- Migração & Refatoração
 
 ## Stack
 
@@ -33,15 +32,14 @@ Sou desenvolvedor com experiência em desenvolvimento web completo, automação 
 
 ### Banco de Dados
 
-- PostgreSQL
+- **PostgreSQL**
 - Supabase
 - MySQL
 
 ### Ferramentas & Infraestrutura
 
 - **Git/GitHub** (versionamento de código)
-- **Vercel** (deploy de projetos pequenos — sites, landing pages)
-- **Railway, Fly.io** (hosting backend + banco, para projetos estruturados)
+- **Vercel, Railway, Fly.io** (hospedagem + banco)
 - Docker
 - Testes Unitários
 
