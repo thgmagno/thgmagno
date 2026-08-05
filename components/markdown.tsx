@@ -37,7 +37,16 @@ interface MarkdownContentProps {
  */
 export function MarkdownContent({ children, className }: MarkdownContentProps) {
   return (
-    <div className={cn("prose prose-neutral max-w-none text-center md:text-left", className)}>
+    <div
+      className={cn(
+        "prose prose-neutral max-w-none",
+        "text-center md:text-left",
+        // Remove o marcador da lista abaixo de `md`
+        "[&_ul]:list-none [&_ul]:ps-0",
+        "[&_ol]:list-none [&_ol]:ps-0",
+        className,
+      )}
+    >
       <Markdown remarkPlugins={[remarkGfm]} components={components}>
         {children}
       </Markdown>
