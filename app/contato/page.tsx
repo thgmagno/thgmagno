@@ -12,7 +12,7 @@ const channels = [
     icon: MessageCircle,
     label: "WhatsApp",
     value: "+55 (48) 99180-8906",
-    href: "https://api.whatsapp.com/send?phone=5548991808906&text=Ol%C3%A1%21%20Vi%20seu%20port%C3%ADf%C3%B3lio%2C%20e%20gostaria%20de%20saber%20mais.",
+    href: "https://api.whatsapp.com/send?phone=5548991808906&text=Opa%21%20Gostei%20do%20seu%20portf%C3%B3lio.%20Podemos%20conversar%3F",
   },
   {
     icon: GithubIcon,
