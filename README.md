@@ -68,7 +68,3 @@ Sou desenvolvedor com experiência em desenvolvimento web completo, automação 
 💬 **WhatsApp:** [+55 (48) 99180-8906](https://api.whatsapp.com/send?phone=5548991808906&text=Ol%C3%A1%21%20Vi%20seu%20port%C3%ADf%C3%B3lio%2C%20e%20gostaria%20de%20saber%20mais.)  
 🔗 **GitHub:** [@thgmagno](https://github.com/thgmagno)  
 💼 **LinkedIn:** [thgmagno](https://www.linkedin.com/in/thgmagno)
-
----
-
-**Criado com ❤️ por Thiago Magno**
