@@ -42,7 +42,7 @@ export default function ContatoPage() {
               href={href}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-3 rounded-xl px-4 py-3 ring-1 ring-foreground/10 transition-colors hover:bg-muted"
+              className="flex items-center gap-3 rounded-xl px-4 py-3 ring-1 ring-foreground/10 transition-colors bg-card hover:bg-secondary"
             >
               <Icon className="size-5 shrink-0 text-muted-foreground" aria-hidden />
               <span className="flex flex-col">
