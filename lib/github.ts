@@ -29,10 +29,22 @@ export interface Project {
   isPrivate: boolean;
 }
 
+export interface Profile {
+  login: string;
+  name: string | null;
+  avatarUrl: string;
+}
+
 /** Resultado de uma leitura do GitHub, para renderizar erro sem quebrar a página. */
 export type GitHubResult<T> =
   | { ok: true; data: T }
   | { ok: false; error: string };
+
+interface GitHubUser {
+  login: string;
+  name: string | null;
+  avatar_url: string;
+}
 
 interface GitHubRepo {
   id: number;
@@ -88,6 +100,43 @@ function toErrorMessage(error: unknown): string {
   return error instanceof Error
     ? error.message
     : "Não foi possível falar com a API do GitHub.";
+}
+
+/**
+ * Largura pedida ao GitHub para o avatar.
+ */
+const AVATAR_SIZE = 320;
+
+/**
+ * Perfil público do GitHub
+ */
+export async function getProfile(): Promise<GitHubResult<Profile>> {
+  "use cache";
+  cacheTag(GITHUB_CACHE_TAG);
+
+  try {
+    const response = await requestGitHub(
+      `/users/${GITHUB_USER}`,
+      "application/vnd.github+json",
+    );
+    const user = (await response.json()) as GitHubUser;
+
+    const avatarUrl = new URL(user.avatar_url);
+    avatarUrl.search = `?s=${AVATAR_SIZE}`;
+
+    cacheLife("hours");
+    return {
+      ok: true,
+      data: {
+        login: user.login,
+        name: user.name,
+        avatarUrl: avatarUrl.toString(),
+      },
+    };
+  } catch (error) {
+    cacheLife("minutes");
+    return { ok: false, error: toErrorMessage(error) };
+  }
 }
 
 /**

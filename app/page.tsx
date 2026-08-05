@@ -1,15 +1,24 @@
 import { GitHubNotice } from "@/components/github-notice";
 import { MarkdownContent } from "@/components/markdown";
-import { getProfileReadme } from "@/lib/github";
+import { ProfileAvatar } from "@/components/profile-avatar";
+import { getProfile, getProfileReadme } from "@/lib/github";
 
 export default async function Home() {
-  const readme = await getProfileReadme();
+  const [profile, readme] = await Promise.all([
+    getProfile(),
+    getProfileReadme(),
+  ]);
 
-  if (!readme.ok) {
-    return (
-      <GitHubNotice title="Não foi possível carregar o conteúdo" />
-    );
-  }
+  return (
+    <div className="flex flex-col gap-6">
+      {/* A foto some sozinha se a API falhar */}
+      {profile.ok && <ProfileAvatar profile={profile.data} />}
 
-  return <MarkdownContent>{readme.data}</MarkdownContent>;
+      {readme.ok ? (
+        <MarkdownContent>{readme.data}</MarkdownContent>
+      ) : (
+        <GitHubNotice title="Não foi possível carregar o conteúdo" />
+      )}
+    </div>
+  );
 }

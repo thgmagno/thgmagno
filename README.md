@@ -1,4 +1,4 @@
-# Thiago Magno | Portfólio
+# Thiago Magno
 
 Desenvolvedor Full Stack especializado em **Next.js**, **Node.js** e **Java/Spring Boot**, criando soluções web modernas, escaláveis e seguras.
 
