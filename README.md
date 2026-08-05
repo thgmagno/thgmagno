@@ -14,36 +14,36 @@ Desenvolvedor web, com experiência em automação de processos e integrações 
 
 ### Frontend
 
-- **Next.js** / React
+- Next.js / React
 - TypeScript
 - Tailwind CSS
 - HTML5 / CSS3
 
 ### Backend
 
-- **Node.js** (Express, NestJS)
-- **Java/Spring Boot**
+- Node.js (Express, NestJS)
+- Java/Spring Boot
 - Python
 - APIs REST
 
 ### Banco de Dados
 
-- **PostgreSQL**
+- PostgreSQL
 - Supabase
 - MySQL
 
 ### Ferramentas & Infraestrutura
 
-- **Git/GitHub** (versionamento de código)
-- **Vercel, Railway, Fly.io** (hospedagem + banco)
+- Git/GitHub (versionamento de código)
+- Vercel, Railway, Fly.io (hospedagem + banco)
 - Docker
 - Testes Unitários
 
 ## Diferenciais
 
-- **UX/UI** — Layouts pensados em conversão
-- **Performance** — Otimização de velocidade e SEO
-- **Segurança** — Código seguro e validações
-- **Documentação** — Código bem documentado
-- **Escalabilidade** — Arquitetura pronta pro crescimento
-- **Colaboração** — Trabalho com Git/PRs, pronto pra outros devs
+- **UX/UI**: Layouts pensados em conversão
+- **Performance**: Otimização de velocidade e SEO
+- **Segurança**: Código seguro e validações
+- **Documentação**: Código bem documentado
+- **Escalabilidade**: Arquitetura pronta pro crescimento
+- **Colaboração**: Trabalho com Git/PRs, pronto pra outros devs
