@@ -24,11 +24,15 @@ export default async function ProjetosPage() {
         />
       ) : (
         <ul className="grid gap-4 sm:grid-cols-2">
-          {projects.data.map((project) => (
-            <li key={project.id} className="flex">
-              <ProjectCard project={project} />
-            </li>
-          ))}
+          {projects.data
+            .toSorted((a, b) =>
+              a.name.localeCompare(b.name, "pt-BR", { sensitivity: "base" }),
+            )
+            .map((project) => (
+              <li key={project.id} className="flex">
+                <ProjectCard project={project} />
+              </li>
+            ))}
         </ul>
       )}
     </section>
